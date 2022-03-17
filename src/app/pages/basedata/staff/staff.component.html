@@ -1,0 +1,5 @@
+<app-list #listComponent [title]="(title ? title : '') + '员工列表'" [fields]="fields" [nav]="nav"
+    (navChange)="navChange($event)" [listData]="listData" [pageData]="pageData" [toolbar]="listToolbar"
+    [action]="listAction" (pageChange)="list()" [level]="2" [navSpan]="5"></app-list>
+<app-edit #editComponent [title]="(title ? title : '') + '员工编辑'" [fields]="fields" [form]="editForm"
+    [toolbar]="editToolbar" [errors]="errors" [level]="2"></app-edit>

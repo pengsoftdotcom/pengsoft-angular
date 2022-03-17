@@ -1,0 +1,6 @@
+<app-list #listComponent title="发薪记录列表" [fields]="fields" [listData]="listData" [pageData]="pageData"
+    [toolbar]="listToolbar" [action]="listAction" (pageChange)="list()">
+</app-list>
+<app-edit #editComponent [title]="editForm.id ? '发薪记录编辑' : '发薪'" [fields]="fields" [form]="editForm"
+    [toolbar]="editToolbar" [errors]="errors" [labelSpan]="5">
+</app-edit>

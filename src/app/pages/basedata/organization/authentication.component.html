@@ -1,0 +1,46 @@
+<ng-template #content>
+    <div class="edit">
+        <nz-steps nzType="navigation" nzSize="small" [nzCurrent]="current">
+            <nz-step *ngFor='let title of titleArray; let i = index' [nzTitle]="title" [nzStatus]="statusArray[i]">
+            </nz-step>
+        </nz-steps>
+        <nz-spin [nzSpinning]="loading">
+            <form nz-form [style.height]="formHeight - 48 + 'px'">
+                <ng-container *ngIf="current === 0 || current === 3; else elseBlock">
+                    <div nz-row>
+                        <ng-container *ngFor="let field of fields" [ngTemplateOutlet]="level1"
+                            [ngTemplateOutletContext]="{field: field, form: form}"></ng-container>
+                    </div>
+                </ng-container>
+                <ng-template #elseBlock>
+                    <ng-container *ngFor="let field of fields" [ngTemplateOutlet]="level2"
+                        [ngTemplateOutletContext]="{field: field, form: form}"></ng-container>
+                </ng-template>
+            </form>
+            <div class="toolbar">
+                <nz-space>
+                    <ng-container *ngFor="let button of toolbar">
+                        <app-button *nzSpaceItem [button]="button" [form]="form"
+                            (action)="button.action && button.action()">
+                        </app-button>
+                    </ng-container>
+                </nz-space>
+            </div>
+        </nz-spin>
+    </div>
+</ng-template>
+
+<ng-template #level2 let-field="field" let-form="form">
+    <div *ngIf="field.edit.visible" class="title">{{field.name}}</div>
+    <div nz-row>
+        <ng-container *ngFor="let subField of field.children" [ngTemplateOutlet]="level1"
+            [ngTemplateOutletContext]="{field: subField, form: getForm(field, form)}">
+        </ng-container>
+    </div>
+</ng-template>
+
+<ng-template #level1 let-field="field" let-form="form">
+    <app-form-item nz-col [nzSpan]="24 / (field.edit.column ? field.edit.column : column)" [column]="column"
+        [labelSpan]="labelSpan" [inputSpan]="inputSpan" [field]="field" [form]="form" [errors]="errors">
+    </app-form-item>
+</ng-template>

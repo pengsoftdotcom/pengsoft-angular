@@ -1,0 +1,60 @@
+<ng-container *ngIf="edit && field">
+    <nz-form-item nz-row *ngIf="edit.input?.type === InputType.COMPOSITE || editVisible">
+        <nz-form-label nz-col *ngIf="labelVisible" [nzSpan]="labelSpan" [nzRequired]="required"
+            [nzNoColon]="!colonVisible">
+            {{label}}
+            <span *ngIf="edit.label && edit.label.tooltip" nz-tooltip [nzTooltipTitle]="edit.label.tooltip"
+                style="margin-left: 2px;">
+                <i nz-tooltip nz-icon nzType="question-circle-o"></i>
+            </span>
+        </nz-form-label>
+        <nz-form-control nz-col *ngIf="inputVisible" [nzSpan]="labelVisible ? inputSpan : 24"
+            [ngSwitch]="edit.input?.type" [nzValidateStatus]="status" [nzErrorTip]="error">
+            <app-input-password *ngSwitchCase="InputType.PASSWORD" [form]="form" [edit]="edit" [errors]="errors">
+            </app-input-password>
+            <app-input-number *ngSwitchCase="InputType.NUMBER" [form]="form" [edit]="edit" [errors]="errors">
+            </app-input-number>
+            <app-input-boolean *ngSwitchCase="InputType.BOOLEAN" [form]="form" [edit]="edit" [errors]="errors">
+            </app-input-boolean>
+            <app-input-datetime *ngSwitchCase="InputType.DATETIME" [form]="form" [edit]="edit" [errors]="errors">
+            </app-input-datetime>
+            <app-input-date *ngSwitchCase="InputType.DATE" [form]="form" [edit]="edit" [errors]="errors">
+            </app-input-date>
+            <app-input-select *ngSwitchCase="InputType.SELECT" [form]="form" [edit]="edit" [errors]="errors">
+            </app-input-select>
+            <app-input-tree-select *ngSwitchCase="InputType.TREE_SELECT" [form]="form" [edit]="edit" [errors]="errors">
+            </app-input-tree-select>
+            <app-input-cascader *ngSwitchCase="InputType.CASCADER" [form]="form" [edit]="edit" [errors]="errors">
+            </app-input-cascader>
+            <app-input-textarea *ngSwitchCase="InputType.TEXTAREA" [form]="form" [edit]="edit" [errors]="errors">
+            </app-input-textarea>
+            <app-input-upload *ngSwitchCase="InputType.UPLOAD" [form]="form" [edit]="edit" [errors]="errors">
+            </app-input-upload>
+            <app-input-image *ngSwitchCase="InputType.IMAGE" [form]="form" [edit]="edit" [errors]="errors">
+            </app-input-image>
+            <app-input-image-data *ngSwitchCase="InputType.IMAGE_DATA" [form]="form" [edit]="edit" [errors]="errors">
+            </app-input-image-data>
+            <app-input-captcha *ngSwitchCase="InputType.CAPTCHA" [form]="form" [edit]="edit" [errors]="errors">
+            </app-input-captcha>
+            <app-input-date-range *ngSwitchCase="InputType.DATE_RANGE" [form]="form" [field]="field" [edit]="edit"
+                [errors]="errors">
+            </app-input-date-range>
+            <app-input-composite *ngSwitchCase="InputType.COMPOSITE" [form]="form" [field]="field" [edit]="edit"
+                [errors]="errors">
+            </app-input-composite>
+            <app-input-popup *ngSwitchCase="InputType.POPUP" [form]="form" [edit]="edit" [errors]="errors">
+            </app-input-popup>
+            <app-input-text *ngSwitchDefault [form]="form" [edit]="edit" [errors]="errors"></app-input-text>
+        </nz-form-control>
+    </nz-form-item>
+    <ng-template #error let-control>
+        <span *ngIf="errors[code].length === 1; else elseBlock" style="padding-left: 12px;">
+            {{errors[code][0]}}
+        </span>
+        <ng-template #elseBlock>
+            <ul style="margin: 0 0 0 -26px">
+                <li *ngFor="let error of errors[code]">{{error}}</li>
+            </ul>
+        </ng-template>
+    </ng-template>
+</ng-container>

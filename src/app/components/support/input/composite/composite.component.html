@@ -1,0 +1,5 @@
+<div *ngIf="field && field.code" style="margin-bottom: -24px;">
+    <app-form-item *ngFor="let subField of field.children" [form]="form[field.code]" [field]="subField"
+        [errors]="compositeErrors">
+    </app-form-item>
+</div>

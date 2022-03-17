@@ -1,0 +1,19 @@
+<ng-container [ngSwitch]="button.type">
+    <ng-container *ngSwitchCase="'link'">
+        <a *ngIf="isVisible()" nz-button nzType="link" [nzDanger]="button.danger" (click)="action.emit()"
+            [disabled]="isReadonly()">
+            {{render()}}
+        </a>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+        <button *ngIf="isVisible()" nz-button [nzType]="getType()" [nzDanger]="button.danger" (click)="action.emit()"
+            [disabled]="isReadonly()" [nzShape]="button.icon ? 'circle' : null" [nzLoading]="button.loading">
+            <ng-container *ngIf="button.icon; else elseBlock">
+                <i nz-icon [nzType]="button.icon"></i>
+            </ng-container>
+            <ng-template #elseBlock>
+                {{render()}}
+            </ng-template>
+        </button>
+    </ng-container>
+</ng-container>

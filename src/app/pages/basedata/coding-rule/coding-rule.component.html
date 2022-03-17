@@ -1,0 +1,6 @@
+<app-list #listComponent title="编码规则列表" [fields]="fields" [listData]="listData" [sortData]="sortData"
+    (sortChange)="list()" [toolbar]="listToolbar" [action]="listAction" [sequenceChangeable]="sequenceChangeable"
+    (sequenceChange)="sort()">
+</app-list>
+<app-edit #editComponent title="编码规则编辑" [fields]="fields" [form]="editForm" [toolbar]="editToolbar" [errors]="errors">
+</app-edit>

@@ -1,0 +1,14 @@
+<div *ngIf="edit.code" class="image-data-ct" [style.width]="width" [style.height]="height" (click)="choose()">
+    <div [style.width]="imageCtWidth" [style.lineHeight]="imageCtHeight">
+        <ng-container *ngIf="!form[edit.code]">
+            <i nz-icon nzType="plus"></i>
+            <input #file style="display: none;" type="file" accept="image/*" (change)="modelChange($event)">
+        </ng-container>
+        <img #image *ngIf="form[edit.code]" [src]="form[edit.code]" alt="" />
+        <div *ngIf="form[edit.code]" class="image-operation-mask"></div>
+        <div class="image-operation-ct">
+            <div><i (click)="view()" nz-icon nzType="eye" nzTheme="outline"></i></div>
+            <div><i (click)="delete()" nz-icon nzType="delete" nzTheme="outline"></i></div>
+        </div>
+    </div>
+</div>

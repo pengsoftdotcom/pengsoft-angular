@@ -1,0 +1,17 @@
+<div [id]="edit.code">
+    <nz-upload *ngIf="edit.code" [id]="edit.code" [nzAction]="path" [nzHeaders]="headers" nzName="file"
+        nzListType="picture-card" [nzShowUploadList]="false" [nzSize]="1024 * 3" (nzChange)="modelChange($event)"
+        [style.marginBottom]="'-8px'" [nzDisabled]="readonly" nzAccept="image/*">
+        <ng-container *ngIf="!form[edit.code]">
+            <i nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+        </ng-container>
+        <img *ngIf="thumbnail" [src]="thumbnail" alt="" />
+        <div *ngIf="form[edit.code]" class="image-operation-mask" [style.width]="(imageWidth+ 2) + 'px'"
+            [style.height]="(imageHeight + 2) + 'px'"></div>
+        <div *ngIf="form[edit.code]" class="image-operation-ct" [style.width]="(imageWidth + 2) + 'px'"
+            [style.height]="(imageHeight + 2) + 'px'" [style.lineHeight]="(imageHeight + 2) + 'px'">
+            <div><i (click)="view()" nz-icon nzType="eye" nzTheme="outline"></i></div>
+            <div><i (click)="delete()" nz-icon nzType="delete" nzTheme="outline"></i></div>
+        </div>
+    </nz-upload>
+</div>

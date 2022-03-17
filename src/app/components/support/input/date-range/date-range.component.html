@@ -1,0 +1,9 @@
+<nz-range-picker [(ngModel)]="rawValue" (ngModelChange)="modelChange($event)" [nzDisabled]="readonly"></nz-range-picker>
+<div *ngIf="errors[startDate]" class="ant-form-item-explain ant-form-item-explain-error ng-star-inserted"
+    style="position: absolute;">
+    <div class="ng-trigger ng-trigger-helpMotion">
+        <span style="padding-left: 12px;" class="ng-star-inserted">
+            {{errors[startDate]}}
+        </span>
+    </div>
+</div>

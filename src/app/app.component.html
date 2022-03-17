@@ -1,0 +1,134 @@
+<nz-layout class="app-layout">
+    <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+        [nzTrigger]="null">
+        <div class="sidebar-logo">
+            <a routerLink="/dashboard">
+                <img src="/assets/logo.png" alt="logo">
+                <h1>Pengsoft.com</h1>
+            </a>
+        </div>
+        <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+            <ng-container *ngFor="let menu of menus">
+                <ng-container *ngIf="!menu.children; else elseBlock">
+                    <li nz-menu-item [hasAnyAuthority]="getMenuAuthority(menu)" [title]="menu.data.exclusive"
+                        [nzMatchRouter]="true" [routerLink]="menu.path">
+                        <i nz-icon [nzType]="menu.data.icon"></i><span>{{menu.data.name}}</span>
+                    </li>
+                </ng-container>
+                <ng-template #elseBlock>
+                    <li nz-submenu [hasAnyAuthority]="getMenuAuthority(menu)" [title]="menu.data.exclusive"
+                        [nzTitle]="menu.data.name" [nzIcon]="menu.data.icon" [nzOpen]="isMenuOpen(menu)">
+                        <ul>
+                            <ng-container *ngFor="let submenu of menu.children">
+                                <ng-container *ngIf="!!submenu.children; else submenuElseBlock">
+                                    <li nz-submenu [hasAnyAuthority]="getMenuAuthority(submenu)"
+                                        [title]="submenu.data.exclusive" [nzTitle]="submenu.data.name"
+                                        [nzIcon]="submenu.data.icon" [nzOpen]="isMenuOpen(submenu)">
+                                        <ul>
+                                            <li *ngFor="let subSubmenu of submenu.children" nz-menu-item
+                                                [hasAnyAuthority]="subSubmenu.data?.code"
+                                                [title]="subSubmenu.data.exclusive" [nzMatchRouter]="true"
+                                                [routerLink]="'/' + menu.path + '/' + (submenu.path ? submenu.path +  '/' : '') + subSubmenu.path">
+                                                {{subSubmenu.data.name}}
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ng-container>
+                                <ng-template #submenuElseBlock>
+                                    <li nz-menu-item [hasAnyAuthority]="submenu.data?.code"
+                                        [title]="submenu.data.exclusive" [nzMatchRouter]="true"
+                                        [routerLink]="'/' + menu.path + '/' + submenu.path">
+                                        {{submenu.data.name}}
+                                    </li>
+                                </ng-template>
+                            </ng-container>
+                        </ul>
+                    </li>
+                </ng-template>
+            </ng-container>
+        </ul>
+    </nz-sider>
+    <nz-layout>
+        <nz-header>
+            <div class="app-header">
+                <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+                    <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+                </span>
+                <span class="header-person" nz-dropdown [nzDropdownMenu]="person" nzTrigger="click">
+                    <ng-container *ngTemplateOutlet="avatarTemplate">
+                    </ng-container>
+                </span>
+                <nz-dropdown-menu #person>
+                    <ul nz-menu class="person">
+                        <li class="name">
+                            {{name}}
+                            <span style="display: inline;">
+                                {{userDetails?.primaryRole ? userDetails?.primaryRole.name :
+                                userDetails?.primaryJob?.name}}
+                            </span>
+                            <span *ngIf="userDetails?.primaryJob">
+                                {{userDetails?.primaryOrganization?.name}} -
+                                {{userDetails?.primaryDepartment?.name}}
+                            </span>
+                        </li>
+                        <li nz-menu-divider></li>
+                        <li class="menu">
+                            <a nz-button nzType="link" (click)="editPerson()" [disabled]="!userDetails?.person"
+                                [style.pointerEvents]="userDetails?.person ? 'all' : 'none'">基本资料</a>
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <ng-container *ngIf="switchJobVisible">
+                                <a nz-button nzType="link" (click)="switchJob()" [disabled]="switchJobReadonly"
+                                    [style.pointerEvents]="switchJobReadonly ? 'none' : 'all'">切换职位</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                            </ng-container>
+                            <ng-container *ngIf="switchRoleVisible">
+                                <a nz-button nzType="link" (click)="switchRole()" [disabled]="switchRoleReadonly"
+                                    [style.pointerEvents]="switchRoleReadonly ? 'none' : 'all'">切换角色</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                            </ng-container>
+                            <a nz-button nzType="link" (click)="changePassword()">修改密码</a>
+                        </li>
+                        <li nz-menu-divider></li>
+                        <li nz-menu-item class="sign-out" (click)="signOut()">退出登录</li>
+                    </ul>
+                </nz-dropdown-menu>
+            </div>
+        </nz-header>
+        <nz-content>
+            <div class="inner-content">
+                <router-outlet></router-outlet>
+            </div>
+        </nz-content>
+        <nz-footer>Copyright ©2022 Pengsoft Inc. All rights reserved.</nz-footer>
+    </nz-layout>
+</nz-layout>
+<ng-template #avatarTemplate>
+    <ng-container *ngIf="userDetails?.person?.avatar?.accessPath; else elseBlock">
+        <nz-avatar [nzSize]="28" [nzSrc]="userDetails?.person?.avatar?.accessPath"></nz-avatar>
+    </ng-container>
+    <ng-template #elseBlock>
+        <nz-avatar [nzSize]="28" nzIcon="user" style="background-color:#1890ff;"></nz-avatar>
+    </ng-template>
+</ng-template>
+<ng-template #jobsTemplate>
+    <nz-radio-group [(ngModel)]="userDetails.primaryJob.id" (ngModelChange)="jobSwitched()">
+        <label *ngFor="let job of userDetails.jobs" nz-radio [nzValue]="job.id">
+            {{job.organization.name}} -
+            {{job.department.name}} -
+            {{job.name}}
+        </label>
+    </nz-radio-group>
+</ng-template>
+<ng-template #rolesTemplate>
+    <nz-radio-group [(ngModel)]="userDetails.primaryRole.id" (ngModelChange)="roleSwitched()">
+        <label *ngFor="let role of userDetails.roles" nz-radio [nzValue]="role.id">{{role.name}}</label>
+    </nz-radio-group>
+</ng-template>
+<ng-template #editPersonTemplate>
+    <div nz-row>
+        <div nz-col nzSpan="24" *ngFor="let field of personFields">
+            <app-form-item [form]="userDetails.person" [field]="field" [errors]="errors">
+            </app-form-item>
+        </div>
+    </div>
+</ng-template>

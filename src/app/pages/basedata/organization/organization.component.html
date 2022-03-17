@@ -1,0 +1,11 @@
+<app-list #listComponent title="机构列表" [fields]="fields" [listData]="listData" [pageData]="pageData"
+    [toolbar]="listToolbar" [action]="listAction" (pageChange)="list()"></app-list>
+<app-edit #editComponent title="机构编辑" [fields]="fields" [form]="editForm" [toolbar]="editToolbar" [errors]="errors">
+</app-edit>
+<app-authentication #authenticationComponent title="认证"></app-authentication>
+<app-legal-representative #legalRepresentativeComponent></app-legal-representative>
+<app-business-license #businessLicenseComponent></app-business-license>
+<app-organization-admin #organizationAdminComponent></app-organization-admin>
+<app-edit-one-to-many #ranksComponent></app-edit-one-to-many>
+<app-edit-one-to-many #postsComponent></app-edit-one-to-many>
+<app-edit-one-to-many #departmentsComponent></app-edit-one-to-many>

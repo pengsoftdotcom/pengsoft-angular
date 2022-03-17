@@ -1,0 +1,33 @@
+nz-upload:hover .image-operation-mask {
+    display: block;
+}
+
+nz-upload:hover .image-operation-ct {
+    display: flex;
+}
+
+.image-operation-mask {
+    position: absolute;
+    display: none;
+    top: 1px;
+    left: 1px;
+    background-color: #000000;
+    opacity: 0.3;
+}
+
+.image-operation-ct {
+    position: absolute;
+    display: none;
+    top: 1px;
+    left: 1px;
+    div {
+        width: calc(50% - 1px);
+        i {
+            color: #ffffff;
+        }
+    }
+    > :last-child {
+        border-left: 1px solid #ffffff;
+        margin-left: 1px;
+    }
+}

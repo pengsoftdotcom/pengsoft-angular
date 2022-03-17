@@ -1,0 +1,5 @@
+<nz-input-number *ngIf="edit.code" [(ngModel)]="form[edit.code]" (ngModelChange)="modelChange($event)"
+    [nzPlaceHolder]="placeholder" [nzInputMode]="edit.input && edit.input.mode ? edit.input.mode : 'numeric'"
+    [disabled]="readonly" [nzMin]="edit.input && edit.input.min ? edit.input.min : MIN"
+    [nzMax]="edit.input && edit.input.max ? edit.input.max : MAX">
+</nz-input-number>

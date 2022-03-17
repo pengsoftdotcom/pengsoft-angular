@@ -1,0 +1,4 @@
+<app-list #listComponent title="站内消息列表" [fields]="fields" [listData]="listData" [pageData]="pageData"
+    [toolbar]="listToolbar" [action]="listAction" (pageChange)="list()" [nav]="nav"></app-list>
+<app-edit #editComponent title="站内消息编辑" [fields]="fields" [form]="editForm" [toolbar]="editToolbar" [errors]="errors">
+</app-edit>

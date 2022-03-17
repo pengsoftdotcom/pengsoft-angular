@@ -1,0 +1,7 @@
+<ng-template #selectComponent>
+    <app-list #listComponent title="" [fields]="fields" [listData]="listData" [pageData]="pageData"
+        [toolbar]="listToolbar" [action]="listAction" (pageChange)="list()"></app-list>
+</ng-template>
+<app-edit #editComponent title="设置法人代表" [fields]="fields" [form]="editForm" [toolbar]="editToolbar" [errors]="errors"
+    [level]="2" [column]="2">
+</app-edit>

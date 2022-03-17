@@ -1,0 +1,21 @@
+export enum InputType {
+    TEXT,
+    TEXTAREA,
+    NUMBER,
+    PASSWORD,
+    SELECT,
+    TREE_SELECT,
+    CASCADER,
+    DATETIME,
+    DATE,
+    DATE_RANGE,
+    BOOLEAN,
+    UPLOAD,
+    IMAGE,
+    IMAGE_DATA,
+    JSON,
+    CAPTCHA,
+    COMPOSITE,
+    HIDDEN,
+    POPUP
+}

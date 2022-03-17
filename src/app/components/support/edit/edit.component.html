@@ -1,0 +1,53 @@
+<ng-template #content>
+    <nz-spin [nzSpinning]="loading">
+        <div class="edit" [ngSwitch]="level">
+            <form nz-form [style.height]="formHeight + 'px'" [style.paddingTop]="level === 3 ? '0' : '24px'">
+                <ng-container *ngSwitchCase="3">
+                    <nz-tabset [nzTabBarStyle]="{marginBottom: '24px'}">
+                        <ng-container *ngFor="let field of fields">
+                            <nz-tab *ngIf="field.edit?.visible" [nzTitle]="field.name ? field.name : ''">
+                                <ng-container *ngFor="let subField of field.children" [ngTemplateOutlet]="level2"
+                                    [ngTemplateOutletContext]="{field: subField, form: form}">
+                                </ng-container>
+                            </nz-tab>
+                        </ng-container>
+                    </nz-tabset>
+                </ng-container>
+                <ng-container *ngSwitchCase="2">
+                    <ng-container *ngFor="let field of fields" [ngTemplateOutlet]="level2"
+                        [ngTemplateOutletContext]="{field: field, form: form}"></ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="1">
+                    <div nz-row>
+                        <ng-container *ngFor="let field of fields" [ngTemplateOutlet]="level1"
+                            [ngTemplateOutletContext]="{field: field, form: form}"></ng-container>
+                    </div>
+                </ng-container>
+            </form>
+            <div class="toolbar">
+                <nz-space>
+                    <ng-container *ngFor="let button of toolbar">
+                        <app-button *nzSpaceItem [button]="button" [hasAnyAuthority]="button.authority" [form]="form"
+                            (action)="button.action && button.action()">
+                        </app-button>
+                    </ng-container>
+                </nz-space>
+            </div>
+        </div>
+    </nz-spin>
+</ng-template>
+
+<ng-template #level2 let-field="field" let-form="form">
+    <div *ngIf="field.edit.visible" class="title">{{field.name}}</div>
+    <div nz-row>
+        <ng-container *ngFor="let subField of field.children" [ngTemplateOutlet]="level1"
+            [ngTemplateOutletContext]="{field: subField, form: getForm(field, form)}">
+        </ng-container>
+    </div>
+</ng-template>
+
+<ng-template #level1 let-field="field" let-form="form">
+    <app-form-item nz-col [nzSpan]="24 / (field.edit.column ? field.edit.column : column)" [column]="column"
+        [labelSpan]="labelSpan" [inputSpan]="inputSpan" [field]="field" [form]="form" [errors]="errors">
+    </app-form-item>
+</ng-template>

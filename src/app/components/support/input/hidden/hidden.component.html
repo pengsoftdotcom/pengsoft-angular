@@ -1,0 +1,2 @@
+<input *ngIf="edit.code" type="hidden" [(ngModel)]="form[edit.code]" (ngModelChange)="modelChange($event)"
+    [placeholder]="placeholder" [disabled]="readonly">

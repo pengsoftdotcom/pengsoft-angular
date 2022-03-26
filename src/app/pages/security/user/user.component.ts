@@ -81,9 +81,9 @@ export class UserComponent extends EntityComponent<UserService> {
                 },
                 filter: { label: { tooltip: '' } }
             }),
-            FieldUtils.buildNumber({ code: 'mobile', name: '手机号码', edit: { input: { mode: 'tel' }, readonly: (form: any) => !!form.id } }),
-            FieldUtils.buildText({ code: 'email', name: '邮件', edit: { readonly: (form: any) => !!form.id } }),
-            FieldUtils.buildText({ code: 'weixinMpOpenId', name: '微信公众号Open ID', edit: { readonly: (form: any) => !!form.id } }),
+            FieldUtils.buildNumber({ code: 'mobile', name: '手机号码', edit: { input: { mode: 'tel' }, readonly: (form: any) => !!form.id }, list: { visible: false } }),
+            FieldUtils.buildText({ code: 'email', name: '邮件', edit: { readonly: (form: any) => !!form.id }, list: { visible: false } }),
+            FieldUtils.buildText({ code: 'mpOpenid', name: '微信Open ID', edit: { readonly: (form: any) => !!form.id }, list: { visible: false } }),
             FieldUtils.buildPassword({
                 code: 'password', name: '密码',
                 edit: {

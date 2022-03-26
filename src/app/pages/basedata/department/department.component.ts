@@ -32,7 +32,7 @@ export class DepartmentComponent extends TreeEntityComponent<DepartmentService> 
 
     @ViewChild('jobsComponent', { static: true }) jobsComponent!: EditOneToManyComponent;
 
-    @ViewChild('staffComponent', { static: true }) staffComponent!: EditOneToManyComponent;
+    @ViewChild('staffsComponent', { static: true }) staffsComponent!: EditOneToManyComponent;
 
     organization: any;
 
@@ -120,10 +120,10 @@ export class DepartmentComponent extends TreeEntityComponent<DepartmentService> 
     }
 
     editStaff(department: any): void {
-        this.staffComponent.component = StaffComponent;
-        this.staffComponent.width = '70%';
-        this.staffComponent.params = { title: department.name, department, allowLoadNavData: false, child: true };
-        this.staffComponent.show();
+        this.staffsComponent.component = StaffComponent;
+        this.staffsComponent.width = '70%';
+        this.staffsComponent.params = { title: department.name, department, allowLoadNavData: false, child: true };
+        this.staffsComponent.show();
     }
 
     override afterEdit(): void {

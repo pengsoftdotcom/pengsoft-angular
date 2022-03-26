@@ -107,7 +107,7 @@ export class BusinessLicenseComponent extends EntityComponent<BusinessLicenseSer
     override initEditToolbar(): Button[] {
         return [
             { name: '保存', type: 'primary', size: 'default', action: () => this.setBusinessLicense(JSON.parse(JSON.stringify(this.editForm))), authority: 'basedata::organization::set_admin' },
-            { name: '删除', type: 'primary', danger: true, size: 'default', isReadonly: form => !form.id, action: () => this.setBusinessLicense(null), authority: 'basedata::organization::set_admin' }
+            { name: '删除', type: 'primary', danger: true, size: 'default', isDisabled: row => !row.id, action: () => this.setBusinessLicense(null), authority: 'basedata::organization::set_admin' }
         ];
     }
 

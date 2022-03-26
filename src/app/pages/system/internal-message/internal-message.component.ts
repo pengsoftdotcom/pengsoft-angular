@@ -37,35 +37,13 @@ export class InternalMessageComponent extends EntityComponent<InternalMessageSer
 
     initFields(): Field[] {
         return [
-            FieldUtils.buildText({ code: 'subject', name: '主题' })
+            FieldUtils.buildSelect({ code: 'sender', name: '发件人', list: { width: 150, align: 'center', render: (field: Field, row: any) => row.sender.username } }),
+            FieldUtils.buildSelect({ code: 'receiver', name: '收件人', list: { width: 150, align: 'center', render: (field: Field, row: any) => row.receiver.username } }),
+            FieldUtils.buildText({ code: 'subject', name: '主题' }),
+            FieldUtils.buildTextarea({ code: 'content', name: '内容' }),
+            FieldUtils.buildDatetime({ code: 'sentAt', name: '发送时间' }),
+            FieldUtils.buildDatetime({ code: 'readAt', name: '阅读时间' })
         ];
-    }
-
-    override initNav(): Nav {
-        return {
-            showExpand: false,
-            data: [{
-                key: '收件箱',
-                title: '收件箱',
-                icon: 'inbox',
-                isLeaf: true
-            }, {
-                key: '草稿',
-                title: '草稿',
-                icon: 'file',
-                isLeaf: true
-            }, {
-                key: '已发送',
-                title: '已发送',
-                icon: 'send',
-                isLeaf: true
-            }, {
-                key: '垃圾箱',
-                title: '垃圾箱',
-                icon: 'delete',
-                isLeaf: true
-            }]
-        }
     }
 
 }

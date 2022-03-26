@@ -9,6 +9,7 @@ import { InternalMessageComponent } from './internal-message/internal-message.co
 import { PushMessageComponent } from './push-message/push-message.component';
 import { RegionComponent } from './region/region.component';
 import { SmsMessageComponent } from './sms-message/sms-message.component';
+import { SubscribeMessageComponent } from './subscribe-message/subscribe-message.component';
 
 const routes: Routes = [
     {
@@ -16,13 +17,14 @@ const routes: Routes = [
         data: { name: '系统设置', icon: 'setting' },
         children: [
             {
-                path: '', data: { name: '消息', path: 'message' },
+                path: '', data: { name: '消息管理', path: 'message' },
                 children: [
                     { path: 'composite-message-template', component: CompositeMessageTemplateComponent, data: { code: 'system::composite_message_template::find_page', name: '消息模版' } },
                     { path: 'internal-message', component: InternalMessageComponent, data: { code: 'system::internal_message::find_page', name: '站内消息' } },
                     { path: 'push-message', component: PushMessageComponent, data: { code: 'system::push_message::find_page', name: '推送消息' } },
                     { path: 'sms-message', component: SmsMessageComponent, data: { code: 'system::sms_message::find_page', name: '短信消息' } },
-                    { path: 'email-message', component: EmailMessageComponent, data: { code: 'system::email_message::find_page', name: '邮件消息' } }
+                    { path: 'email-message', component: EmailMessageComponent, data: { code: 'system::email_message::find_page', name: '邮件消息' } },
+                    { path: 'subscribe-message', component: SubscribeMessageComponent, data: { code: 'system::subscribe_message::find_page', name: '订阅消息' } }
 
                 ]
             },

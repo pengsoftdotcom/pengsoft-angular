@@ -9,6 +9,10 @@ import { StaffComponent } from './staff.component';
 })
 export class StaffPopupComponent extends StaffComponent {
 
+    multiple = false;
+
+    params: any;
+
     override initListToolbar(): Button[] {
         return [
             { name: '刷新', icon: 'reload', action: () => this.list(), authority: this.getAuthority('findPage') + ', ' + this.getAuthority('findAll') },
@@ -20,11 +24,25 @@ export class StaffPopupComponent extends StaffComponent {
     }
 
     override initListAction(): Button[] {
-        return [{ name: '选择', type: 'link', width: 30, action: (row: any) => this.select(row) }]
+        return this.multiple ? [] : [{ name: '选择', type: 'link', width: 30, action: (row: any) => this.select(row) }];
     }
 
-    select(row: any) {
+    select(row: any, listData?: any[]) {
         // 
+    }
+
+    override list(): void {
+        this.entity.findPage(Object.assign(this.filterForm, this.params), this.pageData, {
+            before: () => this.getListComponent().loading = true,
+            success: (res: any) => {
+                this.listData = res.content;
+                this.pageData.total = res.totalElements;
+            },
+            after: () => {
+                this.getListComponent().loading = false;
+                this.uncheckAll();
+            }
+        });
     }
 
 }

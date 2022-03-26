@@ -31,9 +31,9 @@ export class ButtonComponent extends BaseComponent implements OnInit {
         }
     }
 
-    isReadonly(): boolean {
-        if (this.button.isReadonly) {
-            return this.button.isReadonly(this.form);
+    isDisabled(): boolean {
+        if (this.button.isDisabled) {
+            return this.button.isDisabled(this.form);
         } else {
             return false;
         }

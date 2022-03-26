@@ -12,6 +12,7 @@ import { CompositeMessageTemplateComponent } from './composite-message-template/
 import { PushMessageComponent } from './push-message/push-message.component';
 import { SmsMessageComponent } from './sms-message/sms-message.component';
 import { EmailMessageComponent } from './email-message/email-message.component';
+import { SubscribeMessageComponent } from './subscribe-message/subscribe-message.component';
 
 
 
@@ -26,7 +27,8 @@ import { EmailMessageComponent } from './email-message/email-message.component';
         CompositeMessageTemplateComponent,
         PushMessageComponent,
         SmsMessageComponent,
-        EmailMessageComponent
+        EmailMessageComponent,
+        SubscribeMessageComponent
     ],
     imports: [
         CommonModule,

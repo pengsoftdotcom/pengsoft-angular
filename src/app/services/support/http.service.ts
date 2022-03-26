@@ -83,7 +83,16 @@ export class HttpService {
                     this.message.error('请求的资源不存在或已删除');
                     break;
                 case 422:
-                    Object.assign(options.errors, err.error);
+                    if (!options.errors) {
+                        for (const key in err.error) {
+                            if (Object.prototype.hasOwnProperty.call(err.error, key)) {
+                                const value = err.error[key];
+                                this.message.error(value);
+                            }
+                        }
+                    } else {
+                        Object.assign(options.errors, err.error);
+                    }
                     break;
                 case 500:
                     this.message.error(err.error && err.error.error_description ? err.error.error_description : '服务器发生了一个意外的错误，如再次遇到，请联系管理员');

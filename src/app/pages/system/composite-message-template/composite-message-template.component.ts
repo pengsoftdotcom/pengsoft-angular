@@ -34,6 +34,11 @@ export class CompositeMessageTemplateComponent extends EntityComponent<Composite
         super(entity, security, modal, message);
     }
 
+    override ngOnInit(): void {
+        super.ngOnInit();
+        this.editComponent.width = '40%';
+    }
+
     initFields(): Field[] {
         return [
             FieldUtils.buildTextForCode(),
@@ -55,13 +60,23 @@ export class CompositeMessageTemplateComponent extends EntityComponent<Composite
             FieldUtils.buildText({
                 code: 'sms', name: '短信消息', list: { visible: false, childrenVisible: false }, children: [
                     FieldUtils.buildText({ code: 'signName', name: '签名', edit: { required: true } }),
-                    FieldUtils.buildText({ code: 'templateCode', name: '模版编码', edit: { required: true } }),
+                    FieldUtils.buildText({ code: 'templateCode', name: '模版', edit: { required: true } }),
                     FieldUtils.buildTextarea({ code: 'content', name: '内容', edit: { required: true } }),
                     FieldUtils.buildDatetime({ code: 'sentAt', name: '发送时间' })
                 ]
             }),
             FieldUtils.buildText({
                 code: 'email', name: '邮件消息', list: { visible: false, childrenVisible: false }, children: [
+                    FieldUtils.buildText({ code: 'subject', name: '主题', edit: { required: true } }),
+                    FieldUtils.buildTextarea({ code: 'content', name: '内容', edit: { required: true } }),
+                    FieldUtils.buildDatetime({ code: 'sentAt', name: '发送时间' })
+                ]
+            }),
+            FieldUtils.buildText({
+                code: 'subscribe', name: '订阅消息', list: { visible: false, childrenVisible: false }, children: [
+                    FieldUtils.buildText({ code: 'appid', name: 'APP ID', edit: { required: true } }),
+                    FieldUtils.buildText({ code: 'templateId', name: '模版', edit: { required: true } }),
+                    FieldUtils.buildText({ code: 'page', name: '页面' }),
                     FieldUtils.buildText({ code: 'subject', name: '标题', edit: { required: true } }),
                     FieldUtils.buildTextarea({ code: 'content', name: '内容', edit: { required: true } }),
                     FieldUtils.buildDatetime({ code: 'sentAt', name: '发送时间' })
@@ -83,6 +98,9 @@ export class CompositeMessageTemplateComponent extends EntityComponent<Composite
         if (!this.editForm.email) {
             this.editForm.email = {};
         }
+        if (!this.editForm.subscribe) {
+            this.editForm.subscribe = {};
+        }
     }
 
 
@@ -99,6 +117,9 @@ export class CompositeMessageTemplateComponent extends EntityComponent<Composite
         }
         if (JSON.stringify(form.email) === '{}') {
             delete form.email;
+        }
+        if (JSON.stringify(form.subscribe) === '{}') {
+            delete form.subscribe;
         }
         return form;
     }

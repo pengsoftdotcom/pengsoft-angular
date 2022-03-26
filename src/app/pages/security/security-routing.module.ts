@@ -7,7 +7,7 @@ import { UserComponent } from './user/user.component';
 const routes: Routes = [
     {
         path: 'security',
-        data: { name: '权限设置', icon: 'safety' },
+        data: { name: '权限设置', icon: 'key' },
         children: [
             { path: 'user', component: UserComponent, data: { code: 'security::user::find_page', name: '用户' } },
             { path: 'role', component: RoleComponent, data: { code: 'security::role::find_page', name: '角色' } },

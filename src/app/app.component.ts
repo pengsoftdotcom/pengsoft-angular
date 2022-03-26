@@ -140,7 +140,7 @@ export class AppComponent {
     switchJob(): void {
         this.switchJobModal = this.modal.create({
             nzStyle: { top: '30%' },
-            nzWidth: 500,
+            nzWidth: 630,
             nzTitle: '切换职位',
             nzContent: this.jobsTemplate,
             nzFooter: null,

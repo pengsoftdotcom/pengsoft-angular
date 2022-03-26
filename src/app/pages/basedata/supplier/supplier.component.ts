@@ -79,7 +79,7 @@ export class SupplierComponent extends EntityComponent<SupplierConsumerService> 
         }
         buttons.forEach(button => {
             if (button.name === '新增') {
-                button.isReadonly = () => !this.consumer;
+                button.isDisabled = () => !this.consumer;
             }
         })
         return buttons;

@@ -65,7 +65,7 @@
                                     (ngModelChange)="row.dirty = true" [style.width]="'65px'">
                                 </nz-input-number>
                             </td>
-                            <td *ngIf="action.length > 0">
+                            <td *ngIf="action.length > 0" nzAlign="center">
                                 <ng-container *ngFor="let button of action; let i = index">
                                     <ng-container *ngIf="button.children">
                                         <a nz-dropdown [nzDropdownMenu]="menu" [nzDisabled]="isReadonly(button, row)">
@@ -87,7 +87,8 @@
                                             [ngTemplateOutletContext]="{button: button, form: row}">
                                         </ng-container>
                                     </ng-container>
-                                    <nz-divider *ngIf="i + 1 < action.length" nzType="vertical"></nz-divider>
+                                    <nz-divider *ngIf="isButtonVisible(button, row) && i + 1 < action.length"
+                                        [hasAnyAuthority]="button.authority" nzType="vertical"></nz-divider>
                                 </ng-container>
                             </td>
                         </tr>

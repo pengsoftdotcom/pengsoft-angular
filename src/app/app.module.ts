@@ -28,11 +28,10 @@ import { SecurityModule } from './pages/security/security.module';
 import { DashboardComponent } from './pages/shared/dashboard/dashboard.component';
 import { FullScreenForgetPasswordComponent } from './pages/shared/forget-password/forget-password.component';
 import { FullScreenSignInComponent } from './pages/shared/sign-in/sign-in.component';
+import { SsModule } from './pages/ss/ss.module';
 import { SystemModule } from './pages/system/system.module';
 
-
 registerLocaleData(zh);
-
 @NgModule({
     declarations: [
         AppComponent,
@@ -58,6 +57,7 @@ registerLocaleData(zh);
         ComponentModule,
         DirectiveModule,
         IconsProviderModule,
+        SsModule,
         OaModule,
         AcsModule,
         IotModule,

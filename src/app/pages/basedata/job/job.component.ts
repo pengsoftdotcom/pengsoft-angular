@@ -85,10 +85,17 @@ export class JobComponent extends TreeEntityComponent<JobService> implements OnI
         };
         this.departmentService.findAll({ 'organization.id': this.organization.id }, [], {
             success: (res: any) => {
-                nav.data = EntityUtils.convertListToTree(res);
+                nav.data = EntityUtils.convertListToTree(res, (entity: any) => Object.assign({
+                    title: entity.shortName,
+                    value: entity,
+                    key: entity.id,
+                    isLeaf: entity.leaf,
+                    expanded: true,
+                    children: entity.children
+                }));
                 nav.data = [{
                     key: this.organization.id,
-                    title: this.organization.name,
+                    title: this.organization.shortName,
                     value: this.organization,
                     isLeaf: !nav.data || nav.data.length === 0,
                     expanded: true,
@@ -142,7 +149,7 @@ export class JobComponent extends TreeEntityComponent<JobService> implements OnI
         const buttons = super.initListToolbar();
         const button = buttons.find((btn: any) => btn.name === '新增');
         if (button) {
-            button.isReadonly = () => !this.department;
+            button.isDisabled = () => !this.department;
         }
         if (!this.child) {
             buttons.splice(0, 0, {
@@ -208,7 +215,7 @@ export class JobComponent extends TreeEntityComponent<JobService> implements OnI
                         this.jobRolesComponent.targetKeys = userRoles.map((userRole: any) => userRole.role.id);
                         this.jobRolesComponent.treeData = EntityUtils.convertListToTree(roles, (entity: any) => {
                             const node = EntityUtils.convertTreeEntityToTreeNode(entity);
-                            node.expanded = true;
+                            node.expanded = false;
                             node.disabled = userRoles.some((userRole: any) => userRole.role.id === node.key);
                             node.checked = node.disabled;
                             return node;

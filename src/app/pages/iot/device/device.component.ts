@@ -15,6 +15,7 @@ import { EntityUtils } from 'src/app/utils/entity-utils';
 import { FieldUtils } from 'src/app/utils/field-utils';
 import { ProductPopupComponent } from '../product/product-popup.component';
 import { Option } from 'src/app/components/support/input/tree-select/option';
+import { Button } from 'src/app/components/support/button/button';
 
 @Component({
     selector: 'app-device',
@@ -57,7 +58,8 @@ export class DeviceComponent extends EntityComponent<DeviceService> {
                             }
                         }
                     }
-                }
+                },
+                list: { visible: false }
             }),
             FieldUtils.buildPopup({
                 code: 'product', name: '产品',
@@ -86,6 +88,16 @@ export class DeviceComponent extends EntityComponent<DeviceService> {
         return nav;
     }
 
+    override initListToolbar(): Button[] {
+        const buttons = super.initListToolbar();
+        buttons.forEach((button: Button) => {
+            if (button.name === '新增') {
+                button.isDisabled = () => this.group
+            }
+        });
+        return buttons;
+    }
+
     navChange(event: NzFormatEmitEvent): void {
         if (event.node?.origin.selected) {
             this.group = event.node.origin['value'];
@@ -98,52 +110,7 @@ export class DeviceComponent extends EntityComponent<DeviceService> {
     }
 
     override afterEdit(): void {
-        this.editForm.group = this.group;
-    }
-
-    override edit(row?: any): void {
-        this.beforeEdit();
-        this.getEditComponent().show();
-        const id = row ? row.id : null;
-        if (this.entity) {
-            this.entity.findOneWithGroups(id, {
-                before: () => this.getEditComponent().loading = true,
-                success: res => this.editForm = res,
-                after: () => {
-                    this.getEditComponent().loading = false;
-                    this.afterEdit();
-                }
-            });
-        }
-    }
-
-    override list(): void {
-        if (this.pageData) {
-            this.entity.findPageByGroupAndName(this.filterForm['group.id'], this.filterForm['name'], this.pageData, {
-                before: () => this.getListComponent().loading = true,
-                success: (res: any) => {
-                    if (this.getListComponent()) {
-                        this.getListComponent().allChecked = false;
-                        this.getListComponent().indeterminate = false;
-                    }
-                    this.listData = res.content;
-                    this.pageData.total = res.totalElements;
-                },
-                after: () => this.getListComponent().loading = false,
-            });
-        }
-    }
-
-    override save(): void {
-        const form = this.buildEditForm();
-        if (this.entity) {
-            this.entity.saveWithGroups(form, {
-                errors: this.errors,
-                before: () => this.getEditComponent().loading = true,
-                success: (res: any) => this.saveSuccess(res),
-                after: () => this.getEditComponent().loading = false,
-            });
-        }
+        this.editForm.groups = this.group.id;
     }
 
 }

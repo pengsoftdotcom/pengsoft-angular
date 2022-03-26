@@ -1,5 +1,5 @@
 import { Component, OnChanges, SimpleChanges } from '@angular/core';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
 import { InputComponent } from '../input.component';
 
 @Component({
@@ -8,6 +8,10 @@ import { InputComponent } from '../input.component';
     styleUrls: ['./popup.component.scss']
 })
 export class PopupComponent extends InputComponent implements OnChanges {
+
+    multiple = false;
+
+    rowCode = 'name';
 
     constructor(private modal: NzModalService) {
         super();
@@ -28,13 +32,23 @@ export class PopupComponent extends InputComponent implements OnChanges {
         this.rawValue = null;
     }
 
-    popup() {
+    override ngOnInit(): void {
+        super.ngOnInit();
+        if (this.edit.input?.popupComponentParams.multiple) {
+            this.multiple = true;
+        }
+        if (this.edit.input?.popupComponentSelectRowCode) {
+            this.rowCode = this.edit.input?.popupComponentSelectRowCode;
+        }
+    }
+
+    popup(): void {
         if (this.edit.input?.popupComponent) {
-            this.edit.input.popupComponent.prototype.select = (row: any) => {
+            this.edit.input.popupComponent.prototype.select = (row: any, listData: any[]) => {
                 if (this.edit.code) {
                     this.form[this.edit.code] = row;
                     if (this.form[this.edit.code]) {
-                        this.rawValue = this.edit.input?.popupComponentSelectRowCode ? eval('row.' + this.edit.input.popupComponentSelectRowCode) : row.name;
+                        this.rawValue = eval('row.' + this.rowCode);
                     }
                     if (this.edit.input?.popupComponentSelect) {
                         this.edit.input.popupComponentSelect(this, row);
@@ -42,12 +56,23 @@ export class PopupComponent extends InputComponent implements OnChanges {
                 }
                 modalRef.close();
             };
-            const modalRef = this.modal.create({
+            const options: ModalOptions = {
                 nzContent: this.edit.input.popupComponent,
                 nzComponentParams: this.edit.input.popupComponentParams,
                 nzWidth: '80%',
                 nzFooter: null
-            });
+            };
+            if (this.edit.input.popupComponentParams.multiple) {
+                options.nzOnOk = () => {
+                    if (this.edit.code) {
+                        this.form[this.edit.code] = modalRef.getContentComponent().listData.filter((row: any) => row.checked);
+                        this.rawValue = this.form[this.edit.code].map((row: any) => eval('row.' + this.rowCode)).join(', ');
+                    }
+                };
+                delete options.nzFooter;
+            }
+
+            const modalRef = this.modal.create(options);
         }
     }
 

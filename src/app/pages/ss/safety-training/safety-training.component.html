@@ -1,0 +1,5 @@
+<app-list #listComponent title="安全培训列表" [fields]="fields" [listData]="listData" [pageData]="pageData"
+    [toolbar]="listToolbar" [action]="listAction" (pageChange)="list()"></app-list>
+<app-edit #editComponent title="安全培训编辑" [fields]="fields" [form]="editForm" [toolbar]="editToolbar" [errors]="errors">
+</app-edit>
+<app-edit-one-to-many #participants></app-edit-one-to-many>

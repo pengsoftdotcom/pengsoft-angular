@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { Button } from 'src/app/components/support/button/button';
 import { EditComponent } from 'src/app/components/support/edit/edit.component';
 import { EntityComponent } from 'src/app/components/support/entity.component';
 import { Field } from 'src/app/components/support/list/field';
@@ -36,7 +36,15 @@ export class PayrollRecordComponent extends EntityComponent<PayrollRecordService
 
     initFields(): Field[] {
         return [
-            FieldUtils.buildTextForCode(),
+            FieldUtils.buildText({
+                code: 'code', name: '期数',
+                list: {
+                    sortable: true, sortPriority: 1,
+                    render: (field: Field, row: any, sanitizer: DomSanitizer) => sanitizer.bypassSecurityTrustHtml(`<code>${row.code}</code>`)
+                },
+                edit: { required: true, readonly: (row: any) => !!row.id },
+                filter: {}
+            }),
             FieldUtils.buildNumber({ code: 'paidCount', name: '支付人数', edit: { readonly: true } }),
             FieldUtils.buildNumber({ code: 'confirmedCount', name: '确认人数', edit: { readonly: true } }),
             FieldUtils.buildUpload({ code: 'sheet', name: '工资表', edit: { required: true } }, {
@@ -44,30 +52,9 @@ export class PayrollRecordComponent extends EntityComponent<PayrollRecordService
             }),
             FieldUtils.buildUpload({ code: 'signedSheet', name: '工资确认表', edit: { required: true } }, {
                 locked: true, accept: 'image/*'
-            })
+            }),
+            FieldUtils.buildDatetime({ code: 'importedAt', name: '导入时间', edit: { readonly: true } })
         ];
-    }
-
-    override initListToolbar(): Button[] {
-        const listToolbar = super.initListToolbar();
-        listToolbar.forEach((action: Button) => {
-            if (action.name === '新增') {
-                action.name = '发薪'
-            }
-        });
-        return listToolbar;
-    }
-
-
-    override initListAction(): Button[] {
-        const listAction = super.initListAction();
-        listAction.splice(listAction.findIndex((action: Button) => action.name === '修改'), 1);
-        listAction.forEach((action: Button) => {
-            if (action.name === '查看') {
-                delete action.exclusive;
-            }
-        });
-        return listAction;
     }
 
 }

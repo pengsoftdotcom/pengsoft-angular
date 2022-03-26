@@ -43,7 +43,7 @@ export class CaptchaComponent extends EntityComponent<CaptchaService> {
             FieldUtils.buildText({
                 code: 'user', name: '用户',
                 children: UserComponent.prototype.initFields()
-                    .filter(field => field.code && !['username', 'email', 'weixinMpOpenId'].includes(field.code))
+                    .filter(field => field.code && !['username', 'email', 'mpOpenid'].includes(field.code))
                     .map((field: Field) => {
                         if (field.code === 'expiredAt') {
                             delete field.filter;

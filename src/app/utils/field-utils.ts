@@ -460,24 +460,18 @@ export class FieldUtils {
     }
 
     static buildPopupForOrganization(field?: Field) {
-        if (field) {
-            field.list = Object.assign({ render: (f: Field, row: any) => f.code && row[f.code] ? row[f.code].name : '-' }, field.list);
-        }
         return this.buildPopup(this.getField({
             code: 'organization', name: '机构',
             edit: {
                 required: true,
                 input: { popupComponent: OrganizationPopupComponent, popupComponentParams: { title: field?.name ? '选择' + field.name : null } }
             },
-            list: { render: (f: Field, row: any) => f.code && row[f.code] ? row[f.code].name : '-' },
+            list: { render: (f: Field, row: any) => f.code && row[f.code] ? row[f.code].shortName : '-' },
             filter: {}
         }, field ? field : {}));
     }
 
     static buildPopupForStaff(field?: Field): Field {
-        if (field) {
-            field.list = Object.assign({ render: (f: Field, row: any) => f.code && row[f.code] ? row[f.code].name : '-' }, field.list);
-        }
         return this.buildPopup(this.getField({
             code: 'staff', name: '员工',
             edit: { required: true, input: { popupComponent: StaffPopupComponent, popupComponentParams: { title: field?.name ? '选择' + field.name : null }, popupComponentSelectRowCode: 'person.name' } },
@@ -487,9 +481,6 @@ export class FieldUtils {
     }
 
     static buildPopupForPerson(field?: Field): Field {
-        if (field) {
-            field.list = Object.assign({ render: (f: Field, row: any) => f.code && row[f.code] ? row[f.code].name : '-' }, field.list);
-        }
         return this.buildPopup(this.getField({
             code: 'person', name: '人员',
             edit: { required: true, input: { popupComponent: PersonPopupComponent, popupComponentParams: { title: field?.name ? '选择' + field.name : null }, popupComponentSelectRowCode: 'name' } },

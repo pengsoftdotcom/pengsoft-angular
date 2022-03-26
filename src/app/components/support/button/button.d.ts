@@ -26,8 +26,8 @@ export interface Button {
 
     action?: (params?: any) => void;
 
-    isReadonly?: (form?: any) => boolean;
+    isDisabled?: (row?: any) => boolean;
 
-    isVisible?: (form?: any) => boolean;
+    isVisible?: (row?: any) => boolean;
 
 }

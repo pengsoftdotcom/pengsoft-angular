@@ -62,14 +62,21 @@ export class StaffComponent extends EntityComponent<StaffService> implements OnI
         };
         this.departmentService.findAll({ 'organization.id': this.organization.id }, [], {
             success: (res: any) => {
-                nav.data = EntityUtils.convertListToTree(res);
+                nav.data = EntityUtils.convertListToTree(res, (entity: any) => Object.assign({
+                    title: entity.shortName,
+                    value: entity,
+                    key: entity.id,
+                    isLeaf: entity.leaf,
+                    expanded: true,
+                    children: entity.children
+                }));
                 nav.data = [{
                     key: this.organization.id,
-                    title: this.organization.name,
+                    title: this.organization.shortName,
                     value: this.organization,
-                    isLeaf: this.nav?.data?.length === 0,
+                    isLeaf: !nav.data || nav.data.length === 0,
                     expanded: true,
-                    children: this.nav?.data
+                    children: nav.data
                 }];
             }
         });
@@ -151,7 +158,7 @@ export class StaffComponent extends EntityComponent<StaffService> implements OnI
         });
         buttons.forEach(button => {
             if (button.name === '新增') {
-                button.isReadonly = () => !this.organization;
+                button.isDisabled = () => !this.organization;
             }
         })
         return buttons;

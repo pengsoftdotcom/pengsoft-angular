@@ -57,9 +57,9 @@ export class OrganizationAdminComponent extends PersonComponent {
     override initEditToolbar(): Button[] {
         return [
             { name: '保存', type: 'primary', size: 'default', action: () => this.setAdmin(JSON.parse(JSON.stringify(this.editForm))), authority: 'basedata::organization::set_admin' },
-            { name: '重置密码', size: 'default', isReadonly: form => !form.id, action: () => this.resetPassword(this.editForm), authority: 'security::user::reset_password' },
+            { name: '重置密码', size: 'default', isDisabled: row => !row.id, action: () => this.resetPassword(this.editForm), authority: 'security::user::reset_password' },
             { name: '选择', size: 'default', action: () => this.showSelectAdmin(), authority: 'basedata::person::find_page' },
-            { name: '删除', type: 'primary', danger: true, size: 'default', isReadonly: form => !form.id, action: () => this.setAdmin(null), authority: 'basedata::organization::set_admin' }
+            { name: '删除', type: 'primary', danger: true, size: 'default', isDisabled: row => !row.id, action: () => this.setAdmin(null), authority: 'basedata::organization::set_admin' }
         ];
     }
 

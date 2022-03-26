@@ -23,7 +23,8 @@ import {
     FileExcelOutline,
     TabletOutline,
     DownloadOutline,
-    FileTwoTone
+    FileTwoTone,
+    KeyOutline
 } from '@ant-design/icons-angular/icons';
 import { NzIconModule, NZ_ICONS } from 'ng-zorro-antd/icon';
 
@@ -52,7 +53,8 @@ const icons = [
     FileExcelOutline,
     TabletOutline,
     DownloadOutline,
-    FileTwoTone
+    FileTwoTone,
+    KeyOutline
 ];
 
 @NgModule({

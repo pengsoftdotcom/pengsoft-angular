@@ -332,8 +332,8 @@ export class ListComponent extends BaseComponent implements OnInit {
     }
 
     isReadonly(buuton: Button, form: any): boolean {
-        if (buuton.isReadonly) {
-            return buuton.isReadonly(form);
+        if (buuton.isDisabled) {
+            return buuton.isDisabled(form);
         } else {
             return false;
         }
@@ -355,6 +355,14 @@ export class ListComponent extends BaseComponent implements OnInit {
             return field.name;
         }
         return '';
+    }
+
+    isButtonVisible(button: Button, row: any): boolean {
+        if (button.isVisible) {
+            return button.isVisible(row);
+        } else {
+            return true;
+        }
     }
 
 }

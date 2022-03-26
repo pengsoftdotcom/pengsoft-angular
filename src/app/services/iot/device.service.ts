@@ -19,6 +19,10 @@ export class DeviceService extends EntityService {
         return 'device';
     }
 
+    override save(form: any, options: HttpOptions): void {
+        this.saveWithGroups(form, options);
+    }
+
     saveWithGroups(form: any, options: HttpOptions): void {
         const url = this.getApiPath('save-with-groups');
         if (form.groups) {
@@ -29,12 +33,20 @@ export class DeviceService extends EntityService {
         this.http.request('POST', url, options);
     }
 
+    override findOne(id: string, options: HttpOptions): void {
+        this.findOneWithGroups(id, options);
+    }
+
     findOneWithGroups(id: string, options: HttpOptions) {
         const url = this.getApiPath('find-one-with-groups');
         if (id) {
             options.params = { id };
         }
         this.http.request('GET', url, options);
+    }
+
+    override findPage(params: any, pageData: Page, options: HttpOptions): void {
+        this.findPageByGroupAndName(params['group.id'], params['name'], pageData, options);
     }
 
     findPageByGroupAndName(groupId: string, name: string, pageData: Page, options: HttpOptions): void {

@@ -1,0 +1,8 @@
+<app-list #listComponent title="工程项目列表" [fields]="fields" [listData]="listData" [pageData]="pageData"
+    [toolbar]="listToolbar" [action]="listAction" (pageChange)="list()"></app-list>
+<app-edit #editComponent title="工程项目编辑" [fields]="fields" [form]="editForm" [toolbar]="editToolbar" [errors]="errors"
+    [labelSpan]="5">
+</app-edit>
+
+<input #file type="file" (change)="importData()" style="display: none;"
+    accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">

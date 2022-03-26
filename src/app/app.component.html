@@ -67,8 +67,8 @@
                                 userDetails?.primaryJob?.name}}
                             </span>
                             <span *ngIf="userDetails?.primaryJob">
-                                {{userDetails?.primaryOrganization?.name}} -
-                                {{userDetails?.primaryDepartment?.name}}
+                                {{userDetails?.primaryOrganization?.shortName}} -
+                                {{userDetails?.primaryDepartment?.shortName}}
                             </span>
                         </li>
                         <li nz-menu-divider></li>
@@ -113,8 +113,8 @@
 <ng-template #jobsTemplate>
     <nz-radio-group [(ngModel)]="userDetails.primaryJob.id" (ngModelChange)="jobSwitched()">
         <label *ngFor="let job of userDetails.jobs" nz-radio [nzValue]="job.id">
-            {{job.organization.name}} -
-            {{job.department.name}} -
+            {{job.organization.shortName}} -
+            {{job.department.shortName}} -
             {{job.name}}
         </label>
     </nz-radio-group>

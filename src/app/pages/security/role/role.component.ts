@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
+import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { Button } from 'src/app/components/support/button/button';
@@ -69,7 +69,6 @@ export class RoleComponent extends TreeEntityComponent<RoleService> {
             FieldUtils.buildTextForName(),
             FieldUtils.buildTextareaForRemark()
         );
-
     }
 
     override initListAction(): Button[] {
@@ -116,15 +115,11 @@ export class RoleComponent extends TreeEntityComponent<RoleService> {
         });
     }
 
-    hideSelectRoleComponent(): void {
-        this.modalRef.close();
-    }
-
     copyAuthorities(source: any, target: any): void {
         this.entity.copyAuthorities(source, target, {
             success: () => {
                 this.message.info('复制成功');
-                this.hideSelectRoleComponent();
+                this.modalRef.close();
             }
         });
     }

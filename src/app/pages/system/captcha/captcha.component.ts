@@ -40,17 +40,7 @@ export class CaptchaComponent extends EntityComponent<CaptchaService> {
         return [
             FieldUtils.buildTextForCode({ width: 103, align: 'center', sortable: false }),
             FieldUtils.buildDatetimeForExpiredAt(),
-            FieldUtils.buildText({
-                code: 'user', name: '用户',
-                children: UserComponent.prototype.initFields()
-                    .filter(field => field.code && !['username', 'email', 'mpOpenid'].includes(field.code))
-                    .map((field: Field) => {
-                        if (field.code === 'expiredAt') {
-                            delete field.filter;
-                        }
-                        return field;
-                    })
-            })
+            FieldUtils.buildText({ code: 'user', name: '用户', list: { render: (field: Field, row: any) => row.user.username } })
         ];
     }
 

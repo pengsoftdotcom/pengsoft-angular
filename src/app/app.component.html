@@ -50,52 +50,57 @@
     </nz-sider>
     <nz-layout>
         <nz-header>
-            <div class="app-header">
-                <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-                    <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
-                </span>
-                <span class="header-person" nz-dropdown [nzDropdownMenu]="person" nzTrigger="click">
-                    <ng-container *ngTemplateOutlet="avatarTemplate">
-                    </ng-container>
-                </span>
-                <nz-dropdown-menu #person>
-                    <ul nz-menu class="person">
-                        <li class="name">
-                            {{name}}
-                            <span style="display: inline;">
-                                {{userDetails?.primaryRole ? userDetails?.primaryRole.name :
-                                userDetails?.primaryJob?.name}}
-                            </span>
-                            <span *ngIf="userDetails?.primaryJob">
-                                {{userDetails?.primaryOrganization?.shortName}} -
-                                {{userDetails?.primaryDepartment?.shortName}}
-                            </span>
-                        </li>
-                        <li nz-menu-divider></li>
-                        <li class="menu">
-                            <a nz-button nzType="link" (click)="editPerson()" [disabled]="!userDetails?.person"
-                                [style.pointerEvents]="userDetails?.person ? 'all' : 'none'">基本资料</a>
+            <span class="menu-sidebar-trigger" (click)="isCollapsed = !isCollapsed">
+                <i nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+            </span>
+            <span class="toolbar">
+                <a>
+                    <nz-badge [nzDot]="unreadCount > 0">
+                        <i nz-icon nzType="bell"></i>
+                    </nz-badge>
+                </a>
+            </span>
+            <span class="profile" nz-dropdown [nzDropdownMenu]="profile" nzTrigger="click">
+                <ng-container *ngTemplateOutlet="avatarTemplate">
+                </ng-container>
+            </span>
+            <nz-dropdown-menu #profile>
+                <ul nz-menu class="profile-menu">
+                    <li class="name">
+                        {{name}}
+                        <span style="display: inline;">
+                            {{userDetails?.primaryRole ? userDetails?.primaryRole.name :
+                            userDetails?.primaryJob?.name}}
+                        </span>
+                        <span *ngIf="userDetails?.primaryJob">
+                            {{userDetails?.primaryOrganization?.shortName}} -
+                            {{userDetails?.primaryDepartment?.shortName}}
+                        </span>
+                    </li>
+                    <li nz-menu-divider></li>
+                    <li class="menu">
+                        <a nz-button nzType="link" (click)="editPerson()" [disabled]="!userDetails?.person"
+                            [style.pointerEvents]="userDetails?.person ? 'all' : 'none'">基本资料</a>
+                        <nz-divider nzType="vertical"></nz-divider>
+                        <ng-container *ngIf="switchJobVisible">
+                            <a nz-button nzType="link" (click)="switchJob()" [disabled]="switchJobReadonly"
+                                [style.pointerEvents]="switchJobReadonly ? 'none' : 'all'">切换职位</a>
                             <nz-divider nzType="vertical"></nz-divider>
-                            <ng-container *ngIf="switchJobVisible">
-                                <a nz-button nzType="link" (click)="switchJob()" [disabled]="switchJobReadonly"
-                                    [style.pointerEvents]="switchJobReadonly ? 'none' : 'all'">切换职位</a>
-                                <nz-divider nzType="vertical"></nz-divider>
-                            </ng-container>
-                            <ng-container *ngIf="switchRoleVisible">
-                                <a nz-button nzType="link" (click)="switchRole()" [disabled]="switchRoleReadonly"
-                                    [style.pointerEvents]="switchRoleReadonly ? 'none' : 'all'">切换角色</a>
-                                <nz-divider nzType="vertical"></nz-divider>
-                            </ng-container>
-                            <a nz-button nzType="link" (click)="changePassword()">修改密码</a>
-                        </li>
-                        <li nz-menu-divider></li>
-                        <li nz-menu-item class="sign-out" (click)="signOut()">退出登录</li>
-                    </ul>
-                </nz-dropdown-menu>
-            </div>
+                        </ng-container>
+                        <ng-container *ngIf="switchRoleVisible">
+                            <a nz-button nzType="link" (click)="switchRole()" [disabled]="switchRoleReadonly"
+                                [style.pointerEvents]="switchRoleReadonly ? 'none' : 'all'">切换角色</a>
+                            <nz-divider nzType="vertical"></nz-divider>
+                        </ng-container>
+                        <a nz-button nzType="link" (click)="changePassword()">修改密码</a>
+                    </li>
+                    <li nz-menu-divider></li>
+                    <li nz-menu-item class="sign-out" (click)="signOut()">退出登录</li>
+                </ul>
+            </nz-dropdown-menu>
         </nz-header>
         <nz-content>
-            <div class="inner-content">
+            <div>
                 <router-outlet></router-outlet>
             </div>
         </nz-content>

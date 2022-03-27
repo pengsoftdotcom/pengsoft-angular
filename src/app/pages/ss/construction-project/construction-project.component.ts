@@ -40,11 +40,12 @@ export class ConstructionProjectComponent extends EntityComponent<ConstructionPr
         return [
             // FieldUtils.buildTextForCode(),
             FieldUtils.buildTextForName(),
-            FieldUtils.buildPopupForOrganization({ code: 'owner', name: '建设单位' }),
+            FieldUtils.buildPopupForOrganization({ code: 'regulatoryUnit', name: '监管单位', list: { align: 'center' } }),
+            FieldUtils.buildPopupForOrganization({ code: 'owner', name: '建设单位', list: { align: 'center' } }),
             FieldUtils.buildText({ code: 'ownerManager', name: '项目负责人', list: { width: 100, align: 'center' } }),
-            FieldUtils.buildPopupForOrganization({ code: 'supervisionUnit', name: '监理单位' }),
+            FieldUtils.buildPopupForOrganization({ code: 'supervisionUnit', name: '监理单位', list: { align: 'center' } }),
             FieldUtils.buildText({ code: 'suManager', name: '总监理工程师', list: { width: 110, align: 'center' } }),
-            FieldUtils.buildPopupForOrganization({ code: 'buildingUnit', name: '施工单位' }),
+            FieldUtils.buildPopupForOrganization({ code: 'buildingUnit', name: '施工单位', list: { align: 'center' } }),
             FieldUtils.buildPopupForStaff({ code: 'buManager', name: '项目经理', list: { width: 110, align: 'center', render: (field: Field, row: any) => row.buManager?.person?.name } })
         ];
     }

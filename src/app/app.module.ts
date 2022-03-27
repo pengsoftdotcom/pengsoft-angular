@@ -15,6 +15,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComponentModule } from './components/component.module';
@@ -54,6 +55,7 @@ registerLocaleData(zh);
         NzMenuModule,
         NzModalModule,
         NzRadioModule,
+        NzBadgeModule,
         ComponentModule,
         DirectiveModule,
         IconsProviderModule,

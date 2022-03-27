@@ -47,6 +47,8 @@ export class AppComponent {
 
     errors: any = {};
 
+    unreadCount = 0;
+
     constructor(
         private title: Title,
         private router: Router,

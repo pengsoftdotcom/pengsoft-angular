@@ -34,7 +34,7 @@ export class PopupComponent extends InputComponent implements OnChanges {
 
     override ngOnInit(): void {
         super.ngOnInit();
-        if (this.edit.input?.popupComponentParams.multiple) {
+        if (this.edit.input?.popupComponentParams?.multiple) {
             this.multiple = true;
         }
         if (this.edit.input?.popupComponentSelectRowCode) {
@@ -62,7 +62,7 @@ export class PopupComponent extends InputComponent implements OnChanges {
                 nzWidth: '80%',
                 nzFooter: null
             };
-            if (this.edit.input.popupComponentParams.multiple) {
+            if (this.multiple) {
                 options.nzOnOk = () => {
                     if (this.edit.code) {
                         this.form[this.edit.code] = modalRef.getContentComponent().listData.filter((row: any) => row.checked);

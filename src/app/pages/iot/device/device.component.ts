@@ -92,7 +92,7 @@ export class DeviceComponent extends EntityComponent<DeviceService> {
         const buttons = super.initListToolbar();
         buttons.forEach((button: Button) => {
             if (button.name === '新增') {
-                button.isDisabled = () => this.group
+                button.isDisabled = () => !this.group
             }
         });
         return buttons;

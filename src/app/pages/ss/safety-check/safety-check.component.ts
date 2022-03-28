@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
@@ -57,7 +58,7 @@ export class SafetyCheckComponent extends EntityComponent<SafetyCheckService> {
     initFields(): Field[] {
         return [
             FieldUtils.buildSelect({ code: 'project', name: '工程项目', edit: { readonly: true, required: true }, list: { visible: false } }),
-            FieldUtils.buildTextForCode(),
+            FieldUtils.buildTextForCode({ width: 180, align: 'center' }),
             FieldUtils.buildText({ code: 'subject', name: '检查主题', edit: { required: true } }),
             FieldUtils.buildPopup({
                 code: 'checker', name: '检查人',
@@ -76,10 +77,22 @@ export class SafetyCheckComponent extends EntityComponent<SafetyCheckService> {
                         }
                     }
                 },
-                list: { render: (f: Field, row: any) => f.code && row[f.code] ? row[f.code].person.name : '-' },
+                list: { width: 80, align: 'center', render: (f: Field, row: any) => f.code && row[f.code] ? row[f.code].person.name : '-' },
                 filter: {}
             }),
-            FieldUtils.buildSelectForDictionaryItem({ code: 'status', name: '状态', edit: { required: true } }, this.dictionaryItem, 'safety_check_status'),
+            FieldUtils.buildSelectForDictionaryItem({
+                code: 'status', name: '状态',
+                edit: { required: true },
+                list: {
+                    width: 60, align: 'center', render: (field: Field, row: any, sanitizer: DomSanitizer) => {
+                        if (row.status.code === 'safe') {
+                            return sanitizer.bypassSecurityTrustHtml(`<span style="color: #0b8235">${row.status.name}</span>`);
+                        } else {
+                            return sanitizer.bypassSecurityTrustHtml(`<span style="color: #ff4d4f">${row.status.name}</span>`);
+                        }
+                    }
+                }
+            }, this.dictionaryItem, 'safety_check_status'),
             FieldUtils.buildUpload({
                 code: 'submitFiles', name: '检查图片', edit: { required: true }
             }, {

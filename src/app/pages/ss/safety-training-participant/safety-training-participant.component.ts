@@ -68,7 +68,7 @@ export class SafetyTrainingParticipantComponent extends EntityComponent<SafetyTr
             }),
             FieldUtils.buildSelectForDictionaryItem({
                 code: 'status', name: '状态',
-                edit: { required: true, readonly: (form: any) => form.confirmedAt }, list: { width: 80, align: 'center' }
+                edit: { readonly: (form: any) => form.confirmedAt }, list: { width: 80, align: 'center' }
             }, this.dictionaryItem, 'safety_training_participant_status'),
             FieldUtils.buildText({ code: 'reason', name: '原因' }),
             FieldUtils.buildDatetime({ code: 'confirmedAt', name: '确认时间', edit: { readonly: true } })
@@ -77,7 +77,9 @@ export class SafetyTrainingParticipantComponent extends EntityComponent<SafetyTr
 
     override initListToolbar(): Button[] {
         const buttons = super.initListToolbar();
-        buttons.splice(2, 2);
+        if (this.training && this.training.submittedAt) {
+            buttons.splice(2, 2);
+        }
         return buttons;
     }
 
@@ -85,6 +87,39 @@ export class SafetyTrainingParticipantComponent extends EntityComponent<SafetyTr
         const buttons = super.initListAction();
         delete buttons[0].exclusive;
         return buttons;
+    }
+
+    override initEditToolbar(): Button[] {
+        return [{ name: '确认', type: 'primary', size: 'default', action: () => this.confirm(), authority: this.getAuthority('confirm'), isDisabled: (form: any) => form.confirmedAt }];
+    }
+
+    confirm(): void {
+        const form = this.buildEditForm();
+        this.entity.confirm(form, {
+            errors: this.errors,
+            before: () => this.getEditComponent().loading = true,
+            success: () => {
+                this.message.info('确认成功');
+                this.getEditComponent().hide();
+                this.list();
+            },
+            after: () => this.getEditComponent().loading = false
+        });
+    }
+
+    override afterInit(): void {
+        this.filterForm = { 'training.id': this.training.id };
+        this.editForm = { training: this.training };
+        super.afterInit();
+    }
+
+    override afterEdit(): void {
+        this.editForm.training = this.training;
+    }
+
+    override afterFilterFormReset(): void {
+        this.filterForm = { 'training.id': this.training.id };
+        this.list();
     }
 
 }

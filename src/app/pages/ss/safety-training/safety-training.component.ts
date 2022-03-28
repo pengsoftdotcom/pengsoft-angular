@@ -123,14 +123,17 @@ export class SafetyTrainingComponent extends EntityComponent<SafetyTrainingServi
         this.participantsComponent.show();
     }
 
-    submit(row: any): void {
+    submit(): void {
         this.modal.confirm({
             nzTitle: '确定要提交吗?',
-            nzOnOk: () => this.entity.submit(row.id, {
+            nzOnOk: () => this.entity.submit(this.editForm.id, {
+                before: () => this.getEditComponent().loading = true,
                 success: () => {
                     this.message.info('提交成功');
+                    this.getEditComponent().hide();
                     this.list();
-                }
+                },
+                after: () => this.getEditComponent().loading = false
             })
         });
     }
@@ -170,6 +173,7 @@ export class SafetyTrainingComponent extends EntityComponent<SafetyTrainingServi
     override initEditToolbar(): Button[] {
         const buttons = super.initEditToolbar();
         buttons[0].isDisabled = (form: any) => form.allWorkers
+        buttons.push({ name: '提交', type: 'primary', action: () => this.submit(), authority: this.getAuthority('submit'), isDisabled: (form: any) => !form.createdAt || form.submittedAt });
         buttons.push({ name: '保存并提交', type: 'primary', action: () => this.saveAndSubmit(), authority: this.getAuthority('saveAndSubmit'), isDisabled: (form: any) => form.submittedAt || !form.allWorkers });
         buttons.push({ name: '开始', type: 'primary', action: () => this.start(), authority: this.getAuthority('start'), isDisabled: (form: any) => !form.submittedAt || form.startedAt });
         buttons.push({ name: '结束', type: 'primary', action: () => this.end(), authority: this.getAuthority('end'), isDisabled: (form: any) => !form.startedAt || form.endedAt });

@@ -96,7 +96,7 @@ export class SafetyCheckComponent extends EntityComponent<SafetyCheckService> {
             FieldUtils.buildUpload({
                 code: 'submitFiles', name: '检查图片', edit: { required: true }
             }, {
-                multiple: true, accept: 'image/*',
+                multiple: true, accept: FieldUtils.IMAGE,
                 showRemove: (form: any) => !form.id,
                 remove: (file: NzUploadFile) => this.remove(file)
             }),
@@ -105,12 +105,12 @@ export class SafetyCheckComponent extends EntityComponent<SafetyCheckService> {
             FieldUtils.buildUpload({
                 code: 'handleFiles', name: '处理图片', edit: { required: true, visible: (form: any) => form.submittedAt }
             }, {
-                multiple: true, accept: 'image/*',
+                multiple: true, accept: FieldUtils.IMAGE,
                 showRemove: (form: any) => !form.id,
                 remove: (file: NzUploadFile) => this.remove(file)
             }),
             FieldUtils.buildTextarea({ code: 'result', name: '处理结果', edit: { required: true, visible: (form: any) => form.submittedAt } }),
-            FieldUtils.buildDatetime({ code: 'handledAt', name: '处理时间', edit: { readonly: true, visible: (form: any) => form.submittedAt } }),
+            FieldUtils.buildDatetime({ code: 'handledAt', name: '处理时间', edit: { readonly: true, visible: (form: any) => form.submittedAt } })
         ];
     }
 

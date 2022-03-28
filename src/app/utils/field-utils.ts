@@ -1,7 +1,7 @@
 import { DomSanitizer } from '@angular/platform-browser';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
-import { filter, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Edit } from '../components/support/edit/edit';
 import { EditComponent } from '../components/support/edit/edit.component';
 import { Label } from '../components/support/form-item/label';
@@ -23,6 +23,10 @@ import { DateUtils } from './date-utils';
 import { EntityUtils } from './entity-utils';
 
 export class FieldUtils {
+
+    static IMAGE: string = 'image/gif,image/jpeg,image/png';
+
+    static EXECL: string = 'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
     static buildCaptcha(field?: Field): Field {
         field = Object.assign({ code: 'captcha' }, field);

@@ -120,7 +120,7 @@ export class ContractComponent extends EntityComponent<ContractService> {
             FieldUtils.buildUpload({
                 code: 'pictures', name: '合同图片'
             }, {
-                locked: true, multiple: true, accept: 'image/*',
+                locked: true, multiple: true, accept: FieldUtils.IMAGE,
                 remove: (file: NzUploadFile) => new Observable(observer => this.entity.deletePictureByAsset(this.editForm, file.response[0], {
                     success: () => observer.next(true),
                     failure: () => observer.next(false)

@@ -48,10 +48,10 @@ export class PayrollRecordComponent extends EntityComponent<PayrollRecordService
             FieldUtils.buildNumber({ code: 'paidCount', name: '支付人数', edit: { readonly: true } }),
             FieldUtils.buildNumber({ code: 'confirmedCount', name: '确认人数', edit: { readonly: true } }),
             FieldUtils.buildUpload({ code: 'sheet', name: '工资表', edit: { required: true } }, {
-                locked: true, accept: 'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                locked: true, accept: FieldUtils.EXECL
             }),
             FieldUtils.buildUpload({ code: 'signedSheet', name: '工资确认表', edit: { required: true } }, {
-                locked: true, accept: 'image/*'
+                locked: true, accept: FieldUtils.IMAGE
             }),
             FieldUtils.buildDatetime({ code: 'importedAt', name: '导入时间', edit: { readonly: true } })
         ];

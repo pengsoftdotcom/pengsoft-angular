@@ -96,7 +96,7 @@ export class OrganizationComponent extends TreeEntityComponent<OrganizationServi
                     }
                 }, edit: { column: 1 }
             }, {
-                accept: 'image/*',
+                accept: FieldUtils.IMAGE,
                 remove: (file: NzUploadFile) => new Observable(observer => this.entity.deleteLogoByAsset(this.editForm, file.response[0], {
                     success: (res) => {
                         if (res > -1) {

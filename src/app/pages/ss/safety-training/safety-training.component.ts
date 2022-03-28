@@ -95,7 +95,7 @@ export class SafetyTrainingComponent extends EntityComponent<SafetyTrainingServi
             FieldUtils.buildDatetime({ code: 'submittedAt', name: '提交时间', edit: { readonly: true } }),
             FieldUtils.buildDatetime({ code: 'startedAt', name: '开始时间', edit: { readonly: true } }),
             FieldUtils.buildUpload({ code: 'files', name: '过程图片', edit: { visible: (form: any) => form.startedAt } }, {
-                multiple: true, accept: 'image/*',
+                multiple: true, accept: FieldUtils.IMAGE,
                 showRemove: (form: any) => !form.endedAt,
                 remove: (file: NzUploadFile) => new Observable(observer => this.entity.deleteFileByAsset(this.editForm, file.response[0], {
                     success: () => observer.next(true),

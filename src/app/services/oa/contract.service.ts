@@ -64,13 +64,13 @@ export class ContractService extends EntityService {
         this.http.request('POST', url, options);
     }
 
-    deletePictureByAsset(contract: any, asset: any, options: HttpOptions): void {
+    deletePictureByAsset(form: any, asset: any, options: HttpOptions): void {
         const url = this.getApiPath('delete-picture-by-asset');
         options.params = {
             'asset.id': asset.id
         };
-        if (contract && contract.id) {
-            options.params['id'] = contract.id;
+        if (form && form.id) {
+            options.params['id'] = form.id;
         }
         this.http.request('DELETE', url, options);
     }
@@ -79,6 +79,50 @@ export class ContractService extends EntityService {
         const url = this.getApiPath('confirm');
         options.params = { id };
         this.http.request('PUT', url, options);
+    }
+
+    confirmMine(form: any, options: HttpOptions): void {
+        const url = this.getApiPath('confirm-mine');
+        options.params = {
+            id: form.id,
+        };
+        if (form.reason) {
+            options.params['reason'] = form.reason;
+        }
+        if (form.status) {
+            options.params['status.id'] = form.status.id;
+        }
+        this.http.request('PUT', url, options);
+    }
+
+    findOneOfMine(id: string, options: HttpOptions): void {
+        const url = this.getApiPath('find-one-of-mine');
+        if (id) {
+            options.params = { id };
+        }
+        this.http.request('GET', url, options);
+    }
+
+    findPageOfMine(params: any, pageData: Page, options: HttpOptions): void {
+        const url = this.getApiPath('find-page-of-mine');
+        const result = this.handleParams(params);
+        result.page = pageData.page - 1;
+        result.size = pageData.size;
+        result.sort = pageData.sort?.map(s => s.code + ',' + s.direction);
+        options.params = result;
+        this.http.request('GET', url, options);
+    }
+
+    download(id: string, width: number | null, height: number | null, options: HttpOptions): void {
+        const url = this.getApiPath('download');
+        options.params = { id };
+        if (width) {
+            options.params['width'] = width;
+        }
+        if (height) {
+            options.params['height'] = height;
+        }
+        this.http.request('GET', url, options);
     }
 
 }

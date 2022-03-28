@@ -9,12 +9,16 @@ import { ConstructionProjectComponent } from './construction-project/constructio
 import { SafetyTrainingParticipantComponent } from './safety-training-participant/safety-training-participant.component';
 import { SafetyTrainingComponent } from './safety-training/safety-training.component';
 import { SsRoutingModule } from './ss-routing.module';
+import { SafetyCheckComponent } from './safety-check/safety-check.component';
+import { MySafetyTrainingParticipantComponent } from './my-safety-training-participant/my-safety-training-participant.component';
 
 @NgModule({
     declarations: [
         ConstructionProjectComponent,
         SafetyTrainingComponent,
-        SafetyTrainingParticipantComponent
+        SafetyTrainingParticipantComponent,
+        SafetyCheckComponent,
+        MySafetyTrainingParticipantComponent
     ],
     imports: [
         CommonModule,

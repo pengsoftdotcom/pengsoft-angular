@@ -10,6 +10,8 @@ import { ContractComponent } from './contract/contract.component';
 import { OaRoutingModule } from './oa-routing.module';
 import { PayrollDetailComponent } from './payroll-detail/payroll-detail.component';
 import { PayrollRecordComponent } from './payroll-record/payroll-record.component';
+import { MyContractComponent } from './my-contract/my-contract.component';
+import { MySalaryComponent } from './my-salary/my-salary.component';
 
 @NgModule({
     declarations: [
@@ -17,7 +19,9 @@ import { PayrollRecordComponent } from './payroll-record/payroll-record.componen
         PayrollRecordComponent,
         AttendanceRecordComponent,
         PayrollRecordComponent,
-        PayrollDetailComponent
+        PayrollDetailComponent,
+        MyContractComponent,
+        MySalaryComponent
     ],
     imports: [
         CommonModule,

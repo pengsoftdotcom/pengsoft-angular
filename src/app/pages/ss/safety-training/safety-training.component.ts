@@ -1,13 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
+import { Observable } from 'rxjs';
 import { Button } from 'src/app/components/support/button/button';
 import { EditOneToManyComponent } from 'src/app/components/support/edit-one-to-many/edit-one-to-many.component';
 import { EditComponent } from 'src/app/components/support/edit/edit.component';
 import { EntityComponent } from 'src/app/components/support/entity.component';
 import { Field } from 'src/app/components/support/list/field';
 import { ListComponent } from 'src/app/components/support/list/list.component';
-import { JobService } from 'src/app/services/basedata/job.service';
 import { SafetyTrainingService } from 'src/app/services/ss/safety-training.service';
 import { SecurityService } from 'src/app/services/support/security.service';
 import { FieldUtils } from 'src/app/utils/field-utils';
@@ -93,17 +94,24 @@ export class SafetyTrainingComponent extends EntityComponent<SafetyTrainingServi
             FieldUtils.buildTextarea({ code: 'address', name: '培训地址' }),
             FieldUtils.buildDatetime({ code: 'submittedAt', name: '提交时间', edit: { readonly: true } }),
             FieldUtils.buildDatetime({ code: 'startedAt', name: '开始时间', edit: { readonly: true } }),
+            FieldUtils.buildUpload({ code: 'files', name: '过程图片', edit: { visible: (form: any) => form.startedAt } }, {
+                multiple: true, accept: 'image/*',
+                showRemove: (form: any) => !form.endedAt,
+                remove: (file: NzUploadFile) => new Observable(observer => this.entity.deleteFileByAsset(this.editForm, file.response[0], {
+                    success: () => observer.next(true),
+                    failure: () => observer.next(false)
+                }))
+            }),
             FieldUtils.buildDatetime({ code: 'endedAt', name: '结束时间', edit: { readonly: true } })
         ];
     }
 
     override initListAction(): Button[] {
         const buttons = super.initListAction();
+        delete buttons[0].exclusive;
+        buttons.splice(1, 1);
         buttons.splice(0, 0,
-            { name: '参与人', width: 44, type: 'link', action: (row: any) => this.editParticipants(row), authority: 'ss::safety_training_participant::find_page' },
-            { name: '提交', width: 30, type: 'link', action: (row: any) => this.submit(row), authority: this.getAuthority('submit'), isDisabled: (row: any) => row.submittedAt },
-            { name: '开始', width: 30, type: 'link', action: (row: any) => this.start(row), authority: this.getAuthority('start'), isDisabled: (row: any) => row.startedAt },
-            { name: '结束', width: 30, type: 'link', action: (row: any) => this.end(row), authority: this.getAuthority('end'), isDisabled: (row: any) => row.endedAt }
+            { name: '参与人', width: 44, type: 'link', action: (row: any) => this.editParticipants(row), authority: 'ss::safety_training_participant::find_page' }
         );
         return buttons;
     }
@@ -127,26 +135,34 @@ export class SafetyTrainingComponent extends EntityComponent<SafetyTrainingServi
         });
     }
 
-    start(row: any): void {
+    start(): void {
         this.modal.confirm({
             nzTitle: '确定要开始吗?',
-            nzOnOk: () => this.entity.start(row.id, {
+            nzOnOk: () => this.entity.start(this.editForm.id, {
+                before: () => this.getEditComponent().loading = true,
                 success: () => {
                     this.message.info('开始成功');
+                    this.getEditComponent().hide();
                     this.list();
-                }
+                },
+                after: () => this.getEditComponent().loading = false
             })
         });
     }
 
-    end(row: any): void {
+    end(): void {
+        const form = this.buildEditForm();
         this.modal.confirm({
             nzTitle: '确定要结束吗?',
-            nzOnOk: () => this.entity.end(row.id, {
+            nzOnOk: () => this.entity.end(form, {
+                errors: this.errors,
+                before: () => this.getEditComponent().loading = true,
                 success: () => {
                     this.message.info('结束成功');
+                    this.getEditComponent().hide();
                     this.list();
-                }
+                },
+                after: () => this.getEditComponent().loading = false
             })
         });
     }
@@ -154,7 +170,9 @@ export class SafetyTrainingComponent extends EntityComponent<SafetyTrainingServi
     override initEditToolbar(): Button[] {
         const buttons = super.initEditToolbar();
         buttons[0].isDisabled = (form: any) => form.allWorkers
-        buttons.push({ name: '保存并提交', type: 'primary', action: () => this.saveAndSubmit(), authority: this.getAuthority('saveAndSubmit'), isDisabled: (form: any) => !form.allWorkers });
+        buttons.push({ name: '保存并提交', type: 'primary', action: () => this.saveAndSubmit(), authority: this.getAuthority('saveAndSubmit'), isDisabled: (form: any) => form.submittedAt || !form.allWorkers });
+        buttons.push({ name: '开始', type: 'primary', action: () => this.start(), authority: this.getAuthority('start'), isDisabled: (form: any) => !form.submittedAt || form.startedAt });
+        buttons.push({ name: '结束', type: 'primary', action: () => this.end(), authority: this.getAuthority('end'), isDisabled: (form: any) => !form.startedAt || form.endedAt });
         return buttons;
     }
 

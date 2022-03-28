@@ -63,10 +63,13 @@ export class SafetyTrainingParticipantComponent extends EntityComponent<SafetyTr
                         }
                     }
                 },
-                list: { render: (f: Field, row: any) => f.code && row[f.code] ? row[f.code].person.name : '-' },
+                list: { width: 100, align: 'center', render: (f: Field, row: any) => f.code && row[f.code] ? row[f.code].person.name : '-' },
                 filter: {}
             }),
-            FieldUtils.buildSelectForDictionaryItem({ code: 'status', name: '状态', edit: { required: true, readonly: (form: any) => form.confirmedAt } }, this.dictionaryItem, 'safety_training_participant_status'),
+            FieldUtils.buildSelectForDictionaryItem({
+                code: 'status', name: '状态',
+                edit: { required: true, readonly: (form: any) => form.confirmedAt }, list: { width: 80, align: 'center' }
+            }, this.dictionaryItem, 'safety_training_participant_status'),
             FieldUtils.buildText({ code: 'reason', name: '原因' }),
             FieldUtils.buildDatetime({ code: 'confirmedAt', name: '确认时间', edit: { readonly: true } })
         ];
@@ -74,14 +77,13 @@ export class SafetyTrainingParticipantComponent extends EntityComponent<SafetyTr
 
     override initListToolbar(): Button[] {
         const buttons = super.initListToolbar();
-        buttons[2].isDisabled = () => this.training.submittedAt;
-        buttons[3].isDisabled = () => this.training.submittedAt;
+        buttons.splice(2, 2);
         return buttons;
     }
 
     override initListAction(): Button[] {
         const buttons = super.initListAction();
-        buttons[2].isDisabled = () => this.training.submittedAt;
+        delete buttons[0].exclusive;
         return buttons;
     }
 

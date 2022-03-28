@@ -6,7 +6,7 @@ import { HttpService } from '../support/http.service';
 @Injectable({
     providedIn: 'root'
 })
-export class SafetyTrainingService extends EntityService {
+export class SafetyCheckService extends EntityService {
 
     constructor(protected override http: HttpService) { super(http); }
 
@@ -15,32 +15,26 @@ export class SafetyTrainingService extends EntityService {
     }
 
     get entityPath(): string {
-        return 'safety-training';
+        return 'safety-check';
     }
 
-    saveAndSubmit(form: any, options: HttpOptions): void {
-        const url = this.getApiPath('save-and-submit');
+    submit(form: any, options: HttpOptions): void {
+        const url = this.getApiPath('submit');
+        if (form.submitFiles) {
+            options.params = { 'asset.id': form.submitFiles?.map((file: any) => file.id) };
+        }
         options.body = JSON.parse(JSON.stringify(form));
         this.http.request('POST', url, options);
     }
 
-    submit(id: string, options: HttpOptions): void {
-        const url = this.getApiPath('submit');
-        options.params = { id }
-        this.http.request('PUT', url, options);
-    }
-
-    start(id: string, options: HttpOptions): void {
-        const url = this.getApiPath('start');
-        options.params = { id }
-        this.http.request('PUT', url, options);
-    }
-
-    end(form: any, options: HttpOptions): void {
-        const url = this.getApiPath('end');
+    handle(form: any, options: HttpOptions): void {
+        const url = this.getApiPath('handle');
         options.params = { id: form.id };
-        if (form.files) {
-            options.params['file.id'] = form.files.map((file: any) => file.id);
+        if (form.result) {
+            options.params['result'] = form.result
+        }
+        if (form.handleFiles) {
+            options.params['asset.id'] = form.handleFiles?.map((file: any) => file.id)
         }
         this.http.request('PUT', url, options);
     }

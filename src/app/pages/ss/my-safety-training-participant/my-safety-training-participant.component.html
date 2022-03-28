@@ -1,0 +1,5 @@
+<app-list #listComponent title="我的安全培训" [fields]="fields" [listData]="listData" [pageData]="pageData"
+    [toolbar]="listToolbar" [action]="listAction" (pageChange)="list()" [level]="2"></app-list>
+<app-edit #editComponent title="查看安全培训" [fields]="fields" [form]="editForm" [toolbar]="editToolbar" [errors]="errors"
+    [level]="2">
+</app-edit>

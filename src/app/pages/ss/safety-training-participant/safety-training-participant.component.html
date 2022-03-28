@@ -1,4 +1,4 @@
-<app-list #listComponent title="参与人列表" [fields]="fields" [listData]="listData" [toolbar]="listToolbar"
-    [action]="listAction" (pageChange)="list()"></app-list>
+<app-list #listComponent title="参与人列表" [fields]="fields" [listData]="listData" [pageData]="pageData"
+    [toolbar]="listToolbar" [action]="listAction" (pageChange)="list()"></app-list>
 <app-edit #editComponent title="参与人编辑" [fields]="fields" [form]="editForm" [toolbar]="editToolbar" [errors]="errors">
 </app-edit>

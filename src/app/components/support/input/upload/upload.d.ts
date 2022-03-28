@@ -10,7 +10,9 @@ export interface Upload extends Input {
 
     limit?: number;
 
-    convertToFile?(entity: any): NzUploadFile;
+    convertToFile?(entity: any): Promise<NzUploadFile>;
+
+    showRemove?(form: any): boolean;
 
     remove?(file: NzUploadFile): boolean | Observable<boolean>;
 

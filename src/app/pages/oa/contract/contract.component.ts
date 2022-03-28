@@ -57,7 +57,7 @@ export class ContractComponent extends EntityComponent<ContractService> {
                     }
                 }
             },
-            list: { render: (f: Field, row: any) => row.partyA ? row.partyA.name : '-' },
+            list: { align: 'center', render: (f: Field, row: any) => row.partyA ? row.partyA.name : '-' },
             filter: {}
         });
         const partyBField = FieldUtils.buildPopup({
@@ -75,7 +75,7 @@ export class ContractComponent extends EntityComponent<ContractService> {
                     }
                 }
             },
-            list: { render: (f: Field, row: any) => row.partyB ? row.partyB.name : '-' },
+            list: { align: 'center', render: (f: Field, row: any) => row.partyB ? row.partyB.name : '-' },
             filter: {}
         });
         return [
@@ -127,14 +127,6 @@ export class ContractComponent extends EntityComponent<ContractService> {
                 }))
             })
         ];
-    }
-
-    override initListAction(): Button[] {
-        const listAction = super.initListAction();
-        listAction.splice(listAction.length - 1, 0, {
-            name: '确认', type: 'link', width: 30, action: (row: any) => this.confirm(row), authority: this.getAuthority('confirm')
-        });
-        return listAction;
     }
 
     confirm(row: any): void {

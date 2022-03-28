@@ -87,6 +87,9 @@ export class SignInComponent extends BaseComponent {
                 this.userDetails.current({
                     before: () => this.loading = true,
                     success: (userDetails: any) => {
+                        if (userDetails && userDetails.authorities) {
+                            userDetails.authorities.push('authorized');
+                        }
                         this.security.userDetails = userDetails;
                         window.location.reload();
                     },

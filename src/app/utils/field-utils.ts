@@ -386,8 +386,16 @@ export class FieldUtils {
                     FieldUtils.buildSelectForGender(dictionaryItem),
                     FieldUtils.buildNumber({
                         code: 'mobile', name: '手机号码',
-                        list: { width: 140, align: 'center', render: (field: Field, row: any, sanitizer: DomSanitizer) => sanitizer.bypassSecurityTrustHtml(`<code>${row ? row.mobile : ''}</code>`) },
-                        edit: { required: true, input: { mode: 'numeric' }, readonly: (form: any) => !!form.id },
+                        list: {
+                            width: 140, align: 'center', render: (field: Field, row: any, sanitizer: DomSanitizer) => {
+                                if (row.mobile) {
+                                    return sanitizer.bypassSecurityTrustHtml(`<code>${row ? row.mobile : ''}</code>`);
+                                } else {
+                                    return '-';
+                                }
+                            }
+                        },
+                        edit: { input: { mode: 'numeric' }, readonly: (form: any) => !!form.id },
                         filter: {}
                     }),
                     FieldUtils.buildText({

@@ -29,6 +29,10 @@ export class UploadComponent extends InputComponent implements OnChanges {
     constructor(private security: SecurityService, private asset: AssetService) { super(); }
 
     ngOnChanges(): void {
+        this.upload = Object.assign({ accept: '*/*', multiple: false }, this.edit.input) as Upload;
+        if (this.upload.accept) {
+            this.isImage = this.upload.accept?.startsWith('image/');
+        }
         if (this.edit.code && this.form[this.edit.code]) {
             if (Array.isArray(this.form[this.edit.code])) {
                 forkJoin(this.form[this.edit.code].map((entity: any) => this.convertToFile(entity))).subscribe((files: any) => this.files = files);
@@ -41,7 +45,7 @@ export class UploadComponent extends InputComponent implements OnChanges {
     convertToFile(entity: any): Promise<NzUploadFile> {
         const convert = this.upload.convertToFile;
         if (convert) {
-            return Promise.resolve(convert(entity));
+            return convert(entity);
         } else {
             if (entity.locked) {
                 return new Promise(resolve => this.asset.download(entity.id, null, null, {
@@ -71,11 +75,11 @@ export class UploadComponent extends InputComponent implements OnChanges {
     override ngOnInit(): void {
         super.ngOnInit();
         this.upload = Object.assign({ accept: '*/*', multiple: false }, this.edit.input) as Upload;
-        if (this.upload.locked) {
-            this.action += '?locked=true';
-        }
         if (this.upload.accept) {
             this.isImage = this.upload.accept?.startsWith('image/');
+        }
+        if (this.upload.locked) {
+            this.action += '?locked=true';
         }
     }
 
@@ -131,6 +135,16 @@ export class UploadComponent extends InputComponent implements OnChanges {
                 event.file['message'] = event.file.error.error.error_description;
                 break;
         }
+    }
+
+    showRemove(): boolean {
+        if (this.edit.input) {
+            const upload = this.edit.input as Upload;
+            if (upload.showRemove) {
+                return upload.showRemove(this.form);
+            }
+        }
+        return true;
     }
 
 }

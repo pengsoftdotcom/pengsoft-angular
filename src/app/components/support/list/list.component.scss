@@ -1,6 +1,7 @@
 .list {
     height: 100%;
-
+    overflow-x: hidden;
+    overflow-y: auto;
     .title {
         margin-bottom: 16px;
 

@@ -9,6 +9,7 @@ import { ListComponent } from 'src/app/components/support/list/list.component';
 import { PayrollDetailService } from 'src/app/services/oa/payroll-detail.service';
 import { SecurityService } from 'src/app/services/support/security.service';
 import { FieldUtils } from 'src/app/utils/field-utils';
+import { PayrollRecordComponent } from '../payroll-record/payroll-record.component';
 
 @Component({
     selector: 'app-payroll-detail',
@@ -36,29 +37,49 @@ export class PayrollDetailComponent extends EntityComponent<PayrollDetailService
 
     initFields(): Field[] {
         return [
-            FieldUtils.buildText({ code: 'payrollRecord', name: '期数', list: { width: 320, align: 'center', render: (field: Field, row: any) => row.payrollRecord.code } }),
-            FieldUtils.buildPopupForStaff(),
-            FieldUtils.buildNumber({ code: 'grossPay', name: '总收入' }),
-            FieldUtils.buildNumber({ code: 'netPay', name: '净收入' }),
-            FieldUtils.buildDatetime({ code: 'confirmedAt', name: '确认时间' })
+            FieldUtils.buildText({ code: 'payroll', name: '发薪记录', children: PayrollRecordComponent.prototype.initFields() }),
+            FieldUtils.buildText({
+                code: '', name: '发薪明细', children: [
+                    FieldUtils.buildPopupForStaff(),
+                    FieldUtils.buildNumber({ code: 'grossPay', name: '总收入' }),
+                    FieldUtils.buildNumber({ code: 'netPay', name: '净收入' }),
+                    FieldUtils.buildDatetime({ code: 'confirmedAt', name: '确认时间', edit: { readonly: true } })
+                ]
+            })
         ];
     }
 
-    override initListAction(): Button[] {
-        const listAction = super.initListAction();
-        listAction.splice(0, 0, {
-            name: '确认', type: 'link', width: 30, authority: this.getAuthority('confirm'),
-            action: (row: any) => this.confirm(row),
-            isDisabled: (row: any) => !row.confirmedAt
-        });
-        return listAction;
+    override initListToolbar(): Button[] {
+        const buttons = super.initListToolbar();
+        buttons.splice(2, 2);
+        return buttons;
     }
 
-    confirm(row: any): void {
+    override initListAction(): Button[] {
+        const buttons = super.initListAction();
+        delete buttons[0].exclusive;
+        buttons.splice(1, 2);
+        return buttons;
+    }
+
+    override initEditToolbar(): Button[] {
+        return [{ name: '确认', type: 'primary', size: 'default', action: () => this.confirm(), authority: this.getAuthority('confirm'), isDisabled: (form: any) => form.confirmedAt }];
+    }
+
+    confirm(): void {
         this.modal.confirm({
             nzTitle: '确认工资已收到？',
-            nzOnOk: () => new Promise(resolve => this.entity.confirm(row.id, {
-                success: () => { this.message.info('确认成功'); resolve(); }
+            nzOnOk: () => new Promise(resolve => this.entity.confirm(this.editForm.id, {
+                before: () => this.getEditComponent().loading = true,
+                success: () => {
+                    this.message.info('确认成功');
+                    this.getEditComponent().hide();
+                    this.list();
+                },
+                after: () => {
+                    this.getEditComponent().loading = false;
+                    resolve();
+                }
             }))
         });
     }

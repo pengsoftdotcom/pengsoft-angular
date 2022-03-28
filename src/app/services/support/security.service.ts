@@ -54,6 +54,11 @@ export class SecurityService {
         return ['/oauth/token'];
     }
 
+    hasAnyRole(roles: string[]): boolean {
+        const userRoles: string[] = this.userDetails && this.userDetails.roles ? this.userDetails.roles : [];
+        return userRoles.some((userRole: any) => roles.some(role => role === userRole.code));
+    }
+
     hasAnyAuthority(authorityString?: string, exclusive?: string): boolean {
         const authorities = [];
         if (authorityString) {
@@ -68,7 +73,7 @@ export class SecurityService {
         const userAuthorities: string[] = this.userDetails && this.userDetails.authorities ? this.userDetails.authorities : [];
         if (authorities.length > 0) {
             if (authorities.some(authority => userAuthorities.includes(authority))) {
-                if (exclusive && userAuthorities.includes(exclusive)) {
+                if (exclusive && exclusive.split(',').some(e => userAuthorities.includes(e.trim()))) {
                     return false;
                 }
             } else {

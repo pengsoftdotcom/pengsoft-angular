@@ -40,14 +40,14 @@ export class MySalaryComponent extends PayrollDetailComponent {
 
     override initEditToolbar(): Button[] {
         return [
-            { name: '确认', type: 'primary', size: 'default', action: () => this.confirmOfMine(), isDisabled: (form: any) => form.confirmedAt }
+            { name: '确认', type: 'primary', size: 'default', action: () => this.confirmOfMine()/* , isDisabled: (form: any) => form.confirmedAt */ }
         ];
     }
 
     confirmOfMine(): void {
         const form = this.buildEditForm();
         this.modal.confirm({
-            nzTitle: '确定要结束吗?',
+            nzTitle: '确定工资已收到吗?',
             nzOnOk: () =>
                 this.entity.confirmMine(form, {
                     errors: this.errors,

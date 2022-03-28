@@ -64,7 +64,7 @@ export class MyContractComponent extends ContractComponent {
     confirmOfMine(): void {
         const form = this.buildEditForm();
         this.modal.confirm({
-            nzTitle: '确定要结束吗?',
+            nzTitle: '合同真实有效吗?',
             nzOnOk: () =>
                 this.entity.confirmMine(form, {
                     errors: this.errors,

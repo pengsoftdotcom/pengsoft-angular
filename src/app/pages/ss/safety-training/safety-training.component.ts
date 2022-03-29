@@ -172,8 +172,8 @@ export class SafetyTrainingComponent extends EntityComponent<SafetyTrainingServi
 
     override initEditToolbar(): Button[] {
         const buttons = super.initEditToolbar();
-        buttons[0].isDisabled = (form: any) => form.allWorkers
-        buttons.push({ name: '提交', type: 'primary', action: () => this.submit(), authority: this.getAuthority('submit'), isDisabled: (form: any) => !form.createdAt || form.submittedAt });
+        buttons[0].isDisabled = (form: any) => form.allWorkers || form.id
+        buttons.push({ name: '提交', type: 'primary', action: () => this.submit(), authority: this.getAuthority('submit'), isDisabled: (form: any) => !form.id || form.submittedAt });
         buttons.push({ name: '保存并提交', type: 'primary', action: () => this.saveAndSubmit(), authority: this.getAuthority('saveAndSubmit'), isDisabled: (form: any) => form.submittedAt || !form.allWorkers });
         buttons.push({ name: '开始', type: 'primary', action: () => this.start(), authority: this.getAuthority('start'), isDisabled: (form: any) => !form.submittedAt || form.startedAt });
         buttons.push({ name: '结束', type: 'primary', action: () => this.end(), authority: this.getAuthority('end'), isDisabled: (form: any) => !form.startedAt || form.endedAt });

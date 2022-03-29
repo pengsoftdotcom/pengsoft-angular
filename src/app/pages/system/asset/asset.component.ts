@@ -56,6 +56,7 @@ export class AssetComponent extends EntityComponent<AssetService> {
                 filter: { readonly: false, input: { placeholder: '小于录入的值' } }
             }),
             FieldUtils.buildBooleanForLocked(),
+            FieldUtils.buildDatetimeForCreatedAt()
         ];
     }
 

@@ -282,6 +282,20 @@ export class FieldUtils {
         });
     }
 
+    static buildDatetimeForCreatedAt(): Field {
+        return this.buildDatetime({
+            code: 'createdAt', name: '创建时间',
+            edit: { readonly: true }
+        });
+    }
+
+    static buildDatetimeForUpdatedAt(): Field {
+        return this.buildDatetime({
+            code: 'updatedAt', name: '更新时间',
+            edit: { readonly: true }
+        });
+    }
+
     static buildDatetime(field: Field): Field {
         field = this.getList(field, { width: 170, align: 'center' });
         field = this.getEdit(field, { input: { placeholder: '请选择', type: InputType.DATETIME } });

@@ -1,6 +1,6 @@
 <nz-upload nzListType="picture-card" [nzAction]="action" [nzHeaders]="headers" [(nzFileList)]="files"
     (nzChange)="modelChange($event)" [nzPreview]="preview" [nzDownload]="download" [nzRemove]="remove"
-    [nzAccept]="upload.accept" [nzShowButton]="upload.multiple || files.length < 1"
+    [nzAccept]="upload.accept" [nzShowButton]="upload.multiple || files.length < 1" [nzDisabled]="readonly"
     [nzShowUploadList]="{showPreviewIcon: isImage, showDownloadIcon: true, showRemoveIcon: showRemove()}">
     <i nz-icon nzType="plus"></i>
 </nz-upload>

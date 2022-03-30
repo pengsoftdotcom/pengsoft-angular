@@ -1,4 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Button } from 'src/app/components/support/button/button';
@@ -27,6 +29,7 @@ export class TaskComponent extends EntityComponent<TaskService> {
     getEditComponent(): EditComponent { return this.editComponent }
 
     constructor(
+        private router: Router,
         private dictionaryItem: DictionaryItemService,
         public override entity: TaskService,
         public override security: SecurityService,
@@ -38,17 +41,35 @@ export class TaskComponent extends EntityComponent<TaskService> {
     initFields(): Field[] {
         return [
             FieldUtils.buildText({ code: 'name', name: '名称' }),
-            FieldUtils.buildText({ code: 'content', name: '内容' }),
-            FieldUtils.buildSelectForDictionaryItem({ code: 'priority', name: '优先级' }, this.dictionaryItem, 'task_priority'),
-            FieldUtils.buildSelectForDictionaryItem({ code: 'status', name: '状态' }, this.dictionaryItem, 'task_status'),
-            FieldUtils.buildJson({ code: 'params', name: '参数' }),
+            FieldUtils.buildTextarea({ code: 'content', name: '内容' }),
+            FieldUtils.buildSelectForDictionaryItem({
+                code: 'priority', name: '优先级', list: {
+                    width: 80, align: 'center',
+                    render: (field: Field, row: any, sanitizer: DomSanitizer) => {
+                        if (row.priority.code === 'high') {
+                            return sanitizer.bypassSecurityTrustHtml(`<span style="color: #ff4d4f">${row.priority.name}</span>`);
+                        } else if (row.priority.code === 'medium') {
+                            return sanitizer.bypassSecurityTrustHtml(`<span style="color: #eed202">${row.priority.name}</span>`);
+                        } else {
+                            return sanitizer.bypassSecurityTrustHtml(`<span style="color: #0b8235">${row.priority.name}</span>`);
+                        }
+                    }
+                }
+            }, this.dictionaryItem, 'task_priority'),
+            FieldUtils.buildSelectForDictionaryItem({ code: 'status', name: '状态', list: { width: 100, align: 'center' } }, this.dictionaryItem, 'task_status'),
+            FieldUtils.buildText({ code: 'targetPath', name: '目标路径', list: { width: 300 } }),
+            FieldUtils.buildText({ code: 'targetId', name: '目标ID', list: { width: 320, align: 'center' } }),
+            FieldUtils.buildJson({ code: 'targetParams', name: '参数' })
         ];
     }
 
     override initListAction(): Button[] {
         const buttons = super.initListAction();
         delete buttons[0].exclusive;
-        buttons.splice(1, 1, { name: '结束', type: 'link', width: 30, action: (row: any) => this.finish(row), authority: this.getAuthority('finish'), isDisabled: (row: any) => row.finishedAt });
+        buttons.splice(1, 1,
+            { name: '前往', type: 'link', width: 30, action: (row: any) => this.forward(row), isDisabled: (row: any) => row.finishedAt },
+            { name: '结束', type: 'link', width: 30, action: (row: any) => this.finish(row), authority: this.getAuthority('finish'), isDisabled: (row: any) => row.finishedAt }
+        );
         return buttons;
     }
 
@@ -57,6 +78,10 @@ export class TaskComponent extends EntityComponent<TaskService> {
         buttons[0].isDisabled = (form: any) => form.id
         buttons.push({ name: '结束', type: 'primary', size: 'default', action: (form: any) => this.finish(form), authority: this.getAuthority('finish'), isDisabled: (form: any) => form.finishedAt });
         return buttons;
+    }
+
+    forward(row: any): void {
+        this.router.navigateByUrl(row.targetPath);
     }
 
     finish(row: any): void {

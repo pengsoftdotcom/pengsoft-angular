@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
@@ -15,7 +16,6 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComponentModule } from './components/component.module';
@@ -31,6 +31,7 @@ import { FullScreenForgetPasswordComponent } from './pages/shared/forget-passwor
 import { FullScreenSignInComponent } from './pages/shared/sign-in/sign-in.component';
 import { SsModule } from './pages/ss/ss.module';
 import { SystemModule } from './pages/system/system.module';
+import { TaskModule } from './pages/task/task.module';
 
 registerLocaleData(zh);
 @NgModule({
@@ -59,6 +60,7 @@ registerLocaleData(zh);
         ComponentModule,
         DirectiveModule,
         IconsProviderModule,
+        TaskModule,
         SsModule,
         OaModule,
         AcsModule,

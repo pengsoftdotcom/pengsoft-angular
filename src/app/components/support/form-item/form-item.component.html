@@ -44,6 +44,8 @@
             </app-input-composite>
             <app-input-popup *ngSwitchCase="InputType.POPUP" [form]="form" [edit]="edit" [errors]="errors">
             </app-input-popup>
+            <app-input-json *ngSwitchCase="InputType.JSON" [form]="form" [edit]="edit" [errors]="errors">
+            </app-input-json>
             <app-input-text *ngSwitchDefault [form]="form" [edit]="edit" [errors]="errors"></app-input-text>
         </nz-form-control>
     </nz-form-item>

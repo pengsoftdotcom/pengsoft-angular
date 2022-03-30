@@ -8,10 +8,12 @@ import { InputComponent } from '../input.component';
 })
 export class TextComponent extends InputComponent {
 
-    override modelChange(event: any): void {
+    override modelChange(event: string): void {
         super.modelChange(event);
-        if (event === '' && this.edit.code) {
-            delete this.form[this.edit.code];
+        if (event === '') {
+            delete this.form[this.code];
+        } else {
+            this.form[this.code] = event.trim();
         }
     }
 

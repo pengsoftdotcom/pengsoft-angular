@@ -67,6 +67,9 @@ export class FormItemComponent extends BaseComponent implements OnInit {
         if (this.edit?.code) {
             this.code += this.edit.code;
         }
+        if (this.filterable && this.edit) {
+            this.edit.code = this.code;
+        }
     }
 
     private initForm() {

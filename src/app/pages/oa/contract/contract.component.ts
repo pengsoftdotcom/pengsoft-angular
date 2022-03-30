@@ -3,7 +3,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable } from 'rxjs';
-import { Button } from 'src/app/components/support/button/button';
 import { EditComponent } from 'src/app/components/support/edit/edit.component';
 import { EntityComponent } from 'src/app/components/support/entity.component';
 import { InputComponent } from 'src/app/components/support/input/input.component';
@@ -115,6 +114,7 @@ export class ContractComponent extends EntityComponent<ContractService> {
             }, this.dictionaryItem, 'contract_party_type'),
             partyBField,
             FieldUtils.buildHidden({ code: 'partyBId' }),
+            FieldUtils.buildSelectForDictionaryItem({ code: 'status', name: '状态' }, this.dictionaryItem, 'contract_status'),
             FieldUtils.buildDate({ code: 'signedAt', name: '签订日期' }),
             FieldUtils.buildDatetime({ code: 'confirmedAt', name: '确认时间', edit: { readonly: true, input: { placeholder: ' ' } } }),
             FieldUtils.buildUpload({

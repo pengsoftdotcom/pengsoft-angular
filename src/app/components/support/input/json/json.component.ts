@@ -16,7 +16,7 @@ export class JsonComponent extends InputComponent {
     override ngOnInit(): void {
         super.ngOnInit();
         this.jsonEditorOptions = new JsonEditorOptions();
-        this.jsonEditorOptions.modes = ['tree'];
+        this.jsonEditorOptions.modes = ['tree', 'view', 'form', 'code', 'text'];
         this.jsonEditorOptions.onChange = () => this.form[this.code] = this.jsonEditor.get();
     }
 

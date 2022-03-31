@@ -64,9 +64,15 @@ export class FormItemComponent extends BaseComponent implements OnInit {
         if (this.field?.parentCode) {
             this.code = this.field.parentCode + '.';
         }
+
         if (this.edit?.code) {
-            this.code += this.edit.code;
+            if (!this.edit.code?.startsWith(this.code)) {
+                this.code += this.edit.code;
+            } else {
+                this.code = this.edit.code;
+            }
         }
+
         if (this.filterable && this.edit) {
             this.edit.code = this.code;
         }

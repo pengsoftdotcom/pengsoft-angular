@@ -13,6 +13,7 @@ import { PushMessageComponent } from './push-message/push-message.component';
 import { SmsMessageComponent } from './sms-message/sms-message.component';
 import { EmailMessageComponent } from './email-message/email-message.component';
 import { SubscribeMessageComponent } from './subscribe-message/subscribe-message.component';
+import { SystemParamComponent } from './system-param/system-param.component';
 
 
 
@@ -28,7 +29,8 @@ import { SubscribeMessageComponent } from './subscribe-message/subscribe-message
         PushMessageComponent,
         SmsMessageComponent,
         EmailMessageComponent,
-        SubscribeMessageComponent
+        SubscribeMessageComponent,
+        SystemParamComponent
     ],
     imports: [
         CommonModule,

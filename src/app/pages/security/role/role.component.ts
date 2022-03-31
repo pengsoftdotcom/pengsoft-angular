@@ -65,7 +65,7 @@ export class RoleComponent extends TreeEntityComponent<RoleService> {
 
     override initFields(): Field[] {
         return super.initFields().concat(
-            FieldUtils.buildTextForCode(),
+            FieldUtils.buildTextForCode({ width: 420 }),
             FieldUtils.buildTextForName(),
             FieldUtils.buildTextareaForRemark()
         );

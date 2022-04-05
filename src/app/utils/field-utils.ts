@@ -497,13 +497,19 @@ export class FieldUtils {
         }, field ? field : {}));
     }
 
-    static buildPopupForStaff(field?: Field): Field {
+    static buildPopupForStaff(field: Field = {}): Field {
         return this.buildPopup(this.getField({
             code: 'staff', name: '员工',
-            edit: { required: true, input: { popupComponent: StaffPopupComponent, popupComponentParams: { title: field?.name ? '选择' + field.name : null }, popupComponentSelectRowCode: 'person.name' } },
+            edit: {
+                required: true, input: {
+                    popupComponent: StaffPopupComponent,
+                    popupComponentParams: { title: field?.name ? '选择' + field.name : null },
+                    popupComponentSelectRowCode: 'person.name'
+                }
+            },
             list: { align: 'center', width: 100, render: (f: Field, row: any) => f.code && row[f.code] ? row[f.code].person.name : '-' },
             filter: {}
-        }, field ? field : {}));
+        }, field));
     }
 
     static buildPopupForPerson(field?: Field): Field {

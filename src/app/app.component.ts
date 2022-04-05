@@ -61,27 +61,53 @@ export class AppComponent {
         if (security.isNotAuthenticated()) {
             this.signIn();
         }
-
         this.title.setTitle(environment.title);
-        this.menus = this.router.config.filter(
-            (route) => route.data || route.children
-        );
-        this.userDetails = this.security.userDetails;
 
-        if (this.userDetails.jobs && this.userDetails.jobs.length > 0) {
-            this.switchJobVisible = true;
-            if (this.userDetails.jobs.length === 1) {
-                this.switchJobReadonly = true;
+        this.initMenus();
+        this.initPerson();
+        this.initSwitchRole();
+        this.initSwitchJob();
+    }
+
+    private initMenus() {
+        this.menus = this.filterSubMenus(this.router.config.filter((route: Route) => route.data || route.children));
+    }
+
+    filterSubMenus(menus: Route[]): Route[] {
+        return menus.filter(menu => {
+            let visible = false;
+            if (menu.data) {
+                visible = this.security.hasAnyAuthority(menu.data['code'], menu.data['exclusive']);
             }
-        }
+            if (menu.children) {
+                menu.children = this.filterSubMenus(menu.children);
+                visible = menu.children && menu.children.length > 0;
+            }
+            return visible;
+        });
+    }
 
+
+    private initPerson() {
+        this.userDetails = this.security.userDetails;
+    }
+
+    private initSwitchRole() {
         if (!this.userDetails.jobs && this.userDetails.primaryRole && this.userDetails.primaryRole.code !== 'org_admin') {
             this.switchRoleVisible = true;
             if (this.userDetails.roles.length === 1) {
                 this.switchRoleReadonly = true;
             }
         }
+    }
 
+    private initSwitchJob() {
+        if (this.userDetails.jobs && this.userDetails.jobs.length > 0) {
+            this.switchJobVisible = true;
+            if (this.userDetails.jobs.length === 1) {
+                this.switchJobReadonly = true;
+            }
+        }
     }
 
     getMenuAuthority(route: Route): string {

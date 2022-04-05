@@ -10,19 +10,17 @@
         <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
             <ng-container *ngFor="let menu of menus">
                 <ng-container *ngIf="!menu.children; else elseBlock">
-                    <li nz-menu-item [hasAnyAuthority]="getMenuAuthority(menu)" [title]="menu.data.exclusive"
-                        [nzMatchRouter]="true" [routerLink]="menu.path">
+                    <li nz-menu-item [title]="menu.data.exclusive" [nzMatchRouter]="true" [routerLink]="menu.path">
                         <i nz-icon [nzType]="menu.data.icon"></i><span>{{menu.data.name}}</span>
                     </li>
                 </ng-container>
                 <ng-template #elseBlock>
-                    <li nz-submenu [hasAnyAuthority]="getMenuAuthority(menu)" [title]="menu.data.exclusive"
-                        [nzTitle]="menu.data.name" [nzIcon]="menu.data.icon" [nzOpen]="isMenuOpen(menu)">
+                    <li nz-submenu [title]="menu.data.exclusive" [nzTitle]="menu.data.name" [nzIcon]="menu.data.icon"
+                        [nzOpen]="isMenuOpen(menu)">
                         <ul>
                             <ng-container *ngFor="let submenu of menu.children">
                                 <ng-container *ngIf="!!submenu.children; else submenuElseBlock">
-                                    <li nz-submenu [hasAnyAuthority]="getMenuAuthority(submenu)"
-                                        [title]="submenu.data.exclusive" [nzTitle]="submenu.data.name"
+                                    <li nz-submenu [title]="submenu.data.exclusive" [nzTitle]="submenu.data.name"
                                         [nzIcon]="submenu.data.icon" [nzOpen]="isMenuOpen(submenu)">
                                         <ul>
                                             <li *ngFor="let subSubmenu of submenu.children" nz-menu-item

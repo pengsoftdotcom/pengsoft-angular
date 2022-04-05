@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { Edit } from '../edit/edit';
-import { Label } from '../form-item/label';
 
 @Component({
     template: ''

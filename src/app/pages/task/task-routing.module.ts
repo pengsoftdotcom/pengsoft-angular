@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TaskComponent } from './task/task.component';
 
 const routes: Routes = [
-    { path: 'task', component: TaskComponent, data: { code: 'task::task::find_page', name: '任务列表' } }
+    { path: 'task', component: TaskComponent, data: { code: 'task::task::find_page', name: '任务列表', icon: 'unordered-list' } }
 ];
 
 @NgModule({

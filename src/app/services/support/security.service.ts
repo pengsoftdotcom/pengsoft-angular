@@ -60,15 +60,11 @@ export class SecurityService {
     }
 
     hasAnyAuthority(authorityString?: string, exclusive?: string): boolean {
-        const authorities = [];
+        const authorities: string[] = [];
         if (authorityString) {
-            if (authorityString.indexOf(',') === -1) {
-                authorities.push(authorityString);
-            } else {
-                authorityString.split(',')
-                    .map(authority => authority.trim())
-                    .forEach(authority => authorities.push(authority));
-            }
+            authorityString.split(',')
+                .map(authority => authority.trim())
+                .forEach(authority => authorities.push(authority));
         }
         const userAuthorities: string[] = this.userDetails && this.userDetails.authorities ? this.userDetails.authorities : [];
         if (authorities.length > 0) {

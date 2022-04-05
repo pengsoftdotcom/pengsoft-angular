@@ -25,7 +25,8 @@ import {
     DownloadOutline,
     FileTwoTone,
     KeyOutline,
-    BellOutline
+    BellOutline,
+    UnorderedListOutline
 } from '@ant-design/icons-angular/icons';
 import { NzIconModule, NZ_ICONS } from 'ng-zorro-antd/icon';
 
@@ -56,7 +57,8 @@ const icons = [
     DownloadOutline,
     FileTwoTone,
     KeyOutline,
-    BellOutline
+    BellOutline,
+    UnorderedListOutline
 ];
 
 @NgModule({

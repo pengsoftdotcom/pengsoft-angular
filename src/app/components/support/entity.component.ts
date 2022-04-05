@@ -178,14 +178,16 @@ export abstract class EntityComponent<S extends EntityService> extends BaseCompo
 
     edit(row?: any): void {
         this.beforeEdit();
-        this.getEditComponent().show();
         const id = row ? row.id : null;
         if (this.entity) {
             this.entity.findOne(id, {
-                before: () => this.getEditComponent().loading = true,
-                success: res => this.editForm = res,
+                before: () => this.getListComponent().loading = true,
+                success: res => {
+                    this.editForm = res
+                    this.getEditComponent().show();
+                },
                 after: () => {
-                    this.getEditComponent().loading = false;
+                    this.getListComponent().loading = false;
                     this.afterEdit();
                 }
             });

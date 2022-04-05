@@ -1,5 +1,6 @@
 <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-    <input [id]="edit.code" type="text" [(ngModel)]="rawValue" nz-input [placeholder]="placeholder" disabled="true" />
+    <input [id]="edit.code" type="text" [(ngModel)]="form[code].name" nz-input [placeholder]="placeholder"
+        disabled="true" />
 </nz-input-group>
 <ng-template #suffixIconButton>
     <button nz-button nzSearch [disabled]="readonly"><i nz-icon nzType="search" (click)="popup()"></i></button>

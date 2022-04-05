@@ -1,4 +1,4 @@
-import { Component, OnChanges, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { DateUtils } from 'src/app/utils/date-utils';
 import { InputComponent } from '../input.component';
 
@@ -7,24 +7,13 @@ import { InputComponent } from '../input.component';
     templateUrl: './date.component.html',
     styleUrls: ['./date.component.scss']
 })
-export class DateComponent extends InputComponent implements OnChanges {
-
-
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes['form']) {
-            if (this.edit.code && this.form[this.edit.code]) {
-                this.rawValue = DateUtils.parseDate(this.form[this.edit.code]);
-            }
-        }
-    }
+export class DateComponent extends InputComponent {
 
     override modelChange(event: any): void {
-        if (this.edit.code) {
-            if (this.rawValue) {
-                this.form[this.edit.code] = DateUtils.formatDate(this.rawValue);
-            } else {
-                this.form[this.edit.code] = null;
-            }
+        if (this.rawValue) {
+            this.form[this.code] = DateUtils.formatDate(this.rawValue);
+        } else {
+            this.form[this.code] = null;
         }
     }
 

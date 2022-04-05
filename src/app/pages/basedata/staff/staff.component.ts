@@ -102,7 +102,7 @@ export class StaffComponent extends EntityComponent<StaffService> implements OnI
                 code: '', name: '职位信息', children: [
                     FieldUtils.buildTreeSelect({
                         code: 'job', name: '职位',
-                        list: { width: 100, align: 'center' },
+                        list: { width: 120, align: 'center' },
                         edit: {
                             required: true,
                             input: {

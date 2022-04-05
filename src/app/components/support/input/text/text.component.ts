@@ -10,7 +10,7 @@ export class TextComponent extends InputComponent {
 
     override modelChange(event: string): void {
         super.modelChange(event);
-        if (event === '') {
+        if (!event) {
             delete this.form[this.code];
         } else {
             this.form[this.code] = event.trim();

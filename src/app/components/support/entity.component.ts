@@ -210,7 +210,7 @@ export abstract class EntityComponent<S extends EntityService> extends BaseCompo
         }
     }
 
-    saveSuccess(res: any): void {
+    saveSuccess(_res: any): void {
         this.message.info('保存成功');
         this.getEditComponent().hide();
         this.list();
@@ -301,7 +301,7 @@ export abstract class EntityComponent<S extends EntityService> extends BaseCompo
         }
     }
 
-    afterDelete(deletedRows: any[]): void {
+    afterDelete(_deletedRows: any[]): void {
         this.list();
     }
 

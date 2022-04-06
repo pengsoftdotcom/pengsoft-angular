@@ -56,8 +56,7 @@ export class ContractComponent extends EntityComponent<ContractService> {
                     }
                 }
             },
-            list: { align: 'center', render: (f: Field, row: any) => row.partyA ? row.partyA.name : '-' },
-            filter: {}
+            list: { align: 'center', render: (_field: Field, row: any) => row.partyA ? row.partyA.name : '-' }
         });
         const partyBField = FieldUtils.buildPopup({
             code: 'partyB', name: '乙方',
@@ -74,8 +73,7 @@ export class ContractComponent extends EntityComponent<ContractService> {
                     }
                 }
             },
-            list: { align: 'center', render: (f: Field, row: any) => row.partyB ? row.partyB.name : '-' },
-            filter: {}
+            list: { align: 'center', render: (_field: Field, row: any) => row.partyB ? row.partyB.name : '-' }
         });
         return [
             FieldUtils.buildSelectForDictionaryItem({
@@ -92,7 +90,8 @@ export class ContractComponent extends EntityComponent<ContractService> {
                         }
                     }
                 },
-                list: { visible: false }
+                list: { visible: false },
+                filter: {}
             }, this.dictionaryItem, 'contract_party_type'),
             partyAField,
             FieldUtils.buildHidden({ code: 'partyAId' }),
@@ -110,7 +109,8 @@ export class ContractComponent extends EntityComponent<ContractService> {
                         }
                     }
                 },
-                list: { visible: false }
+                list: { visible: false },
+                filter: {}
             }, this.dictionaryItem, 'contract_party_type'),
             partyBField,
             FieldUtils.buildHidden({ code: 'partyBId' }),

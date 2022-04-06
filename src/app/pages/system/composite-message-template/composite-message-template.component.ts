@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { Button } from 'src/app/components/support/button/button';
 import { EditComponent } from 'src/app/components/support/edit/edit.component';
 import { EntityComponent } from 'src/app/components/support/entity.component';
 import { Field } from 'src/app/components/support/list/field';
@@ -83,6 +84,16 @@ export class CompositeMessageTemplateComponent extends EntityComponent<Composite
                 ]
             })
         ];
+    }
+
+    override initEditToolbar(): Button[] {
+        const buttons = super.initEditToolbar();
+        buttons.push({ name: '清除站内消息', type: 'primary', size: 'default', action: () => this.editForm.internal = {} });
+        buttons.push({ name: '清除推送消息', type: 'primary', size: 'default', action: () => this.editForm.push = {} });
+        buttons.push({ name: '清除短信消息', type: 'primary', size: 'default', action: () => this.editForm.sms = {} });
+        buttons.push({ name: '清除邮件消息', type: 'primary', size: 'default', action: () => this.editForm.email = {} });
+        buttons.push({ name: '清除订阅消息', type: 'primary', size: 'default', action: () => this.editForm.subscribe = {} });
+        return buttons;
     }
 
     override afterEdit(): void {

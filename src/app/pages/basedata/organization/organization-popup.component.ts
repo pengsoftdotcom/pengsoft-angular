@@ -25,7 +25,7 @@ export class OrganizationPopupComponent extends OrganizationComponent {
         return [{ name: this.action, type: 'link', width: 30, action: (row: any) => this.select(row) }]
     }
 
-    select(row: any) {
+    select(_row: any) {
         //
     }
 

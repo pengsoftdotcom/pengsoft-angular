@@ -1,7 +1,7 @@
 <ng-template #content>
     <nz-spin [nzSpinning]="loading">
         <div class="edit">
-            <form nz-form [style.height]="formHeight + 'px'" [style.paddingTop]="level === 3 ? '0' : '24px'">
+            <form nz-form [style.height]="formHeight + 'px'">
                 <div nz-row>
                     <ng-container *ngFor="let field of level1Fields" [ngTemplateOutlet]="level1"
                         [ngTemplateOutletContext]="{field: field, form: form}"></ng-container>

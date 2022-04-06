@@ -28,7 +28,7 @@ export class FieldUtils {
 
     static EXECL: string = 'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
-    static buildCaptcha(field?: Field): Field {
+    static buildCaptcha(field: Field = {}): Field {
         field = Object.assign({ code: 'captcha' }, field);
         field = this.getEdit(field, {
             label: { visible: false },
@@ -64,19 +64,19 @@ export class FieldUtils {
         });
     }
 
-    static buildTextForCode(list?: List): Field {
+    static buildTextForCode(list: List = {}): Field {
         return this.buildText({
             code: 'code', name: '编码',
             list: Object.assign({
                 sortable: true, sortPriority: 1,
-                render: (field: Field, row: any, sanitizer: DomSanitizer) => sanitizer.bypassSecurityTrustHtml(`<code>${row.code}</code>`)
+                render: (_field: Field, row: any, sanitizer: DomSanitizer) => sanitizer.bypassSecurityTrustHtml(`<code>${row.code}</code>`)
             }, list),
             edit: { required: true },
             filter: {}
         });
     }
 
-    static buildTextForName(field?: Field): Field {
+    static buildTextForName(field: Field = {}): Field {
         field = Object.assign({ code: 'name', name: field && field.name ? field.name : '名称' }, field);
         let sortable = true;
         if (field && field.list && !field.list.sortable) {
@@ -140,7 +140,7 @@ export class FieldUtils {
         return field;
     }
 
-    static buildSelectForOrganization(organization: OrganizationService, field?: Field) {
+    static buildSelectForOrganization(organization: OrganizationService, field: Field = {}) {
         if (field) {
             if (!field.edit) {
                 field.edit = {};
@@ -172,7 +172,7 @@ export class FieldUtils {
         return this.buildSelect(field);
     }
 
-    static buildSelectForGender(dictionaryItem: DictionaryItemService, field?: Field): Field {
+    static buildSelectForGender(dictionaryItem: DictionaryItemService, field: Field = {}): Field {
         field = Object.assign({ code: 'gender', name: '性别' }, field);
         return this.buildSelectForDictionaryItem(field, dictionaryItem);
     }
@@ -223,10 +223,10 @@ export class FieldUtils {
         return field;
     }
 
-    static buildCascaderForRegion(region: RegionService, field?: Field): Field {
+    static buildCascaderForRegion(region: RegionService, field: Field = {}): Field {
         if (field) {
             field = this.getList(field, {
-                render: (f: Field, row: any) => {
+                render: (_field: Field, row: any) => {
                     const parents = [];
                     let parent = row.region;
                     while (parent) {
@@ -325,10 +325,10 @@ export class FieldUtils {
         return field;
     }
 
-    static buildBooleanForEnabled(field?: Field): Field {
+    static buildBooleanForEnabled(field: Field = {}): Field {
         field = Object.assign({
             code: 'enabled', name: '是否启用', list: {
-                render: (f: Field, row: any, sanitizer: DomSanitizer) => {
+                render: (_field: Field, row: any, sanitizer: DomSanitizer) => {
                     if (field && field.code && row[field.code]) {
                         return sanitizer.bypassSecurityTrustHtml('<span style="color: #0b8235">启用</span>');
                     } else {
@@ -340,11 +340,11 @@ export class FieldUtils {
         return this.buildBoolean(field);
     }
 
-    static buildBooleanForLocked(field?: Field): Field {
+    static buildBooleanForLocked(field: Field = {}): Field {
         field = Object.assign({
             code: 'locked', name: '是否锁定',
             list: {
-                render: (f: Field, row: any, sanitizer: DomSanitizer) => {
+                render: (_field: Field, row: any, sanitizer: DomSanitizer) => {
                     if (field && field.code && row[field.code]) {
                         return sanitizer.bypassSecurityTrustHtml('<span style="color: #0b8235">是</span>');
                     } else {
@@ -405,7 +405,7 @@ export class FieldUtils {
                     FieldUtils.buildNumber({
                         code: 'mobile', name: '手机号码',
                         list: {
-                            width: 140, align: 'center', render: (field: Field, row: any, sanitizer: DomSanitizer) => {
+                            width: 140, align: 'center', render: (_field: Field, row: any, sanitizer: DomSanitizer) => {
                                 if (row.mobile) {
                                     return sanitizer.bypassSecurityTrustHtml(`<code>${row ? row.mobile : ''}</code>`);
                                 } else {
@@ -485,7 +485,7 @@ export class FieldUtils {
         return field;
     }
 
-    static buildPopupForOrganization(field?: Field) {
+    static buildPopupForOrganization(field: Field = {}) {
         return this.buildPopup(this.getField({
             code: 'organization', name: '机构',
             edit: {
@@ -494,7 +494,7 @@ export class FieldUtils {
             },
             list: { render: (f: Field, row: any) => f.code && row[f.code] ? row[f.code].shortName : '-' },
             filter: {}
-        }, field ? field : {}));
+        }, field));
     }
 
     static buildPopupForStaff(field: Field = {}): Field {
@@ -512,13 +512,13 @@ export class FieldUtils {
         }, field));
     }
 
-    static buildPopupForPerson(field?: Field): Field {
+    static buildPopupForPerson(field: Field = {}): Field {
         return this.buildPopup(this.getField({
             code: 'person', name: '人员',
             edit: { required: true, input: { popupComponent: PersonPopupComponent, popupComponentParams: { title: field?.name ? '选择' + field.name : null }, popupComponentSelectRowCode: 'name' } },
             list: { align: 'center', width: 100, render: (f: Field, row: any) => f.code && row[f.code] ? row[f.code].name : '-' },
             filter: {}
-        }, field ? field : {}));
+        }, field));
     }
 
     static getField(sourceField: Field, targetField: Field): Field {
@@ -545,7 +545,7 @@ export class FieldUtils {
         return Object.assign(sourceField, targetField);
     }
 
-    static getList(field: Field, list?: List): Field {
+    static getList(field: Field, list: List = {}): Field {
         list = Object.assign({
             filterable: false,
             sortable: false,
@@ -564,56 +564,41 @@ export class FieldUtils {
         return field;
     }
 
-    static getEdit(field: Field, edit?: Edit): Field {
+    static getEdit(field: Field, edit: Edit = {}): Field {
+        const label = field.edit?.label;
+        const input = field.edit?.input;
         field.edit = Object.assign({ visible: true, colSpan: 1 }, field.edit);
-        if (edit) {
-            const label = edit.label;
-            delete edit.label;
-            const input = edit.input;
-            delete edit.input;
-            field.edit = Object.assign(field.edit, edit);
-            field = label ? this.getLabel(field, label) : this.getLabel(field);
-            field = input ? this.getInput(field, input) : this.getInput(field);
-        } else {
-            field = this.getLabel(field);
-            field = this.getInput(field);
-        }
+        field.edit = Object.assign(field.edit, edit);
+        field = this.getLabel(field, label);
+        field = this.getInput(field, input);
         if (field.edit && !field.edit.code) {
             field.edit.code = field.code;
         }
         if (field.filter) {
-            const label = field.filter.label;
-            delete field.filter.label;
-            const input = field.filter.input;
-            delete field.filter.input;
+            const filterLabel = field.filter.label;
+            const filterInput = field.filter.input;
             const visible = field.filter.visible;
-            field.filter = Object.assign(field.filter, field.edit);
-            field.filter.visible = visible;
-            if (label) {
-                field.filter.label = label;
-            }
-            if (input) {
-                field.filter.input = input;
+            field.filter = Object.assign(field.edit, field.filter);
+            field.filter.label = Object.assign(field.edit?.label, filterLabel);
+            field.filter.input = Object.assign(field.edit?.input, filterInput);
+            if (visible !== undefined) {
+                field.filter.visible = visible;
             }
         }
         return field;
     }
 
-    static getLabel(field: Field, label?: Label): Field {
+    static getLabel(field: Field, label: Label = {}): Field {
         field.edit = Object.assign({}, field.edit);
         field.edit.label = Object.assign({ span: 4 }, field.edit.label);
-        if (label) {
-            field.edit.label = Object.assign(label, field.edit.label);
-        }
+        field.edit.label = Object.assign(label, field.edit.label);
         return field;
     }
 
-    static getInput(field: Field, input?: Input): Field {
+    static getInput(field: Field, input: Input = {}): Field {
         field.edit = Object.assign({}, field.edit);
         field.edit.input = Object.assign({ span: 20 }, field.edit.input);
-        if (input) {
-            field.edit.input = Object.assign(input, field.edit.input);
-        }
+        field.edit.input = Object.assign(input, field.edit.input);
         return field;
     }
 

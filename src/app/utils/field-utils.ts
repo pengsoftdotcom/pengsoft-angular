@@ -136,7 +136,7 @@ export class FieldUtils {
                 }
             }
         });
-        field = this.getEdit(field, { input: { lazy: false, multiple: false, options: [], placeholder: '请选择', type: InputType.SELECT } });
+        field = this.getEdit(field, { input: { lazy: false, multiple: false, options: field.edit?.input?.options ? field.edit?.input?.options : [], placeholder: '请选择', type: InputType.SELECT } });
         return field;
     }
 

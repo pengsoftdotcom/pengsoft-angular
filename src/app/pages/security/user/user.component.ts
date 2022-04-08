@@ -100,7 +100,7 @@ export class UserComponent extends EntityComponent<UserService> {
                     width: 63, align: 'center',
                     render: (field: Field, row: any) => {
                         if (field.edit?.input?.options) {
-                            return field.edit.input.options.filter(option => field.code && EntityUtils.equals(option.value, row[field.code]))[0].label;
+                            return field.edit.input.options.filter(option => field.code && EntityUtils.equals(option.value, row[field.code]))[0]?.label;
                         } else {
                             return '-';
                         }

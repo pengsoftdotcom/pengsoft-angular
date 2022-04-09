@@ -58,7 +58,6 @@ export class SafetyCheckComponent extends EntityComponent<SafetyCheckService> {
         return [
             FieldUtils.buildSelect({ code: 'project', name: '工程项目', edit: { readonly: true, required: true }, list: { visible: false } }),
             FieldUtils.buildTextForCode({ width: 180, align: 'center' }),
-            FieldUtils.buildSelectForDictionaryItem({ code: 'type', name: '检查类型', edit: { required: true } }, this.dictionaryItem, 'safety_check_type'),
             FieldUtils.buildPopup({
                 code: 'checker', name: '检查人',
                 edit: {

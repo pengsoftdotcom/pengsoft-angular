@@ -52,7 +52,6 @@ export class SafetyCheckComponent extends EntityComponent<SafetyCheckService> {
     override ngOnInit(): void {
         super.ngOnInit();
         this.editComponent.width = '40%';
-
     }
 
     initFields(): Field[] {
@@ -84,7 +83,7 @@ export class SafetyCheckComponent extends EntityComponent<SafetyCheckService> {
                 code: 'status', name: '状态',
                 edit: { required: true },
                 list: {
-                    width: 60, align: 'center', render: (field: Field, row: any, sanitizer: DomSanitizer) => {
+                    width: 60, align: 'center', render: (_field: Field, row: any, sanitizer: DomSanitizer) => {
                         if (row.status.code === 'safe') {
                             return sanitizer.bypassSecurityTrustHtml(`<span style="color: #0b8235">${row.status.name}</span>`);
                         } else {
@@ -145,7 +144,7 @@ export class SafetyCheckComponent extends EntityComponent<SafetyCheckService> {
             this.entity.submit(form, {
                 errors: this.errors,
                 before: () => this.getEditComponent().loading = true,
-                success: (res: any) => {
+                success: () => {
                     this.message.info('提交成功');
                     this.getEditComponent().hide();
                     this.list();
@@ -161,7 +160,7 @@ export class SafetyCheckComponent extends EntityComponent<SafetyCheckService> {
             this.entity.handle(form, {
                 errors: this.errors,
                 before: () => this.getEditComponent().loading = true,
-                success: (res: any) => {
+                success: () => {
                     this.message.info('处理成功');
                     this.getEditComponent().hide();
                     this.list();

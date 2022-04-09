@@ -213,7 +213,7 @@ export class ListComponent extends BaseComponent implements OnInit {
 
     isVisible(row: any): boolean {
         if (this.tree) {
-            const parents = this.listData.filter((data, i) => row.id !== data.id && row.parentIds.indexOf(data.id) > -1);
+            const parents = this.listData.filter((data: any) => row.id !== data.id && row.parentIds.indexOf(data.id) > -1);
             if (parents.length > 0) {
                 return parents.every(parent => parent.expand);
             }

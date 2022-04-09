@@ -1,12 +1,6 @@
 <nz-upload nzListType="picture-card" [nzAction]="action" [nzHeaders]="headers" [(nzFileList)]="files"
     (nzChange)="modelChange($event)" [nzPreview]="preview" [nzDownload]="download" [nzRemove]="remove"
     [nzAccept]="upload.accept" [nzShowButton]="upload.multiple || files.length < 1" [nzDisabled]="readonly"
-    [nzShowUploadList]="{showPreviewIcon: isImage, showDownloadIcon: true, showRemoveIcon: showRemove()}">
+    [nzShowUploadList]="{showPreviewIcon: showPreview(), showDownloadIcon: showDownload(), showRemoveIcon: showRemove()}">
     <i nz-icon nzType="plus"></i>
 </nz-upload>
-<nz-modal [nzVisible]="thumbnail.visible" [nzContent]="modalContent" [nzFooter]="null"
-    (nzOnCancel)="thumbnail.visible = false">
-    <ng-template #modalContent>
-        <img [src]="thumbnail.data" [ngStyle]="{ width: '100%' }" alt="" />
-    </ng-template>
-</nz-modal>

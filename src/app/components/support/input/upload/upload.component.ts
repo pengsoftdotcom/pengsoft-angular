@@ -83,25 +83,63 @@ export class UploadComponent extends InputComponent implements OnChanges {
         }
     }
 
+    showPreview(): boolean {
+        if (this.edit.input) {
+            const upload = this.edit.input as Upload;
+            if (upload.showPreview) {
+                return upload.showPreview(this.form);
+            } else {
+                return !!upload.preview;
+            }
+        }
+        return false;
+    }
+
     preview = (file: NzUploadFile): void => {
-        if (file.status === 'done') {
-            this.thumbnail.visible = true;
-            this.thumbnail.data = file.thumbUrl;
+        if (this.upload.preview) {
+            this.upload.preview(file);
         }
     }
 
-    download = (file: NzUploadFile): void => {
-        if (this.isImage) {
-            var image = new Image();
-            if (file.thumbUrl) {
-                image.src = file.thumbUrl;
-            }
-            const doc = window.open()?.document;
-            if (doc) {
-                doc.write(image.outerHTML);
-                doc.close();
+    showDownload(): boolean {
+        if (this.edit.input) {
+            const upload = this.edit.input as Upload;
+            if (upload.showDownload) {
+                return upload.showDownload(this.form);
             }
         }
+        return true;
+    }
+
+    download = (file: NzUploadFile): void => {
+        if (this.upload.download) {
+            this.upload.download(file);
+        } else {
+            if (this.isImage) {
+                var image = new Image();
+                if (file.thumbUrl) {
+                    image.src = file.thumbUrl;
+                }
+                const doc = window.open()?.document;
+                if (doc) {
+                    doc.write(image.outerHTML);
+                    doc.close();
+                }
+            } else {
+                window.open(file.thumbUrl);
+            }
+        }
+    }
+
+
+    showRemove(): boolean {
+        if (this.edit.input) {
+            const upload = this.edit.input as Upload;
+            if (upload.showRemove) {
+                return upload.showRemove(this.form);
+            }
+        }
+        return true;
     }
 
     remove = (file: NzUploadFile): boolean | Observable<boolean> => {
@@ -135,16 +173,6 @@ export class UploadComponent extends InputComponent implements OnChanges {
                 event.file['message'] = event.file.error.error.error_description;
                 break;
         }
-    }
-
-    showRemove(): boolean {
-        if (this.edit.input) {
-            const upload = this.edit.input as Upload;
-            if (upload.showRemove) {
-                return upload.showRemove(this.form);
-            }
-        }
-        return true;
     }
 
 }

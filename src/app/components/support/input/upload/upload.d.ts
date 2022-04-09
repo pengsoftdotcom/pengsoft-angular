@@ -12,6 +12,14 @@ export interface Upload extends Input {
 
     convertToFile?(entity: any): Promise<NzUploadFile>;
 
+    showPreview?(form: any): boolean;
+
+    preview?(file: NzUploadFile): void;
+
+    showDownload?(form: any): boolean;
+
+    download?(file: NzUploadFile): void;
+
     showRemove?(form: any): boolean;
 
     remove?(file: NzUploadFile): boolean | Observable<boolean>;

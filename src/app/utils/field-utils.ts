@@ -303,7 +303,7 @@ export class FieldUtils {
     }
 
     static buildDate(field: Field): Field {
-        field = this.getList(field, { width: 170, align: 'center' });
+        field = this.getList(field, { width: 110, align: 'center' });
         field = this.getEdit(field, { input: { placeholder: '请选择', type: InputType.DATE } });
         return field;
     }

@@ -4,7 +4,6 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { Button } from 'src/app/components/support/button/button';
 import { EditComponent } from 'src/app/components/support/edit/edit.component';
 import { EntityComponent } from 'src/app/components/support/entity.component';
-import { InputComponent } from 'src/app/components/support/input/input.component';
 import { Field } from 'src/app/components/support/list/field';
 import { ListComponent } from 'src/app/components/support/list/list.component';
 import { ConstructionProjectService } from 'src/app/services/ss/construction-project.service';
@@ -63,7 +62,8 @@ export class ConstructionProjectComponent extends EntityComponent<ConstructionPr
         });
         return [
             FieldUtils.buildTextForCode({ width: 120, align: 'center' }),
-            FieldUtils.buildTextForName(),
+            FieldUtils.buildTextForName({ list: { visible: false } }),
+            FieldUtils.buildText({ code: 'shortName', name: '简称' }),
             FieldUtils.buildText({
                 code: '', name: '监管单位',
                 children: [
@@ -143,9 +143,12 @@ export class ConstructionProjectComponent extends EntityComponent<ConstructionPr
                         }, list: { label: '名称', align: 'center' }
                     }),
                     buManagerField,
-                    FieldUtils.buildNumber({ code: 'payday', name: '发薪日', list: { width: 60, align: 'center' } })
+
                 ]
             }),
+            FieldUtils.buildNumber({ code: 'payday', name: '发薪日', list: { visible: false } }),
+            FieldUtils.buildDate({ code: 'startedAt', name: '开工时间' }),
+            FieldUtils.buildDate({ code: 'completedAt', name: '完工时间' })
         ];
     }
 

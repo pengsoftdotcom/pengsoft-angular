@@ -8,6 +8,7 @@ import { Field } from 'src/app/components/support/list/field';
 import { ListComponent } from 'src/app/components/support/list/list.component';
 import { ConstructionProjectService } from 'src/app/services/ss/construction-project.service';
 import { SecurityService } from 'src/app/services/support/security.service';
+import { DictionaryItemService } from 'src/app/services/system/dictionary-item.service';
 import { FieldUtils } from 'src/app/utils/field-utils';
 
 @Component({
@@ -28,6 +29,7 @@ export class ConstructionProjectComponent extends EntityComponent<ConstructionPr
     @ViewChild('file') file: ElementRef;
 
     constructor(
+        private dictionaryItem: DictionaryItemService,
         public override entity: ConstructionProjectService,
         public override security: SecurityService,
         public override modal: NzModalService,
@@ -64,6 +66,10 @@ export class ConstructionProjectComponent extends EntityComponent<ConstructionPr
             FieldUtils.buildTextForCode({ width: 120, align: 'center' }),
             FieldUtils.buildTextForName({ list: { visible: false } }),
             FieldUtils.buildText({ code: 'shortName', name: '简称' }),
+            FieldUtils.buildNumber({ code: 'payday', name: '发薪日', list: { visible: false } }),
+            FieldUtils.buildSelectForDictionaryItem({ code: 'status', name: '状态', edit: { required: true }, list: { width: 100, align: 'center' } }, this.dictionaryItem, 'construction_project_status'),
+            FieldUtils.buildDate({ code: 'startedAt', name: '开工时间' }),
+            FieldUtils.buildDate({ code: 'completedAt', name: '完工时间' }),
             FieldUtils.buildText({
                 code: '', name: '监管单位',
                 children: [
@@ -145,10 +151,7 @@ export class ConstructionProjectComponent extends EntityComponent<ConstructionPr
                     buManagerField,
 
                 ]
-            }),
-            FieldUtils.buildNumber({ code: 'payday', name: '发薪日', list: { visible: false } }),
-            FieldUtils.buildDate({ code: 'startedAt', name: '开工时间' }),
-            FieldUtils.buildDate({ code: 'completedAt', name: '完工时间' })
+            })
         ];
     }
 

@@ -8,7 +8,7 @@ const routes: Routes = [{
     path: 'ss',
     data: { name: '工地安全', icon: 'safety' },
     children: [
-        { path: 'construction-project', component: ConstructionProjectComponent, data: { code: 'ss::construction_project::find_page', name: '工程项目' } },
+        { path: 'construction-project', component: ConstructionProjectComponent, data: { code: 'ss::construction_project::find_page', name: '建筑项目' } },
         { path: 'safety-training', component: SafetyTrainingComponent, data: { code: 'ss::safety_training::find_page', name: '安全培训' } },
         { path: 'safety-check', component: SafetyCheckComponent, data: { code: 'ss::safety_check::find_page', name: '安全检查' } },
     ]

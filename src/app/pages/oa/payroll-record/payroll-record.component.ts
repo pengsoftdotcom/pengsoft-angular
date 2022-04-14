@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { EditComponent } from 'src/app/components/support/edit/edit.component';
@@ -8,6 +7,7 @@ import { Field } from 'src/app/components/support/list/field';
 import { ListComponent } from 'src/app/components/support/list/list.component';
 import { PayrollRecordService } from 'src/app/services/oa/payroll-record.service';
 import { SecurityService } from 'src/app/services/support/security.service';
+import { DictionaryItemService } from 'src/app/services/system/dictionary-item.service';
 import { FieldUtils } from 'src/app/utils/field-utils';
 
 @Component({
@@ -26,6 +26,7 @@ export class PayrollRecordComponent extends EntityComponent<PayrollRecordService
     getEditComponent(): EditComponent { return this.editComponent }
 
     constructor(
+        private dictionaryItem: DictionaryItemService,
         public override entity: PayrollRecordService,
         public override security: SecurityService,
         public override modal: NzModalService,
@@ -36,24 +37,18 @@ export class PayrollRecordComponent extends EntityComponent<PayrollRecordService
 
     initFields(): Field[] {
         return [
-            FieldUtils.buildText({
-                code: 'code', name: '期数',
-                list: {
-                    sortable: true, sortPriority: 1,
-                    render: (field: Field, row: any, sanitizer: DomSanitizer) => sanitizer.bypassSecurityTrustHtml(`<code>${row.code}</code>`)
-                },
-                edit: { required: true, readonly: (row: any) => !!row.id },
-                filter: {}
-            }),
-            FieldUtils.buildNumber({ code: 'paidCount', name: '支付人数', edit: { readonly: true } }),
+            FieldUtils.buildNumber({ code: 'year', name: '年', list: { width: 100, align: 'center' } }),
+            FieldUtils.buildNumber({ code: 'month', name: '月', list: { width: 100, align: 'center' } }),
+            FieldUtils.buildSelectForDictionaryItem({ code: 'status', name: '状态', list: { width: 100, align: 'center' } }, this.dictionaryItem, 'payroll_record_status'),
+            FieldUtils.buildNumber({ code: 'paidCount', name: '支付人数', edit: { readonly: false } }),
             FieldUtils.buildNumber({ code: 'confirmedCount', name: '确认人数', edit: { readonly: true } }),
-            FieldUtils.buildUpload({ code: 'sheet', name: '工资表', edit: { required: true } }, {
+            FieldUtils.buildUpload({ code: 'sheet', name: '工资表' }, {
                 locked: true, accept: FieldUtils.EXECL
             }),
-            FieldUtils.buildUpload({ code: 'signedSheet', name: '工资确认表', edit: { required: true } }, {
+            FieldUtils.buildUpload({ code: 'signedSheet', name: '工资确认表' }, {
                 locked: true, accept: FieldUtils.IMAGE
             }),
-            FieldUtils.buildDatetime({ code: 'importedAt', name: '导入时间', edit: { readonly: true } })
+            FieldUtils.buildDatetime({ code: 'importedAt', name: '导入时间', list: { visible: false }, edit: { readonly: true } })
         ];
     }
 

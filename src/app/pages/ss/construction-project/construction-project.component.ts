@@ -66,7 +66,6 @@ export class ConstructionProjectComponent extends EntityComponent<ConstructionPr
             FieldUtils.buildTextForCode({ width: 120, align: 'center' }),
             FieldUtils.buildTextForName({ list: { visible: false } }),
             FieldUtils.buildText({ code: 'shortName', name: '简称' }),
-            FieldUtils.buildNumber({ code: 'payday', name: '发薪日', list: { visible: false } }),
             FieldUtils.buildSelectForDictionaryItem({ code: 'status', name: '状态', edit: { required: true }, list: { width: 100, align: 'center' } }, this.dictionaryItem, 'construction_project_status'),
             FieldUtils.buildDate({ code: 'startedAt', name: '开工时间' }),
             FieldUtils.buildDate({ code: 'completedAt', name: '完工时间' }),

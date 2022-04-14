@@ -2,12 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
+import { Observable } from 'rxjs';
 import { Button } from 'src/app/components/support/button/button';
 import { EditOneToManyComponent } from 'src/app/components/support/edit-one-to-many/edit-one-to-many.component';
 import { EditComponent } from 'src/app/components/support/edit/edit.component';
-import { Field } from 'src/app/components/support/list/field';
-import { Option } from 'src/app/components/support/input/tree-select/option';
 import { InputComponent } from 'src/app/components/support/input/input.component';
+import { Option } from 'src/app/components/support/input/tree-select/option';
+import { Field } from 'src/app/components/support/list/field';
 import { ListComponent } from 'src/app/components/support/list/list.component';
 import { TreeEntityComponent } from 'src/app/components/support/tree-entity.component';
 import { OrganizationService } from 'src/app/services/basedata/organization.service';
@@ -24,8 +26,6 @@ import { PersonComponent } from '../person/person.component';
 import { PostComponent } from '../post/post.component';
 import { RankComponent } from '../rank/rank.component';
 import { AuthenticationComponent } from './authentication.component';
-import { NzUploadFile } from 'ng-zorro-antd/upload';
-import { Observable } from 'rxjs';
 
 
 @Component({
@@ -86,7 +86,7 @@ export class OrganizationComponent extends TreeEntityComponent<OrganizationServi
             FieldUtils.buildUpload({
                 code: 'logo', name: 'Logo', list: {
                     align: 'center',
-                    visible: true, render: (field: Field, row: any, sanitizer: DomSanitizer) => {
+                    visible: true, render: (_field: Field, row: any, _sanitizer: DomSanitizer) => {
                         if (row.logo) {
                             const src = row.logo.accessPath + '?x-oss-process=image/resize,h_32';
                             return `<img src="${src}"></img>`
@@ -132,6 +132,7 @@ export class OrganizationComponent extends TreeEntityComponent<OrganizationServi
             }),
             FieldUtils.buildTextForName(),
             FieldUtils.buildText({ code: 'shortName', name: '简称' }),
+            FieldUtils.buildNumber({ code: 'payday', name: '发薪日', list: { width: 100, align: 'center' } }),
             FieldUtils.buildCascader({
                 code: 'type', name: '类型',
                 list: { width: 200, align: 'center' },
@@ -157,7 +158,7 @@ export class OrganizationComponent extends TreeEntityComponent<OrganizationServi
                 code: 'authentication', name: '实名认证状态', edit: { visible: false }, list: {
                     visible: false,
                     align: 'center',
-                    render: (field, row, sanitizer) => {
+                    render: (_field, row, sanitizer) => {
                         const value = row.authentication;
                         if (!value || value.status.code === 'unauthenticated') {
                             return sanitizer.bypassSecurityTrustHtml('<span style="color: #ff4d4f">未认证</span>');

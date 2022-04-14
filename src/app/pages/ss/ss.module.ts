@@ -6,6 +6,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { ComponentModule } from 'src/app/components/component.module';
 import { ConstructionProjectComponent } from './construction-project/construction-project.component';
+import { QualityCheckComponent } from './quality-check/quality-check.component';
 import { SafetyCheckComponent } from './safety-check/safety-check.component';
 import { SafetyTrainingParticipantComponent } from './safety-training-participant/safety-training-participant.component';
 import { SafetyTrainingComponent } from './safety-training/safety-training.component';
@@ -16,7 +17,8 @@ import { SsRoutingModule } from './ss-routing.module';
         ConstructionProjectComponent,
         SafetyTrainingComponent,
         SafetyTrainingParticipantComponent,
-        SafetyCheckComponent
+        SafetyCheckComponent,
+        QualityCheckComponent
     ],
     imports: [
         CommonModule,

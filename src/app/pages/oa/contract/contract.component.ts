@@ -45,6 +45,7 @@ export class ContractComponent extends EntityComponent<ContractService> {
             code: 'partyA', name: '甲方',
             edit: {
                 required: true,
+                readonly: (form: any) => !form.partyAType,
                 input: {
                     popupComponentParams: { title: '选择甲方' }, popupComponentSelect: (component: InputComponent, row: any) => {
                         if (this.editForm.partyBId === row.id) {
@@ -56,12 +57,14 @@ export class ContractComponent extends EntityComponent<ContractService> {
                     }
                 }
             },
-            list: { align: 'center', render: (_field: Field, row: any) => row.partyA ? row.partyA.name : '-' }
+            list: { align: 'center', render: (_field: Field, row: any) => row.partyA ? row.partyA.name : '-' },
+            filter: {}
         });
         const partyBField = FieldUtils.buildPopup({
             code: 'partyB', name: '乙方',
             edit: {
                 required: true,
+                readonly: (form: any) => !form.partyBType,
                 input: {
                     popupComponentParams: { title: '选择乙方' }, popupComponentSelect: (component: InputComponent, row: any) => {
                         if (this.editForm.partyAId === row.id) {
@@ -73,7 +76,8 @@ export class ContractComponent extends EntityComponent<ContractService> {
                     }
                 }
             },
-            list: { align: 'center', render: (_field: Field, row: any) => row.partyB ? row.partyB.name : '-' }
+            list: { align: 'center', render: (_field: Field, row: any) => row.partyB ? row.partyB.name : '-' },
+            filter: {}
         });
         return [
             FieldUtils.buildSelectForDictionaryItem({
@@ -82,7 +86,7 @@ export class ContractComponent extends EntityComponent<ContractService> {
                     required: true, input: {
                         modelChange: () => {
                             delete this.editForm.partyAId;
-                            delete this.editForm.partyA;
+                            this.editForm.partyA = {};
                             (document.getElementById('partyA') as HTMLInputElement).value = '';
                             if (this.editForm.partyAType && partyAField.edit && partyAField.edit.input) {
                                 partyAField.edit.input.popupComponent = this.editForm.partyAType.code === 'organization' ? OrganizationPopupComponent : PersonPopupComponent;
@@ -101,7 +105,7 @@ export class ContractComponent extends EntityComponent<ContractService> {
                     required: true, input: {
                         modelChange: () => {
                             delete this.editForm.partyBId;
-                            delete this.editForm.partyB;
+                            this.editForm.partyB = {};
                             (document.getElementById('partyB') as HTMLInputElement).value = '';
                             if (this.editForm.partyBType && partyBField.edit && partyBField.edit.input) {
                                 partyBField.edit.input.popupComponent = this.editForm.partyBType.code === 'organization' ? OrganizationPopupComponent : PersonPopupComponent;

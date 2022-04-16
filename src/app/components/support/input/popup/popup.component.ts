@@ -11,8 +11,6 @@ export class PopupComponent extends InputComponent {
 
     multiple = false;
 
-    component: any = {};
-
     params: any = {};
 
     rowCode = 'name';
@@ -26,9 +24,6 @@ export class PopupComponent extends InputComponent {
         this.modelChange(this.form[this.code]);
         if (this.edit.input?.popupComponentParams?.multiple) {
             this.multiple = true;
-        }
-        if (this.edit.input?.popupComponent) {
-            this.component = this.edit.input.popupComponent;
         }
         if (this.edit.input?.popupComponentParams) {
             this.params = this.edit.input.popupComponentParams;
@@ -54,7 +49,8 @@ export class PopupComponent extends InputComponent {
     }
 
     popup(): void {
-        this.component.prototype.select = (row: any, listData: any[]) => {
+        const component = this.edit?.input?.popupComponent;
+        component.prototype.select = (row: any) => {
             this.form[this.code] = row;
             this.setName();
             if (this.edit.input?.popupComponentSelect) {
@@ -64,7 +60,7 @@ export class PopupComponent extends InputComponent {
             modalRef.close();
         };
         const options: ModalOptions = {
-            nzContent: this.component,
+            nzContent: component,
             nzComponentParams: this.params,
             nzWidth: '80%',
             nzFooter: null

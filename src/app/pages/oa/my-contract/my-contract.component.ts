@@ -1,13 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { Component } from '@angular/core';
 import { Button } from 'src/app/components/support/button/button';
 import { Upload } from 'src/app/components/support/input/upload/upload';
 import { Field } from 'src/app/components/support/list/field';
-import { AssetService } from 'src/app/services/basedata/asset.service';
-import { ContractService } from 'src/app/services/oa/contract.service';
-import { SecurityService } from 'src/app/services/support/security.service';
-import { DictionaryItemService } from 'src/app/services/system/dictionary-item.service';
 import { ContractComponent } from '../contract/contract.component';
 
 @Component({
@@ -87,7 +81,7 @@ export class MyContractComponent extends ContractComponent {
                 success: res => this.editForm = res,
                 after: () => {
                     this.getEditComponent().loading = false;
-                    this.afterEdit();
+                    this.afterEdit(row);
                 }
             });
         }

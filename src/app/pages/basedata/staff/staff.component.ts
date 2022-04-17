@@ -7,9 +7,9 @@ import { ResetPasswordComponent } from 'src/app/components/modal/reset-password/
 import { Button } from 'src/app/components/support/button/button';
 import { EditComponent } from 'src/app/components/support/edit/edit.component';
 import { EntityComponent } from 'src/app/components/support/entity.component';
-import { Field } from 'src/app/components/support/list/field';
-import { Option } from 'src/app/components/support/input/tree-select/option';
 import { InputComponent } from 'src/app/components/support/input/input.component';
+import { Option } from 'src/app/components/support/input/tree-select/option';
+import { Field } from 'src/app/components/support/list/field';
 import { ListComponent } from 'src/app/components/support/list/list.component';
 import { Nav } from 'src/app/components/support/list/nav';
 import { DepartmentService } from 'src/app/services/basedata/department.service';
@@ -196,7 +196,8 @@ export class StaffComponent extends EntityComponent<StaffService> implements OnI
         });
     }
 
-    override afterEdit(): void {
+    override afterEdit(row?: any): void {
+        super.afterEdit(row);
         this.editForm.organization = this.organization;
         this.editForm.department = this.department;
     }

@@ -171,7 +171,7 @@ export abstract class EntityComponent<S extends EntityService> extends BaseCompo
         }
     }
 
-    beforeEdit(): void {
+    beforeEdit(row?: any): void {
         this.errors = {};
         this.editForm = {};
     }
@@ -185,16 +185,14 @@ export abstract class EntityComponent<S extends EntityService> extends BaseCompo
                 success: res => {
                     this.editForm = res
                     this.getEditComponent().show();
+                    this.afterEdit(row);
                 },
-                after: () => {
-                    this.getListComponent().loading = false;
-                    this.afterEdit();
-                }
+                after: () => this.getListComponent().loading = false
             });
         }
     }
 
-    afterEdit(): void {
+    afterEdit(row?: any): void {
         // 空实现
     }
 

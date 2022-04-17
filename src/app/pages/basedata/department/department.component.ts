@@ -126,7 +126,8 @@ export class DepartmentComponent extends TreeEntityComponent<DepartmentService> 
         this.staffsComponent.show();
     }
 
-    override afterEdit(): void {
+    override afterEdit(row?: any): void {
+        super.afterEdit(row);
         if (!this.editForm.id && this.organization) {
             this.editForm.organization = this.organization;
         }

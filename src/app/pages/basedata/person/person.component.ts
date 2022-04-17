@@ -64,7 +64,8 @@ export class PersonComponent extends EntityComponent<PersonService> {
         return buttons;
     }
 
-    override afterEdit(): void {
+    override afterEdit(row?: any): void {
+        super.afterEdit(row);
         if (!this.editForm.identityCard) {
             this.editForm.identityCard = {};
         }

@@ -113,7 +113,8 @@ export class SafetyTrainingParticipantComponent extends EntityComponent<SafetyTr
         super.afterInit();
     }
 
-    override afterEdit(): void {
+    override afterEdit(row?: any): void {
+        super.afterEdit(row);
         this.editForm.training = this.training;
     }
 

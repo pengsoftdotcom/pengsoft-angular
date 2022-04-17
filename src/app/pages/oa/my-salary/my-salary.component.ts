@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Button } from 'src/app/components/support/button/button';
 import { Field } from 'src/app/components/support/list/field';
 import { FieldUtils } from 'src/app/utils/field-utils';
@@ -70,14 +70,14 @@ export class MySalaryComponent extends PayrollDetailComponent {
                 success: res => this.editForm = res,
                 after: () => {
                     this.getEditComponent().loading = false;
-                    this.afterEdit();
+                    this.afterEdit(row);
                 }
             });
         }
     }
 
-    override afterEdit(): void {
-        super.afterEdit();
+    override afterEdit(row?: any): void {
+        super.afterEdit(row);
         this.editForm.payroll = this.editForm.payroll.code;
     }
 

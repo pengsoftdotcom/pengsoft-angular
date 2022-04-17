@@ -90,7 +90,8 @@ export class ConsumerComponent extends EntityComponent<SupplierConsumerService> 
         return buttons;
     }
 
-    override afterEdit(): void {
+    override afterEdit(row?: any): void {
+        super.afterEdit(row);
         this.editForm.supplier = this.supplier;
     }
 

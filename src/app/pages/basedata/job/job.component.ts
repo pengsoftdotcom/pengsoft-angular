@@ -5,8 +5,8 @@ import { NzFormatEmitEvent } from 'ng-zorro-antd/tree';
 import { Button } from 'src/app/components/support/button/button';
 import { EditManyToManyComponent } from 'src/app/components/support/edit-many-to-many/edit-many-to-many.component';
 import { EditComponent } from 'src/app/components/support/edit/edit.component';
-import { Field } from 'src/app/components/support/list/field';
 import { InputComponent } from 'src/app/components/support/input/input.component';
+import { Field } from 'src/app/components/support/list/field';
 import { ListComponent } from 'src/app/components/support/list/list.component';
 import { Nav } from 'src/app/components/support/list/nav';
 import { TreeEntityComponent } from 'src/app/components/support/tree-entity.component';
@@ -227,7 +227,8 @@ export class JobComponent extends TreeEntityComponent<JobService> implements OnI
         });
     }
 
-    override afterEdit(): void {
+    override afterEdit(row?: any): void {
+        super.afterEdit(row);
         if (!this.editForm.id && this.department) {
             this.editForm.department = this.department;
         }

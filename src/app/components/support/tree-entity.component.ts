@@ -7,9 +7,9 @@ import { TreeEntityService } from 'src/app/services/support/tree-entity.service'
 import { EntityUtils } from 'src/app/utils/entity-utils';
 import { FieldUtils } from 'src/app/utils/field-utils';
 import { EntityComponent } from './entity.component';
-import { Field } from './list/field';
-import { Option } from './input/tree-select/option';
 import { InputComponent } from './input/input.component';
+import { Option } from './input/tree-select/option';
+import { Field } from './list/field';
 
 @Injectable()
 export abstract class TreeEntityComponent<S extends TreeEntityService> extends EntityComponent<S> {
@@ -128,6 +128,15 @@ export abstract class TreeEntityComponent<S extends TreeEntityService> extends E
                         super.uncheckAll();
                     }
                 });
+            }
+        }
+    }
+
+    override afterEdit(row?: any): void {
+        if (!this.editForm.parent) {
+            const parent = this.listData.find(data => data.checked);
+            if (parent) {
+                this.editForm.parent = parent;
             }
         }
     }

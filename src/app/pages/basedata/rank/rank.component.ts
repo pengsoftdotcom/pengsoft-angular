@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { SwitchOrganizationComponent } from 'src/app/components/modal/switch-organization/switch-organization.component';
 import { Button } from 'src/app/components/support/button/button';
 import { EditComponent } from 'src/app/components/support/edit/edit.component';
 import { EntityComponent } from 'src/app/components/support/entity.component';
@@ -86,7 +85,8 @@ export class RankComponent extends EntityComponent<RankService> implements OnIni
         });
     }
 
-    override afterEdit(): void {
+    override afterEdit(row?: any): void {
+        super.afterEdit(row);
         if (!this.editForm.id) {
             this.editForm.organization = this.organization;
         }

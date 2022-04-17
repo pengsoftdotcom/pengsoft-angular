@@ -1,11 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { NzFormatEmitEvent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
+import { NzFormatEmitEvent } from 'ng-zorro-antd/tree';
+import { Button } from 'src/app/components/support/button/button';
 import { EditComponent } from 'src/app/components/support/edit/edit.component';
 import { EntityComponent } from 'src/app/components/support/entity.component';
-import { Field } from 'src/app/components/support/list/field';
 import { InputComponent } from 'src/app/components/support/input/input.component';
+import { Option } from 'src/app/components/support/input/tree-select/option';
+import { Field } from 'src/app/components/support/list/field';
 import { ListComponent } from 'src/app/components/support/list/list.component';
 import { Nav } from 'src/app/components/support/list/nav';
 import { DeviceService } from 'src/app/services/iot/device.service';
@@ -14,8 +16,6 @@ import { SecurityService } from 'src/app/services/support/security.service';
 import { EntityUtils } from 'src/app/utils/entity-utils';
 import { FieldUtils } from 'src/app/utils/field-utils';
 import { ProductPopupComponent } from '../product/product-popup.component';
-import { Option } from 'src/app/components/support/input/tree-select/option';
-import { Button } from 'src/app/components/support/button/button';
 
 @Component({
     selector: 'app-device',
@@ -109,7 +109,8 @@ export class DeviceComponent extends EntityComponent<DeviceService> {
         }
     }
 
-    override afterEdit(): void {
+    override afterEdit(row?: any): void {
+        super.afterEdit(row);
         this.editForm.groups = this.group.id;
     }
 

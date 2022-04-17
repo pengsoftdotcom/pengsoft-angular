@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Button } from 'src/app/components/support/button/button';
@@ -96,7 +96,8 @@ export class CompositeMessageTemplateComponent extends EntityComponent<Composite
         return buttons;
     }
 
-    override afterEdit(): void {
+    override afterEdit(row?: any): void {
+        super.afterEdit(row);
         if (!this.editForm.internal) {
             this.editForm.internal = {};
         }

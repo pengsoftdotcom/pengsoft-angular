@@ -68,7 +68,8 @@ export class DictionaryItemComponent extends TreeEntityComponent<DictionaryItemS
         super.afterInit();
     }
 
-    override afterEdit(): void {
+    override afterEdit(row?: any): void {
+        super.afterEdit(row);
         if (!this.editForm.id) {
             this.editForm.type = this.type;
         }

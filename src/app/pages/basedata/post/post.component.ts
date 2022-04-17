@@ -98,7 +98,8 @@ export class PostComponent extends EntityComponent<PostService> implements OnIni
         });
     }
 
-    override afterEdit(): void {
+    override afterEdit(row?: any): void {
+        super.afterEdit(row);
         if (!this.editForm.id) {
             this.editForm.organization = this.organization;
         }

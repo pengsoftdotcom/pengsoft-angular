@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { SwitchOrganizationComponent } from 'src/app/components/modal/switch-organization/switch-organization.component';
 import { Button } from 'src/app/components/support/button/button';
 import { EditComponent } from 'src/app/components/support/edit/edit.component';
 import { EntityComponent } from 'src/app/components/support/entity.component';
@@ -91,7 +90,8 @@ export class SupplierComponent extends EntityComponent<SupplierConsumerService> 
         return buttons;
     }
 
-    override afterEdit(): void {
+    override afterEdit(row?: any): void {
+        super.afterEdit(row);
         this.editForm.consumer = this.consumer;
     }
 

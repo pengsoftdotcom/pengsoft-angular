@@ -40,8 +40,8 @@ export class PayrollRecordComponent extends EntityComponent<PayrollRecordService
             FieldUtils.buildNumber({ code: 'year', name: '年', list: { width: 100, align: 'center' } }),
             FieldUtils.buildNumber({ code: 'month', name: '月', list: { width: 100, align: 'center' } }),
             FieldUtils.buildSelectForDictionaryItem({ code: 'status', name: '状态', list: { width: 100, align: 'center' } }, this.dictionaryItem, 'payroll_record_status'),
-            FieldUtils.buildNumber({ code: 'paidCount', name: '支付人数', edit: { readonly: false } }),
-            FieldUtils.buildNumber({ code: 'confirmedCount', name: '确认人数', edit: { readonly: true } }),
+            FieldUtils.buildNumber({ code: 'paidCount', name: '支付人数' }),
+            FieldUtils.buildNumber({ code: 'confirmedCount', name: '确认人数' }),
             FieldUtils.buildUpload({ code: 'sheet', name: '工资表' }, {
                 locked: true, accept: FieldUtils.EXECL
             }),

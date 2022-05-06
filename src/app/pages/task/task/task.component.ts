@@ -40,12 +40,12 @@ export class TaskComponent extends EntityComponent<TaskService> {
 
     initFields(): Field[] {
         return [
-            FieldUtils.buildText({ code: 'name', name: '名称' }),
-            FieldUtils.buildTextarea({ code: 'content', name: '内容' }),
+            FieldUtils.buildText({ code: 'name', name: '名称', list: { width: 150 } }),
+            FieldUtils.buildTextarea({ code: 'content', name: '内容', list: { visible: true } }),
             FieldUtils.buildSelectForDictionaryItem({
                 code: 'priority', name: '优先级', list: {
-                    width: 80, align: 'center',
-                    render: (field: Field, row: any, sanitizer: DomSanitizer) => {
+                    width: 70, align: 'center',
+                    render: (_field: Field, row: any, sanitizer: DomSanitizer) => {
                         if (row.priority.code === 'high') {
                             return sanitizer.bypassSecurityTrustHtml(`<span style="color: #ff4d4f">${row.priority.name}</span>`);
                         } else if (row.priority.code === 'medium') {
@@ -56,10 +56,12 @@ export class TaskComponent extends EntityComponent<TaskService> {
                     }
                 }
             }, this.dictionaryItem, 'task_priority'),
-            FieldUtils.buildSelectForDictionaryItem({ code: 'status', name: '状态', list: { width: 100, align: 'center' } }, this.dictionaryItem, 'task_status'),
-            FieldUtils.buildText({ code: 'targetPath', name: '目标路径', list: { width: 300 } }),
-            FieldUtils.buildText({ code: 'targetId', name: '目标ID', list: { width: 320, align: 'center' } }),
-            FieldUtils.buildJson({ code: 'targetParams', name: '参数' })
+            FieldUtils.buildSelectForDictionaryItem({ code: 'status', name: '状态', list: { width: 70, align: 'center' } }, this.dictionaryItem, 'task_status'),
+            FieldUtils.buildText({ code: 'targetPath', name: '目标路径', list: { visible: false } }),
+            FieldUtils.buildText({ code: 'targetId', name: '目标ID', list: { visible: false } }),
+            FieldUtils.buildJson({ code: 'targetParams', name: '参数' }),
+            FieldUtils.buildDatetimeForCreatedAt(),
+            FieldUtils.buildDatetime({ code: 'finishedAt', name: '完成时间' })
         ];
     }
 

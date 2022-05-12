@@ -132,7 +132,7 @@ export abstract class TreeEntityComponent<S extends TreeEntityService> extends E
         }
     }
 
-    override afterEdit(row?: any): void {
+    override afterEdit(_row?: any): void {
         if (!this.editForm.parent) {
             const parent = this.listData.find(data => data.checked);
             if (parent) {

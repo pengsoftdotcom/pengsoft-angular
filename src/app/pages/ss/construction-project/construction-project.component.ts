@@ -38,7 +38,7 @@ export class ConstructionProjectComponent extends EntityComponent<ConstructionPr
         super(entity, security, modal, message);
     }
 
-    initFields(): Field[] {
+    override initFields(): Field[] {
         const ruManagerField = FieldUtils.buildPopupForStaff({
             code: 'ruManager', name: '负责人',
             edit: { required: false, readonly: (form: any) => !form.regulatoryUnit },
@@ -167,7 +167,10 @@ export class ConstructionProjectComponent extends EntityComponent<ConstructionPr
     importData(): void {
         this.entity.importData(this.file.nativeElement.files[0], {
             before: () => this.listComponent.loading = true,
-            success: () => this.list(),
+            success: () => {
+                this.message.info('导入成功');
+                this.list();
+            },
             after: () => this.listComponent.loading = false
         });
     }

@@ -8,8 +8,10 @@ import { Button } from 'src/app/components/support/button/button';
 import { EditOneToManyComponent } from 'src/app/components/support/edit-one-to-many/edit-one-to-many.component';
 import { EditComponent } from 'src/app/components/support/edit/edit.component';
 import { EntityComponent } from 'src/app/components/support/entity.component';
+import { InputComponent } from 'src/app/components/support/input/input.component';
 import { Field } from 'src/app/components/support/list/field';
 import { ListComponent } from 'src/app/components/support/list/list.component';
+import { ConstructionProjectService } from 'src/app/services/ss/construction-project.service';
 import { SafetyCheckService } from 'src/app/services/ss/safety-check.service';
 import { SecurityService } from 'src/app/services/support/security.service';
 import { DictionaryItemService } from 'src/app/services/system/dictionary-item.service';
@@ -38,6 +40,7 @@ export class SafetyCheckComponent extends EntityComponent<SafetyCheckService> {
     department: any;
 
     constructor(
+        private constructionProject: ConstructionProjectService,
         private dictionaryItem: DictionaryItemService,
         public override entity: SafetyCheckService,
         public override security: SecurityService,
@@ -56,7 +59,28 @@ export class SafetyCheckComponent extends EntityComponent<SafetyCheckService> {
 
     initFields(): Field[] {
         return [
-            FieldUtils.buildSelect({ code: 'project', name: '工程项目', edit: { readonly: true, required: true }, list: { visible: false } }),
+            FieldUtils.buildSelect({
+                code: 'project', name: '工程项目',
+                edit: {
+                    required: true,
+                    readonly: !this.editForm.id,
+                    input: {
+                        load: (component: InputComponent) => {
+                            this.constructionProject.findAll(null, [], {
+                                success: (res: any) => {
+                                    if (component.edit.input) {
+                                        component.edit.input.options = res.map((data: any) => Object.assign({ label: data.shortName, value: data }));
+                                    }
+                                }
+                            });
+                        }
+                    }
+                },
+                list: { render: (_field: Field, row: any) => row.project.shortName },
+                filter: {
+                    readonly: false
+                }
+            }),
             FieldUtils.buildTextForCode({ width: 180, align: 'center' }),
             FieldUtils.buildPopup({
                 code: 'checker', name: '检查人',
@@ -76,7 +100,9 @@ export class SafetyCheckComponent extends EntityComponent<SafetyCheckService> {
                     }
                 },
                 list: { width: 80, align: 'center', render: (f: Field, row: any) => f.code && row[f.code] ? row[f.code].person.name : '-' },
-                filter: {}
+                filter: {
+                    readonly: false
+                }
             }),
             FieldUtils.buildSelectForDictionaryItem({
                 code: 'status', name: '状态',

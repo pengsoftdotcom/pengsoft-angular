@@ -7,8 +7,10 @@ import { Button } from 'src/app/components/support/button/button';
 import { EditOneToManyComponent } from 'src/app/components/support/edit-one-to-many/edit-one-to-many.component';
 import { EditComponent } from 'src/app/components/support/edit/edit.component';
 import { EntityComponent } from 'src/app/components/support/entity.component';
+import { InputComponent } from 'src/app/components/support/input/input.component';
 import { Field } from 'src/app/components/support/list/field';
 import { ListComponent } from 'src/app/components/support/list/list.component';
+import { ConstructionProjectService } from 'src/app/services/ss/construction-project.service';
 import { SafetyTrainingService } from 'src/app/services/ss/safety-training.service';
 import { SecurityService } from 'src/app/services/support/security.service';
 import { FieldUtils } from 'src/app/utils/field-utils';
@@ -37,6 +39,7 @@ export class SafetyTrainingComponent extends EntityComponent<SafetyTrainingServi
     department: any;
 
     constructor(
+        private constructionProject: ConstructionProjectService,
         public override entity: SafetyTrainingService,
         public override security: SecurityService,
         public override modal: NzModalService,
@@ -54,7 +57,28 @@ export class SafetyTrainingComponent extends EntityComponent<SafetyTrainingServi
 
     initFields(): Field[] {
         return [
-            FieldUtils.buildSelect({ code: 'project', name: '工程项目', edit: { readonly: true, required: true }, list: { visible: false } }),
+            FieldUtils.buildSelect({
+                code: 'project', name: '工程项目',
+                edit: {
+                    required: true,
+                    readonly: !this.editForm.id,
+                    input: {
+                        load: (component: InputComponent) => {
+                            this.constructionProject.findAll(null, [], {
+                                success: (res: any) => {
+                                    if (component.edit.input) {
+                                        component.edit.input.options = res.map((data: any) => Object.assign({ label: data.shortName, value: data }));
+                                    }
+                                }
+                            });
+                        }
+                    }
+                },
+                list: { render: (_field: Field, row: any) => row.project.shortName },
+                filter: {
+                    readonly: false
+                }
+            }),
             FieldUtils.buildTextForCode(),
             FieldUtils.buildText({ code: 'subject', name: '培训主题', edit: { required: true } }),
             FieldUtils.buildPopup({
@@ -186,7 +210,7 @@ export class SafetyTrainingComponent extends EntityComponent<SafetyTrainingServi
             this.entity.saveAndSubmit(form, {
                 errors: this.errors,
                 before: () => this.getEditComponent().loading = true,
-                success: (res: any) => {
+                success: () => {
                     this.message.info('保存成功');
                     this.getEditComponent().hide();
                     this.list();

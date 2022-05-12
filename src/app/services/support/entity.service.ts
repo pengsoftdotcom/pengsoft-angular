@@ -79,8 +79,10 @@ export abstract class EntityService extends BaseService {
             const result: any = {};
             for (const key in params) {
                 const val = params[key];
-                if (typeof val === 'object' && val) {
-                    result[key + '.id'] = val.id;
+                if (typeof val === 'object') {
+                    if (val?.id) {
+                        result[key + '.id'] = val.id;
+                    }
                 } else {
                     result[key] = val;
                 }

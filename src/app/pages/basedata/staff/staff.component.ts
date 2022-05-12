@@ -117,7 +117,8 @@ export class StaffComponent extends EntityComponent<StaffService> implements OnI
                                     after: () => component.loading = false
                                 })
                             }
-                        }
+                        },
+                        filter: {}
                     }),
                     FieldUtils.buildBoolean({
                         code: 'primary', name: '主要', list: {

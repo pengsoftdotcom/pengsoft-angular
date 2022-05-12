@@ -40,7 +40,7 @@ export class TaskComponent extends EntityComponent<TaskService> {
 
     initFields(): Field[] {
         return [
-            FieldUtils.buildText({ code: 'name', name: '名称', list: { width: 150 } }),
+            FieldUtils.buildText({ code: 'name', name: '名称', list: { width: 150 }, filter: {} }),
             FieldUtils.buildTextarea({ code: 'content', name: '内容', list: { visible: true } }),
             FieldUtils.buildSelectForDictionaryItem({
                 code: 'priority', name: '优先级', list: {

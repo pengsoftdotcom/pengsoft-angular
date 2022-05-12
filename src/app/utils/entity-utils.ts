@@ -30,7 +30,7 @@ export class EntityUtils {
 
     static convertTreeEntityToTreeNode(entity: any): NzTreeNodeOptions {
         return {
-            title: entity.name,
+            title: entity.shortName ? entity.shortName : entity.name,
             value: entity,
             key: entity.id,
             isLeaf: entity.leaf,

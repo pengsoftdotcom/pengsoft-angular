@@ -154,6 +154,7 @@ export class OrganizationComponent extends TreeEntityComponent<OrganizationServi
                 },
                 filter: {}
             }),
+            FieldUtils.buildText({ code: 'number', name: '员工数', edit: { readonly: true }, list: { align: 'right' } }),
             FieldUtils.buildText({
                 code: 'authentication', name: '实名认证状态', edit: { visible: false }, list: {
                     visible: false,

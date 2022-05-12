@@ -56,7 +56,8 @@ export class DepartmentComponent extends TreeEntityComponent<DepartmentService> 
         return super.initFields().concat(
             FieldUtils.buildTreeSelect({ code: 'organization', name: '机构', list: { visible: false }, edit: { visible: false } }),
             FieldUtils.buildTextForName(),
-            FieldUtils.buildText({ code: 'shortName', name: '简称' })
+            FieldUtils.buildText({ code: 'shortName', name: '简称' }),
+            FieldUtils.buildNumber({ code: 'number', name: '员工数', edit: { readonly: true }, list: { align: 'right' } }),
         );
     }
 

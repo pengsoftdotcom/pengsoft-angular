@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { EntityService } from '../support/entity.service';
 import { HttpOptions } from '../support/http-options';
 import { HttpService } from '../support/http.service';
+import { TreeEntityService } from '../support/tree-entity.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ConstructionProjectService extends EntityService {
+export class ConstructionProjectService extends TreeEntityService {
 
     constructor(protected override http: HttpService) { super(http); }
 

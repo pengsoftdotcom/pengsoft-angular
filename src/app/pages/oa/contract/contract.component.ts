@@ -91,6 +91,9 @@ export class ContractComponent extends EntityComponent<ContractService> {
                             if (this.editForm.partyAType && partyAField.edit && partyAField.edit.input) {
                                 partyAField.edit.input.popupComponent = this.editForm.partyAType.code === 'organization' ? OrganizationPopupComponent : PersonPopupComponent;
                             }
+                            if (this.filterForm.partyAType && partyAField.filter && partyAField.filter.input) {
+                                partyAField.filter.input.popupComponent = this.filterForm.partyAType.code === 'organization' ? OrganizationPopupComponent : PersonPopupComponent;
+                            }
                         }
                     }
                 },
@@ -110,6 +113,9 @@ export class ContractComponent extends EntityComponent<ContractService> {
                             if (this.editForm.partyBType && partyBField.edit && partyBField.edit.input) {
                                 partyBField.edit.input.popupComponent = this.editForm.partyBType.code === 'organization' ? OrganizationPopupComponent : PersonPopupComponent;
                             }
+                            if (this.filterForm.partyBType && partyBField.filter && partyBField.filter.input) {
+                                partyBField.filter.input.popupComponent = this.filterForm.partyBType.code === 'organization' ? OrganizationPopupComponent : PersonPopupComponent;
+                            }
                         }
                     }
                 },
@@ -118,7 +124,7 @@ export class ContractComponent extends EntityComponent<ContractService> {
             }, this.dictionaryItem, 'contract_party_type'),
             partyBField,
             FieldUtils.buildHidden({ code: 'partyBId' }),
-            FieldUtils.buildSelectForDictionaryItem({ code: 'status', name: '状态' }, this.dictionaryItem, 'contract_status'),
+            FieldUtils.buildSelectForDictionaryItem({ code: 'status', name: '状态', filter: {} }, this.dictionaryItem, 'contract_status'),
             FieldUtils.buildDate({ code: 'signedAt', name: '签订日期' }),
             FieldUtils.buildDatetime({ code: 'confirmedAt', name: '确认时间', edit: { readonly: true, input: { placeholder: ' ' } } }),
             FieldUtils.buildUpload({
@@ -140,6 +146,20 @@ export class ContractComponent extends EntityComponent<ContractService> {
                 success: () => this.list()
             }),
         });
+    }
+
+    override list(): void {
+        if (this.filterForm.partyA && this.filterForm.partyA.id) {
+            this.filterForm.partyAId = this.filterForm.partyA.id;
+        } else {
+            delete this.filterForm.partyAId;
+        }
+        if (this.filterForm.partyB && this.filterForm.partyB.id) {
+            this.filterForm.partyBId = this.filterForm.partyB.id;
+        } else {
+            delete this.filterForm.partyBId;
+        }
+        super.list();
     }
 
 }

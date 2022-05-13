@@ -93,14 +93,6 @@ export class JobComponent extends TreeEntityComponent<JobService> implements OnI
                     expanded: true,
                     children: entity.children
                 }));
-                nav.data = [{
-                    key: this.organization.id,
-                    title: this.organization.shortName,
-                    value: this.organization,
-                    isLeaf: !nav.data || nav.data.length === 0,
-                    expanded: true,
-                    children: nav.data
-                }];
             }
         });
         return nav;

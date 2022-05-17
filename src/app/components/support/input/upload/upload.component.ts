@@ -48,7 +48,7 @@ export class UploadComponent extends InputComponent implements OnChanges {
             return convert(entity);
         } else {
             if (entity.locked) {
-                return new Promise(resolve => this.asset.download(entity.id, null, null, {
+                return new Promise(resolve => this.asset.download(entity.id, false, null, null, {
                     responseType: 'text',
                     before: () => this.loading = true,
                     success: (data: any) => resolve({
@@ -148,10 +148,10 @@ export class UploadComponent extends InputComponent implements OnChanges {
         } else {
             return new Observable(observer => this.asset.delete([file.response[0].id], {
                 success: () => {
+                    observer.next(true);
                     if (this.edit.code) {
                         this.form[this.edit.code] = this.files.map(f => f.response[0]);
                     }
-                    observer.next(true);
                 },
                 failure: () => observer.next(false)
             }));

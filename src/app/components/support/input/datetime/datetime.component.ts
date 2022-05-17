@@ -9,7 +9,14 @@ import { InputComponent } from '../input.component';
 })
 export class DatetimeComponent extends InputComponent {
 
-    override modelChange(event: any): void {
+    override ngOnInit(): void {
+        super.ngOnInit();
+        if (this.form[this.code]) {
+            this.rawValue = DateUtils.parseDatetime(this.form[this.code]);
+        }
+    }
+
+    override modelChange(_event: any): void {
         if (this.rawValue) {
             this.form[this.code] = DateUtils.formatDateTime(this.rawValue);
         } else {

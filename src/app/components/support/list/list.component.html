@@ -56,7 +56,10 @@
                                 </ng-container>
                                 <ng-template #elseBlock>
                                     <td nzBreakWord [nzAlign]="getAlign(field)">
-                                        <span [innerHTML]="render(field, row)"></span>
+                                        <span *ngIf="field.code  !== 'percent'; else percent" [innerHTML]="render(field, row)"></span>
+                                        <ng-template #percent>
+                                            <nz-progress [nzWidth]="48" [nzPercent]="row.percent" nzType="circle"></nz-progress>
+                                        </ng-template>
                                     </td>
                                 </ng-template>
                             </ng-container>

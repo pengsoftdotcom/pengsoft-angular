@@ -18,15 +18,17 @@ export class AssetService extends EntityService {
         return 'asset';
     }
 
-    download(id: string, width: number | null, height: number | null, options: HttpOptions): void {
+    download(id: string, zoomed: boolean, width: number | null, height: number | null, options: HttpOptions): void {
         const url = this.getApiPath('download');
-        options.params = { id };
-        if (width) {
-            options.params['width'] = width;
+        options.params = { id, zoomed };
+        if (!width) {
+            width = 1200;
         }
-        if (height) {
-            options.params['height'] = height;
+        options.params['width'] = width;
+        if (!height) {
+            height = 1200;
         }
+        options.params['height'] = height;
         this.http.request('GET', url, options);
     }
 

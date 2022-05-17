@@ -14,6 +14,7 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
@@ -116,6 +117,7 @@ import { ListComponent } from './support/list/list.component';
         NzMessageModule,
         NzModalModule,
         NzPageHeaderModule,
+        NzProgressModule,
         NzRadioModule,
         NzSelectModule,
         NzSpinModule,

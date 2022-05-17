@@ -99,7 +99,7 @@ export class ImageComponent extends InputComponent implements OnChanges {
         if (changed === undefined) {
             changed = true;
         }
-        this.asset.download(asset.id, width, height, {
+        this.asset.download(asset.id, false, width, height, {
             responseType: 'text',
             before: () => this.loading = true,
             success: (data: any) => this.data = data,

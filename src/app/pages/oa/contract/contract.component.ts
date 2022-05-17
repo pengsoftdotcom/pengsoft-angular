@@ -124,18 +124,40 @@ export class ContractComponent extends EntityComponent<ContractService> {
             }, this.dictionaryItem, 'contract_party_type'),
             partyBField,
             FieldUtils.buildHidden({ code: 'partyBId' }),
-            FieldUtils.buildSelectForDictionaryItem({ code: 'status', name: '状态', filter: {} }, this.dictionaryItem, 'contract_status'),
+            FieldUtils.buildSelectForDictionaryItem({ code: 'status', name: '状态', edit: { readonly: true }, filter: { readonly: false } }, this.dictionaryItem, 'contract_status'),
             FieldUtils.buildDate({ code: 'signedAt', name: '签订日期' }),
-            FieldUtils.buildDatetime({ code: 'confirmedAt', name: '确认时间', edit: { readonly: true, input: { placeholder: ' ' } } }),
+
             FieldUtils.buildUpload({
                 code: 'pictures', name: '合同图片'
             }, {
                 locked: true, multiple: true, accept: FieldUtils.IMAGE,
                 remove: (file: NzUploadFile) => new Observable(observer => this.entity.deletePictureByAsset(this.editForm, file.response[0], {
-                    success: () => observer.next(true),
+                    success: () => {
+                        observer.next(true);
+                        const index = this.editForm.pictures.findIndex((picture: any) => picture.id === file.response[0].id);
+                        if (index > -1) {
+                            this.editForm.pictures.splice(index, 1);
+                        }
+                    },
                     failure: () => observer.next(false)
                 }))
-            })
+            }),
+            FieldUtils.buildUpload({
+                code: 'confirmPictures', name: '确认图片'
+            }, {
+                locked: true, multiple: true, accept: FieldUtils.IMAGE,
+                remove: (file: NzUploadFile) => new Observable(observer => this.entity.deleteConfirmPictureByAsset(this.editForm, file.response[0], {
+                    success: () => {
+                        observer.next(true);
+                        const index = this.editForm.confirmPictures.findIndex((picture: any) => picture.id === file.response[0].id);
+                        if (index > -1) {
+                            this.editForm.confirmPictures.splice(index, 1);
+                        }
+                    },
+                    failure: () => observer.next(false)
+                }))
+            }),
+            FieldUtils.buildDatetime({ code: 'confirmedAt', name: '确认时间', edit: { readonly: true, input: { placeholder: ' ' } } })
         ];
     }
 

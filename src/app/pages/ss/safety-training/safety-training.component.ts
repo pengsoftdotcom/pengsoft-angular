@@ -100,21 +100,21 @@ export class SafetyTrainingComponent extends EntityComponent<SafetyTrainingServi
                 list: { render: (f: Field, row: any) => f.code && row[f.code] ? row[f.code].person.name : '-' },
                 filter: {}
             }),
-            FieldUtils.buildBoolean({
-                code: 'allWorkers', name: '全部工人参与',
-                edit: {
-                    input: {
-                        modelChange: () => {
-                            if (!this.editForm.allWorkers) {
-                                this.message.warning("非全部工人参与，请在保存后添加参与人");
-                            }
-                        }
-                    }
-                },
-                list: { visible: false }
-            }),
-            FieldUtils.buildDatetime({ code: 'estimatedStartTime', name: '预计开始时间', list: { visible: false } }),
-            FieldUtils.buildDatetime({ code: 'estimatedEndTime', name: '预计结束时间', list: { visible: false } }),
+            // FieldUtils.buildBoolean({
+            //     code: 'allWorkers', name: '全部工人参与',
+            //     edit: {
+            //         input: {
+            //             modelChange: () => {
+            //                 if (!this.editForm.allWorkers) {
+            //                     this.message.warning("非全部工人参与，请在保存后添加参与人");
+            //                 }
+            //             }
+            //         }
+            //     },
+            //     list: { visible: false }
+            // }),
+            FieldUtils.buildDatetime({ code: 'estimatedStartTime', name: '预计开始时间', edit: { readonly: () => this.editForm.submittedAt }, list: { visible: false } }),
+            FieldUtils.buildDatetime({ code: 'estimatedEndTime', name: '预计结束时间', edit: { readonly: () => this.editForm.submittedAt }, list: { visible: false } }),
             FieldUtils.buildTextarea({ code: 'address', name: '培训地址' }),
             FieldUtils.buildDatetime({ code: 'submittedAt', name: '提交时间', edit: { readonly: true } }),
             FieldUtils.buildDatetime({ code: 'startedAt', name: '开始时间', edit: { readonly: true } }),
@@ -195,29 +195,11 @@ export class SafetyTrainingComponent extends EntityComponent<SafetyTrainingServi
     }
 
     override initEditToolbar(): Button[] {
-        const buttons = super.initEditToolbar();
-        buttons[0].isDisabled = (form: any) => form.allWorkers || form.id
-        buttons.push({ name: '提交', type: 'primary', action: () => this.submit(), authority: this.getAuthority('submit'), isDisabled: (form: any) => !form.id || form.submittedAt });
-        buttons.push({ name: '保存并提交', type: 'primary', action: () => this.saveAndSubmit(), authority: this.getAuthority('saveAndSubmit'), isDisabled: (form: any) => form.submittedAt || !form.allWorkers });
-        buttons.push({ name: '开始', type: 'primary', action: () => this.start(), authority: this.getAuthority('start'), isDisabled: (form: any) => !form.submittedAt || form.startedAt });
-        buttons.push({ name: '结束', type: 'primary', action: () => this.end(), authority: this.getAuthority('end'), isDisabled: (form: any) => !form.startedAt || form.endedAt });
-        return buttons;
-    }
-
-    saveAndSubmit(): void {
-        const form = this.buildEditForm();
-        if (this.entity) {
-            this.entity.saveAndSubmit(form, {
-                errors: this.errors,
-                before: () => this.getEditComponent().loading = true,
-                success: () => {
-                    this.message.info('保存成功');
-                    this.getEditComponent().hide();
-                    this.list();
-                },
-                after: () => this.getEditComponent().loading = false,
-            });
-        }
+        return [
+            { name: '提交', type: 'primary', action: () => this.submit(), authority: this.getAuthority('submit'), isDisabled: (form: any) => !form.id || form.submittedAt },
+            { name: '开始', type: 'primary', action: () => this.start(), authority: this.getAuthority('start'), isDisabled: (form: any) => !form.submittedAt || form.startedAt },
+            { name: '结束', type: 'primary', action: () => this.end(), authority: this.getAuthority('end'), isDisabled: (form: any) => !form.startedAt || form.endedAt }
+        ];
     }
 
 }

@@ -61,7 +61,8 @@ export class TaskComponent extends EntityComponent<TaskService> {
             FieldUtils.buildText({ code: 'targetId', name: '目标ID', list: { visible: false } }),
             FieldUtils.buildJson({ code: 'targetParams', name: '参数' }),
             FieldUtils.buildDatetimeForCreatedAt(),
-            FieldUtils.buildDatetime({ code: 'finishedAt', name: '完成时间' })
+            FieldUtils.buildDatetime({ code: 'finishedAt', name: '完成时间' }),
+            FieldUtils.buildNumber({ code: 'percent', name: '完成率', list: { width: 60 } }),
         ];
     }
 

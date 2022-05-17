@@ -46,7 +46,7 @@ export class ContractService extends EntityService {
     }
 
     override save(form: any, options: HttpOptions): void {
-        options.failure = (err: any) => {
+        options.failure = () => {
             if (options.errors['partyAId']) {
                 options.errors['partyA'] = options.errors['partyAId'];
             }
@@ -56,16 +56,33 @@ export class ContractService extends EntityService {
             }
         };
         const url = this.getApiPath('save-with-pictures');
-        options.params = {
-            'picture.id': form.pictures?.map((picture: any) => picture.id)
-        };
+        options.params = {};
+        if (form.pictures && form.pictures.length > 0) {
+            options.params['picture.id'] = form.pictures.map((picture: any) => picture.id);
+        }
+        if (form.confirmPictures && form.confirmPictures.length > 0) {
+            options.params['confirmPicture.id'] = form.confirmPictures.map((picture: any) => picture.id);
+        }
         delete form.pictures;
+        delete form.confirmPictures;
         options.body = JSON.parse(JSON.stringify(form));
         this.http.request('POST', url, options);
     }
 
     deletePictureByAsset(form: any, asset: any, options: HttpOptions): void {
         const url = this.getApiPath('delete-picture-by-asset');
+        options.params = {
+            'asset.id': asset.id
+        };
+        if (form && form.id) {
+            options.params['id'] = form.id;
+        }
+        this.http.request('DELETE', url, options);
+    }
+
+
+    deleteConfirmPictureByAsset(form: any, asset: any, options: HttpOptions): void {
+        const url = this.getApiPath('delete-confirm-picture-by-asset');
         options.params = {
             'asset.id': asset.id
         };

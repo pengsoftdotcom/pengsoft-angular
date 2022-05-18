@@ -45,7 +45,7 @@ export class PayrollRecordComponent extends EntityComponent<PayrollRecordService
             FieldUtils.buildUpload({ code: 'sheet', name: '工资表' }, {
                 locked: true, accept: FieldUtils.EXECL
             }),
-            FieldUtils.buildUpload({ code: 'signedSheet', name: '工资确认表' }, {
+            FieldUtils.buildUpload({ code: 'signedSheet', name: '确认图片' }, {
                 locked: true, multiple: true, accept: FieldUtils.IMAGE
             }),
             FieldUtils.buildDatetime({ code: 'importedAt', name: '导入时间', list: { visible: false }, edit: { readonly: true } })

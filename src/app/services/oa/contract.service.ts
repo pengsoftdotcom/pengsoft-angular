@@ -19,6 +19,11 @@ export class ContractService extends EntityService {
         return 'contract';
     }
 
+    generate(options: HttpOptions): void {
+        const url = this.getApiPath('generate');
+        this.http.request('POST', url, options);
+    }
+
     override findOne(id: string, options: HttpOptions): void {
         this.findOneWithParty(id, options);
     }

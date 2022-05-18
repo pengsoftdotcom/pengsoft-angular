@@ -3,6 +3,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable } from 'rxjs';
+import { Button } from 'src/app/components/support/button/button';
 import { EditComponent } from 'src/app/components/support/edit/edit.component';
 import { EntityComponent } from 'src/app/components/support/entity.component';
 import { InputComponent } from 'src/app/components/support/input/input.component';
@@ -161,11 +162,29 @@ export class ContractComponent extends EntityComponent<ContractService> {
         ];
     }
 
+    override initListToolbar(): Button[] {
+        const buttons = super.initListToolbar();
+        buttons.splice(2, 0, { name: '生成', type: 'primary', action: () => this.generate(), authority: this.getAuthority('generate') })
+        return buttons;
+    }
+
     confirm(row: any): void {
         this.modal.confirm({
             nzTitle: '确定该合同的真实有效吗？',
             nzOnOk: () => this.entity.confirm(row.id, {
                 success: () => this.list()
+            }),
+        });
+    }
+
+    generate(): void {
+        this.modal.confirm({
+            nzTitle: '确定生成用工合同吗？',
+            nzOnOk: () => this.entity.generate({
+                success: () => {
+                    this.message.info('生成成功');
+                    this.list();
+                }
             }),
         });
     }

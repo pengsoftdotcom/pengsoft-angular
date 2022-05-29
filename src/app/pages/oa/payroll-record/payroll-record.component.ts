@@ -54,6 +54,7 @@ export class PayrollRecordComponent extends EntityComponent<PayrollRecordService
                         delete res.confirmPictures;
                         this.editForm.sheet = null;
                         this.editForm = { ...this.editForm, ...res };
+                        this.list();
                     },
                     failure: () => observer.next(false),
                     after: () => this.getEditComponent().loading = false
@@ -72,6 +73,7 @@ export class PayrollRecordComponent extends EntityComponent<PayrollRecordService
                         if (index > -1) {
                             this.editForm.confirmPictures.splice(index, 1);
                         }
+                        this.list();
                     },
                     failure: () => observer.next(false),
                     after: () => this.getEditComponent().loading = false

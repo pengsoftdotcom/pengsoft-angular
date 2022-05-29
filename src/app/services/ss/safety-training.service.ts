@@ -56,6 +56,17 @@ export class SafetyTrainingService extends EntityService {
         this.http.request('DELETE', url, options);
     }
 
+    deleteConfirmFileByAsset(form: any, asset: any, options: HttpOptions): void {
+        const url = this.getApiPath('delete-confirm-file-by-asset');
+        options.params = {
+            'asset.id': asset.id
+        };
+        if (form && form.id) {
+            options.params['id'] = form.id;
+        }
+        this.http.request('DELETE', url, options);
+    }
+
     override findOne(id: string, options: HttpOptions): void {
         const url = this.getApiPath('find-one-with-files');
         if (id) {

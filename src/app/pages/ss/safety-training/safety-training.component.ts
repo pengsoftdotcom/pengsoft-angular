@@ -126,6 +126,14 @@ export class SafetyTrainingComponent extends EntityComponent<SafetyTrainingServi
                     failure: () => observer.next(false)
                 }))
             }),
+            FieldUtils.buildUpload({ code: 'confirmFiles', name: '确认图片', edit: { visible: (form: any) => form.startedAt } }, {
+                multiple: true, accept: FieldUtils.IMAGE,
+                showRemove: (form: any) => !form.endedAt,
+                remove: (file: NzUploadFile) => new Observable(observer => this.entity.deleteConfirmFileByAsset(this.editForm, file.response[0], {
+                    success: () => observer.next(true),
+                    failure: () => observer.next(false)
+                }))
+            }),
             FieldUtils.buildDatetime({ code: 'endedAt', name: '结束时间', edit: { readonly: true } })
         ];
     }

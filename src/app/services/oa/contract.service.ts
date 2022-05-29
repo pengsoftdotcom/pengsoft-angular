@@ -85,7 +85,6 @@ export class ContractService extends EntityService {
         this.http.request('DELETE', url, options);
     }
 
-
     deleteConfirmPictureByAsset(form: any, asset: any, options: HttpOptions): void {
         const url = this.getApiPath('delete-confirm-picture-by-asset');
         options.params = {

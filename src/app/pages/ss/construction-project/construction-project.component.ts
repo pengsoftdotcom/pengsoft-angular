@@ -80,7 +80,8 @@ export class ConstructionProjectComponent extends EntityComponent<ConstructionPr
                                         if (ruManagerField.edit && ruManagerField.edit?.input && ruManagerField.edit.input.popupComponentParams) {
                                             ruManagerField.edit.input.popupComponentParams.organization = this.editForm.regulatoryUnit;
                                         }
-                                        if (this.editForm.ruManager && this.editForm.ruManager.job.department.organization.id !== this.editForm.regulatoryUnit.id) {
+                                        const manager = this.editForm.ruManager;
+                                        if (manager && JSON.stringify(manager) !== '{}' && manager.job.department.organization.id !== this.editForm.regulatoryUnit.id) {
                                             this.editForm.ruManager = {};
                                         }
                                     }
@@ -100,7 +101,8 @@ export class ConstructionProjectComponent extends EntityComponent<ConstructionPr
                                     if (ownerManagerField.edit && ownerManagerField.edit?.input && ownerManagerField.edit.input.popupComponentParams) {
                                         ownerManagerField.edit.input.popupComponentParams.organization = this.editForm.owner;
                                     }
-                                    if (this.editForm.ownerManager && this.editForm.ownerManager.job.department.organization.id !== this.editForm.owner.id) {
+                                    const manager = this.editForm.ownerManager;
+                                    if (manager && JSON.stringify(manager) !== '{}' && manager.job.department.organization.id !== this.editForm.owner.id) {
                                         this.editForm.ownerManager = {};
                                     }
                                 }
@@ -120,7 +122,8 @@ export class ConstructionProjectComponent extends EntityComponent<ConstructionPr
                                     if (suManagerField.edit && suManagerField.edit?.input && suManagerField.edit.input.popupComponentParams) {
                                         suManagerField.edit.input.popupComponentParams.organization = this.editForm.supervisionUnit;
                                     }
-                                    if (this.editForm.suManager && this.editForm.suManager.job.department.organization.id !== this.editForm.supervisionUnit.id) {
+                                    const manager = this.editForm.suManager;
+                                    if (manager && JSON.stringify(manager) !== '{}' && manager.job.department.organization.id !== this.editForm.supervisionUnit.id) {
                                         this.editForm.suManager = {};
                                     }
                                 }
@@ -140,7 +143,8 @@ export class ConstructionProjectComponent extends EntityComponent<ConstructionPr
                                     if (buManagerField.edit && buManagerField.edit?.input && buManagerField.edit.input.popupComponentParams) {
                                         buManagerField.edit.input.popupComponentParams.organization = this.editForm.buildingUnit;
                                     }
-                                    if (this.editForm.buManager && this.editForm.buManager.job.department.organization.id !== this.editForm.buildingUnit.id) {
+                                    const manager = this.editForm.buManager;
+                                    if (manager && JSON.stringify(manager) !== '{}' && manager.job.department.organization.id !== this.editForm.buildingUnit.id) {
                                         this.editForm.buManager = {};
                                     }
                                 }

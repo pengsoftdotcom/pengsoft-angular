@@ -419,7 +419,6 @@ export class FieldUtils {
                     FieldUtils.buildText({
                         code: 'identityCardNumber', name: '身份证号',
                         list: { width: 190, align: 'center' },
-                        edit: { visible: false },
                         filter: {}
                     })
                 ]
@@ -488,10 +487,7 @@ export class FieldUtils {
     static buildPopupForOrganization(field: Field = {}) {
         return this.buildPopup(this.getField({
             code: 'organization', name: '机构',
-            edit: {
-                required: true,
-                input: { popupComponent: OrganizationPopupComponent, popupComponentParams: { title: field?.name ? '选择' + field.name : null } }
-            },
+            edit: { required: true, input: { popupComponent: OrganizationPopupComponent, popupComponentParams: { title: field?.name ? '选择' + field.name : null } } },
             list: { render: (f: Field, row: any) => f.code && row[f.code] ? row[f.code].shortName : '-' },
             filter: {}
         }, field));
@@ -500,13 +496,7 @@ export class FieldUtils {
     static buildPopupForStaff(field: Field = {}): Field {
         return this.buildPopup(this.getField({
             code: 'staff', name: '员工',
-            edit: {
-                required: true, input: {
-                    popupComponent: StaffPopupComponent,
-                    popupComponentParams: { title: field?.name ? '选择' + field.name : null },
-                    popupComponentSelectRowCode: 'person.name'
-                }
-            },
+            edit: { required: true, input: { popupComponent: StaffPopupComponent, popupComponentParams: { title: field?.name ? '选择' + field.name : null }, popupComponentSelectRowCode: 'person.name' } },
             list: { align: 'center', width: 100, render: (f: Field, row: any) => f.code && row[f.code] ? row[f.code].person.name : '-' },
             filter: {}
         }, field));

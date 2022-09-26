@@ -36,8 +36,10 @@ export class PayrollDetailComponent extends EntityComponent<PayrollDetailService
     }
 
     initFields(): Field[] {
+        const payrollFields = PayrollRecordComponent.prototype.initFields();
+
         return [
-            FieldUtils.buildText({ code: 'payroll', name: '发薪记录', children: PayrollRecordComponent.prototype.initFields() }),
+            FieldUtils.buildText({ code: 'payroll', name: '发薪记录', children: payrollFields.splice(0, 2) }),
             FieldUtils.buildText({
                 code: '', name: '发薪明细', children: [
                     FieldUtils.buildPopupForStaff(),

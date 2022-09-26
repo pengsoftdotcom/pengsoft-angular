@@ -1,8 +1,8 @@
-import { Component, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnChanges } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { EntityUtils } from 'src/app/utils/entity-utils';
-import { Option } from '../tree-select/option';
 import { InputComponent } from '../input.component';
+import { Option } from '../tree-select/option';
 
 @Component({
     selector: 'app-input-select',
@@ -13,30 +13,19 @@ export class SelectComponent extends InputComponent implements OnChanges {
 
     constructor(public sanitizer: DomSanitizer) { super(); }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes['form'] && this.edit?.code) {
-            const value = this.form[this.edit.code];
-            if (value && this.edit.input) {
-                if (this.edit.input.multiple) {
-                    this.rawValue = value.split(',');
-                } else {
-                    this.rawValue = value;
-                    if (typeof this.rawValue === 'object') {
-                        const options = this.edit.input.options;
-                        if (options && !options.find(option => EntityUtils.equals(option.value, this.rawValue))) {
-                            const render = this.edit.input.optionLabelRender;
-                            const option: any = {
-                                label: !render ? this.rawValue.name : render(this.edit, this.form),
-                                value: this.rawValue
-                            };
-                            option.title = option.label;
-                            option.key = option.value;
-                            options.push(option);
-                        }
-                    }
-                }
-            } else {
-                this.rawValue = undefined;
+    ngOnChanges(): void {
+        this.rawValue = this.edit.input?.multiple ? this.form[this.code].split(',') : this.form[this.code];
+        if (this.rawValue && typeof this.rawValue === 'object') {
+            const options = this.edit.input?.options;
+            if (options && !options.find(option => EntityUtils.equals(option.value, this.rawValue))) {
+                const render = this.edit.input?.optionLabelRender;
+                const option: any = {
+                    label: !render ? this.rawValue.name : render(this.edit, this.form),
+                    value: this.rawValue
+                };
+                option.title = option.label;
+                option.key = option.value;
+                options.push(option);
             }
         }
     }

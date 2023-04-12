@@ -13,6 +13,11 @@ export class SelectComponent extends InputComponent implements OnChanges {
 
     constructor(public sanitizer: DomSanitizer) { super(); }
 
+    override ngOnInit(): void {
+        super.ngOnInit();
+        this.ngOnChanges();
+    }
+
     ngOnChanges(): void {
         this.rawValue = this.edit.input?.multiple ? this.form[this.code].split(',') : this.form[this.code];
         if (this.rawValue && typeof this.rawValue === 'object') {

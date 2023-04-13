@@ -66,7 +66,7 @@ export class SafetyCheckComponent extends EntityComponent<SafetyCheckService> {
                     readonly: !this.editForm.id,
                     input: {
                         load: (component: InputComponent) => {
-                            this.constructionProject.findAll({'status.code': ['building','complete']}, [], {
+                            this.constructionProject.findAll({ 'status.code': ['building', 'complete'] }, [], {
                                 success: (res: any) => {
                                     if (component.edit.input) {
                                         component.edit.input.options = res.map((data: any) => Object.assign({ label: data.shortName, value: data }));
@@ -92,10 +92,7 @@ export class SafetyCheckComponent extends EntityComponent<SafetyCheckService> {
                         popupComponentSelectRowCode: 'person.name',
                         popupComponentParams: {
                             organization: this.organization,
-                            department: this.department,
-                            params: {
-                                'job.name': '安全员'
-                            }
+                            department: this.department
                         }
                     }
                 },

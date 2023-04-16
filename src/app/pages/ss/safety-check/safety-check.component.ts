@@ -66,7 +66,7 @@ export class SafetyCheckComponent extends EntityComponent<SafetyCheckService> {
                     readonly: !this.editForm.id,
                     input: {
                         load: (component: InputComponent) => {
-                            this.constructionProject.findAll({ 'status.code': ['building', 'complete'] }, [], {
+                            this.constructionProject.findAll(null, [], {
                                 success: (res: any) => {
                                     if (component.edit.input) {
                                         component.edit.input.options = res.map((data: any) => Object.assign({ label: data.shortName, value: data }));
